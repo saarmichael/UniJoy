@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,6 +11,7 @@ using log4net;
 using Params;
 using Trajectories.TrajectoryCreators;
 using VaryingValuesGenerators;
+using MoogController;
 
 namespace UniJoy
 {
@@ -22,31 +21,6 @@ namespace UniJoy
     /// </summary>
     public partial class GuiInterface : Form
     {
-#if DEBUG
-                [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Debug\MoogInterfeace.dll")]
-                public static extern void Connect();
-                [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Debug\MoogInterfeace.dll")]
-                public static extern void Engage();
-                [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Debug\MoogInterfeace.dll")]
-                public static extern void Disengage();
-                [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Debug\MoogInterfeace.dll")]
-                public static extern void Disconnect();
-                [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Debug\MoogInterfeace.dll", CallingConvention = CallingConvention.Cdecl)]
-                public static extern void SendPosition(double surge, double heave, double lateral, double yaw, double roll, double pitch);
-#else
-
-        [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Release\MoogInterfeace.dll")]
-                public static extern void Connect();
-                [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Release\MoogInterfeace.dll")]
-                public static extern void Engage();
-                [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Release\MoogInterfeace.dll")]
-                public static extern void Disengage();
-                [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Release\MoogInterfeace.dll")]
-                public static extern void Disconnect();
-                [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Release\MoogInterfeace.dll" , CallingConvention = CallingConvention.Cdecl)]
-                public static extern void SendPosition(double surge, double heave, double lateral, double yaw, double roll, double pitch);
-#endif
-
         #region MEMBERS
         /// <summary>
         /// The selected protocols path to view protocols.
@@ -161,7 +135,7 @@ namespace UniJoy
             try
             {
                 //connect to the robot.
-                Connect();
+                MoogController.MoogController.Connect();
             }
             catch
             {
@@ -635,7 +609,7 @@ namespace UniJoy
             //turn off the robot servos.
             //avi-insert//
             //_motocomController.SetServoOff();
-            Disconnect();
+            MoogController.MoogController.Disconnect();
 
             //TODO: Do I need this?
             //close the connection with the led strip.
@@ -1008,7 +982,7 @@ namespace UniJoy
                     _btnMoveRobotSide.Enabled = false;
                     #endregion
 
-                    Disengage();
+                    MoogController.MoogController.Disengage();
 
                     //TODO: What changes should be made here to work with Moog?
 
@@ -1076,7 +1050,7 @@ namespace UniJoy
 
                     try
                     {
-                        Engage();
+                        MoogController.MoogController.Engage();
                     }
                     catch
                     {
