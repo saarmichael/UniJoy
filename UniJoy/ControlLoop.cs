@@ -392,7 +392,7 @@ namespace UniJoy
         private WindowsMediaPlayer _windowsMediaPlayer;
 
         //Maayan Edit
-        private ThundermasterJoysticUserInputController _remoteController;
+        private IUserInputController _remoteController;
 
         #endregion ATTRIBUTES
 
