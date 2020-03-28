@@ -985,29 +985,6 @@ namespace UniJoy
 
                     MoogController.MoogController.Disengage();
 
-                    //TODO: What changes should be made here to work with Moog?
-
-                    /*string checkerParkPosition = CheckBothRobotsAtParkPosition(MotocomSettings.Default.DeltaParkToPark);
-                    string checkerEngagePosition = CheckBothRobotAroundEngagePosition(MotocomSettings.Default.DeltaEngageToPark);
-                    string checkerAsidePosition = CheckBothRobotAroundASidePosition(MotocomSettings.Default.DeltaASideToPark);
-
-                    if (checkerParkPosition.Equals(string.Empty) || checkerEngagePosition.Equals(string.Empty) || checkerAsidePosition.Equals(string.Empty))
-                    {
-
-                        _motocomController.WriteParkPositionFile();
-                        _motocomController.MoveRobotParkPosition();
-
-                        _motocomController.WaitJobFinished();
-
-                        _isEngaged = false;
-                    }
-                    else
-                    {
-                        MessageBox.Show(checkerParkPosition + "\n" + checkerEngagePosition, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    */
-                    
-                    //Maayan - delete this when the code above is updated
                     _isEngaged = false;
 
                     #region ENABLE_BUTTONS_BACK
@@ -1058,26 +1035,7 @@ namespace UniJoy
                         MessageBox.Show("Cannot set the servos on - check if robot is conncted in play mode and also not turned off", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-
-                    /*string checkerParkPosition = CheckBothRobotsAtParkPosition(MotocomSettings.Default.DeltaParkToEngage);
-                    string checkerEngagePosition = CheckBothRobotAroundEngagePosition(MotocomSettings.Default.DeltaEngageToEngage);
-
-                    if (checkerParkPosition.Equals(string.Empty) || checkerEngagePosition.Equals(string.Empty))
-                    {
-                        _motocomController.WriteHomePosFile();
-                        _motocomController.MoveRobotHomePosition();
-
-                        _motocomController.WaitJobFinished();
-
-                        _isEngaged = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show(checkerParkPosition + "\n" + checkerEngagePosition, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    */
                     
-                    // Maayan - delete this when the code above is updated
                     _isEngaged = true;
 
                     #region ENABLE_BUTTONS_BACK
@@ -1814,37 +1772,6 @@ namespace UniJoy
         }
 
         /// <summary>
-        /// Event for changing the AutoRewardSound status.
-        /// </summary>
-        /// <param name="sender">The checkbox.</param>
-        /// <param name="e">The param.</param>
-        //private void _checkboxCenterRewardSound_CheckedChanged(object sender, EventArgs e)
-        //{
-            /*if (_checkBoxCenterRewardSound.Checked)
-                _cntrlLoop.CenterRewardSound = true;
-            else*/
-               // _cntrlLoop.CenterRewardSound = false;
-        //}
-
-        //private void _checkboxSideRewardSound_CheckedChanged(object sender, EventArgs e)
-        //{
-            /*if (_checkboxSideRewardSound.Checked)
-                _cntrlLoop.SideRewardSound = true;
-            else*/
-                //_cntrlLoop.SideRewardSound = false;
-        //}
-
-        /// <summary>
-        /// Handler for event turnning on/off the SecondResponseChance checkbox.
-        /// </summary>
-        /// <param name="sender">Sender.</param>
-        /// <param name="e">Args.</param>
-        /*private void _checkboxSecondResponseChance_CheckedChanged(object sender, EventArgs e)
-        {
-            _cntrlLoop.SecondResponseChance = (sender as CheckBox).Checked;
-        }*/
-
-        /// <summary>
         /// Handler for event turnning on/off the SoundOn for error choice.
         /// </summary>
         /// <param name="sender">Sender.</param>
@@ -2317,13 +2244,6 @@ namespace UniJoy
         {
             _buttonbasesDictionary = new Dictionary<string, ButtonBase>();
 
-            //_buttonbasesDictionary.Add("AUTO_FIXATION", _checkBoxAutoFixation);
-            //_buttonbasesDictionary.Add("CENTER_REWARD_SOUND", _checkBoxCenterRewardSound);
-            //_buttonbasesDictionary.Add("SIDE_REWARD_SOUND", _checkboxSideRewardSound);
-            //_buttonbasesDictionary.Add("AUTO_START", _checkBoxAutoStart);
-            //_buttonbasesDictionary.Add("AUTO_CHOICE", _checkBoxAutoChoice);
-            //_buttonbasesDictionary.Add("B.F_SOUND_ON", _checkBoxBreakFixationSoundEnable);
-            //_buttonbasesDictionary.Add("SEC_RESP_CHANCE", _checkboxSecondResponseChance);
             _buttonbasesDictionary.Add("GO_CUE_SOUND", _checkBoxEnableGoCue);
             _buttonbasesDictionary.Add("CORRECT_CUE_SOUND", _radiobuttonGoCueCorrectSide);
             _buttonbasesDictionary.Add("BOTH_SIDE_CUE_SOUND", _radiobuttonGoCueBothSide);
