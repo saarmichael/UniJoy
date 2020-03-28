@@ -16,6 +16,7 @@ using System.Threading;
 using MathNet.Numerics.Distributions;
 using UnityVR;
 using Newtonsoft.Json;
+using MoogController;
 
 namespace UniJoy
 {
@@ -1459,7 +1460,7 @@ namespace UniJoy
                     double rx = _currentTrialTrajectories.Item1[i].RX;
                     double ry = _currentTrialTrajectories.Item1[i].RY;
                     double rz = _currentTrialTrajectories.Item1[i].RZ;
-                    GuiInterface.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
+                    MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
                 }
             });
 
@@ -1740,7 +1741,7 @@ namespace UniJoy
                         double rx = returnTrajectory.Item1[i].RX;
                         double ry = returnTrajectory.Item1[i].RY;
                         double rz = returnTrajectory.Item1[i].RZ;
-                        GuiInterface.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
+                        MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
                     }
 
                     _logger.Info("Backward ended.");

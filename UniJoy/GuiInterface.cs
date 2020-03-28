@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,6 +11,7 @@ using log4net;
 using Params;
 using Trajectories.TrajectoryCreators;
 using VaryingValuesGenerators;
+using MoogController;
 
 namespace UniJoy
 {
@@ -132,7 +135,7 @@ namespace UniJoy
             try
             {
                 //connect to the robot.
-                Connect();
+                MoogController.MoogController.Connect();
             }
             catch
             {
@@ -606,7 +609,7 @@ namespace UniJoy
             //turn off the robot servos.
             //avi-insert//
             //_motocomController.SetServoOff();
-            Disconnect();
+            MoogController.MoogController.Disconnect();
 
             //TODO: Do I need this?
             //close the connection with the led strip.
@@ -979,7 +982,7 @@ namespace UniJoy
                     _btnMoveRobotSide.Enabled = false;
                     #endregion
 
-                    Disengage();
+                    MoogController.MoogController.Disengage();
 
                     //TODO: What changes should be made here to work with Moog?
 
@@ -1047,7 +1050,7 @@ namespace UniJoy
 
                     try
                     {
-                        Engage();
+                        MoogController.MoogController.Engage();
                     }
                     catch
                     {
