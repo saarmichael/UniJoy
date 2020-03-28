@@ -392,7 +392,7 @@ namespace UniJoy
         private WindowsMediaPlayer _windowsMediaPlayer;
 
         //Maayan Edit
-        private RemoteController _remoteController;
+        private IUserInputController _remoteController;
 
         #endregion ATTRIBUTES
 
@@ -473,7 +473,8 @@ namespace UniJoy
             _windowsMediaPlayer = new WindowsMediaPlayer();
 
             //Maayan edit
-            _remoteController = new RemoteController(_logger);
+            //_remoteController = new ThundermasterJoysticUserInputController(_logger);
+            _remoteController = new KeyBoardUserInputController();
         }
 
         /// <summary>
@@ -1670,9 +1671,9 @@ namespace UniJoy
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
+            _remoteController.FlushBuffer();
             while ((int)sw.Elapsed.TotalMilliseconds < (int)(_currentTrialTimings.wTimeOutTime * 1000))
             {
-
                 if (_remoteController.IsStartButtonPressed())
                 {
                     _trialEventRealTiming.Add("HeadEnterCenter", _controlLoopTrialTimer.ElapsedMilliseconds);

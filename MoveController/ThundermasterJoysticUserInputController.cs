@@ -6,26 +6,25 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using log4net;
-using log4net;
 using SharpDX.XInput;
 
 namespace UserInputControllers
 {
-    public class RemoteController
+    public class ThundermasterJoysticUserInputController: IUserInputController
     {
         private ILog log;
         private Controller controller;
         private bool isConnected = false;
         private ThundermasterJoystickController _joystick;
 
-        public RemoteController(ILog logger = null)
+        public ThundermasterJoysticUserInputController(ILog logger = null)
         {
             log = logger;
             Initialize();
             _joystick = new ThundermasterJoystickController();
         }
 
-        public RemoteController()
+        public ThundermasterJoysticUserInputController()
         {
             Initialize();
             _joystick = new ThundermasterJoystickController();
@@ -97,6 +96,7 @@ namespace UserInputControllers
             return false;
 
         }
+
         public byte SubjectMovementChoice()
         {
             //According to RatDecision enum: Left = 1 Right = 2, Up = 3, Down = 4
@@ -107,6 +107,11 @@ namespace UserInputControllers
                 return (byte)value;
             }
             return 0;
+
+        }
+
+        public void FlushBuffer()
+        {
 
         }
     }
