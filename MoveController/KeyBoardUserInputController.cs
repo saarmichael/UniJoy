@@ -23,11 +23,13 @@ namespace UserInputControllers
 
         public bool IsStartButtonPressed()
         {
+            return true;
             return _inputStream.ReadByte() == 's';
         }
 
         public byte SubjectMovementChoice()
         {
+            return 1;
             int byteRead = _inputStream.ReadByte();
             return (byte)
                 (byteRead == 'a' ? 1 :
