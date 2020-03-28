@@ -99,9 +99,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MoveController\MoveController.csproj">
+    <ProjectReference Include="..\MoveController\UserInputControllers.csproj">
       <Project>{78354a3a-39e9-4258-9620-8c047c7b00fb}</Project>
-      <Name>MoveController</Name>
+      <Name>UserInputControllers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Params\Params.csproj">
       <Project>{28e0ea13-1dfd-4cfb-9654-20fcdd13d8c7}</Project>

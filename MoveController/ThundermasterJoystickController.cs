@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using SlimDX.DirectInput;
 using SlimDX.XInput;
 
-namespace MoveController
+namespace UserInputControllers
 {
-    public class Joy
+    public class ThundermasterJoystickController
     {
         #region PROPERTIES
         DirectInput Input = new DirectInput();
@@ -23,7 +23,7 @@ namespace MoveController
         #endregion
 
         #region CONSTRUCTOR
-        public Joy()
+        public ThundermasterJoystickController()
         {
             xValue = 0;
             yValue = 0;

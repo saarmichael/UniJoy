@@ -9,26 +9,26 @@ using log4net;
 using log4net;
 using SharpDX.XInput;
 
-namespace MoveController
+namespace UserInputControllers
 {
     public class RemoteController
     {
         private ILog log;
         private Controller controller;
         private bool isConnected = false;
-        private Joy _joystick;
+        private ThundermasterJoystickController _joystick;
 
         public RemoteController(ILog logger = null)
         {
             log = logger;
             Initialize();
-            _joystick = new Joy();
+            _joystick = new ThundermasterJoystickController();
         }
 
         public RemoteController()
         {
             Initialize();
-            _joystick = new Joy();
+            _joystick = new ThundermasterJoystickController();
         }
 
         private void Initialize()
@@ -91,7 +91,7 @@ namespace MoveController
             //return pressedKey==GamepadButtonFlags.A;
             if(_joystick.CheckIfPressed(10))
             {
-                _joystick = new Joy();
+                _joystick = new ThundermasterJoystickController();
                 return true;
             }
             return false;
@@ -103,7 +103,7 @@ namespace MoveController
             int value = _joystick.KeyPressed();
             if (value != 0)
             {
-                _joystick = new Joy();
+                _joystick = new ThundermasterJoystickController();
                 return (byte)value;
             }
             return 0;
