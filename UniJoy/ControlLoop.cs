@@ -474,7 +474,7 @@ namespace UniJoy
 
             //Maayan edit
             //_remoteController = new ThundermasterJoysticUserInputController(_logger);
-            _remoteController = = new KeyBoardUserInputController();
+            _remoteController = new KeyBoardUserInputController();
         }
 
         /// <summary>
