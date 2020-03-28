@@ -16,19 +16,19 @@ namespace UserInputControllers
         private ILog log;
         private Controller controller;
         private bool isConnected = false;
-        private Joy _joystick;
+        private ThundermasterJoysticController _joystick;
 
         public RemoteController(ILog logger = null)
         {
             log = logger;
             Initialize();
-            _joystick = new Joy();
+            _joystick = new ThundermasterJoysticController();
         }
 
         public RemoteController()
         {
             Initialize();
-            _joystick = new Joy();
+            _joystick = new ThundermasterJoysticController();
         }
 
         private void Initialize()
@@ -91,7 +91,7 @@ namespace UserInputControllers
             //return pressedKey==GamepadButtonFlags.A;
             if(_joystick.CheckIfPressed(10))
             {
-                _joystick = new Joy();
+                _joystick = new ThundermasterJoysticController();
                 return true;
             }
             return false;
@@ -103,7 +103,7 @@ namespace UserInputControllers
             int value = _joystick.KeyPressed();
             if (value != 0)
             {
-                _joystick = new Joy();
+                _joystick = new ThundermasterJoysticController();
                 return (byte)value;
             }
             return 0;

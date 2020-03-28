@@ -57,7 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Joy.cs" />
+    <Compile Include="ThundermasterJoysticController.cs" />
     <Compile Include="RemoteController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

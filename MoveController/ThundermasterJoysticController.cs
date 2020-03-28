@@ -8,7 +8,7 @@ using SlimDX.XInput;
 
 namespace UserInputControllers
 {
-    public class Joy
+    public class ThundermasterJoysticController
     {
         #region PROPERTIES
         DirectInput Input = new DirectInput();
@@ -23,7 +23,7 @@ namespace UserInputControllers
         #endregion
 
         #region CONSTRUCTOR
-        public Joy()
+        public ThundermasterJoysticController()
         {
             xValue = 0;
             yValue = 0;
