@@ -473,7 +473,8 @@ namespace UniJoy
             _windowsMediaPlayer = new WindowsMediaPlayer();
 
             //Maayan edit
-            _remoteController = new ThundermasterJoysticUserInputController(_logger);
+            //_remoteController = new ThundermasterJoysticUserInputController(_logger);
+            _remoteController = = new KeyBoardUserInputController();
         }
 
         /// <summary>

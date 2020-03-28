@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UserInputControllers;
 
-namespace MoveController
+namespace UserInputControllers
 {
     public class KeyBoardUserInputController : IUserInputController
     {
