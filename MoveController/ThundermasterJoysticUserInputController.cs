@@ -96,6 +96,7 @@ namespace UserInputControllers
             return false;
 
         }
+
         public byte SubjectMovementChoice()
         {
             //According to RatDecision enum: Left = 1 Right = 2, Up = 3, Down = 4
@@ -106,6 +107,11 @@ namespace UserInputControllers
                 return (byte)value;
             }
             return 0;
+
+        }
+
+        public void FlushBuffer()
+        {
 
         }
     }

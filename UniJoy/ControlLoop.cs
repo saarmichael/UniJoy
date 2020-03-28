@@ -1670,9 +1670,9 @@ namespace UniJoy
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
+            _remoteController.FlushBuffer();
             while ((int)sw.Elapsed.TotalMilliseconds < (int)(_currentTrialTimings.wTimeOutTime * 1000))
             {
-
                 if (_remoteController.IsStartButtonPressed())
                 {
                     _trialEventRealTiming.Add("HeadEnterCenter", _controlLoopTrialTimer.ElapsedMilliseconds);

@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IUserInputController.cs" />
+    <Compile Include="KeyBoardUserInputController.cs" />
     <Compile Include="ThundermasterJoystickController.cs" />
     <Compile Include="ThundermasterJoysticUserInputController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
