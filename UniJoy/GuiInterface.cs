@@ -166,7 +166,8 @@ namespace UniJoy
             catch
             {
                 MessageBox.Show("Cannot connect to the robot - check if robot is conncted in listen mode and also not turned off", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                //todo::add member indicating if the Moog was connected or not.
+                //return;
             }
 
             Globals._systemState = SystemState.INITIALIZED;
