@@ -9,7 +9,7 @@ using log4net;
 using log4net;
 using SharpDX.XInput;
 
-namespace MoveController
+namespace UserInputControllers
 {
     public class RemoteController
     {

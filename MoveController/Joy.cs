@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SlimDX.DirectInput;
 using SlimDX.XInput;
 
-namespace MoveController
+namespace UserInputControllers
 {
     public class Joy
     {

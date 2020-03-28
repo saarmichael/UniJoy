@@ -8,7 +8,7 @@ using System.Diagnostics;
 using Trajectories;
 using Trajectories.TrajectoryCreators;
 using Params;
-using MoveController;
+using UserInputControllers;
 using WMPLib;
 using log4net;
 using System.Windows.Forms.DataVisualization.Charting;
