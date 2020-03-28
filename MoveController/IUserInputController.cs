@@ -11,5 +11,7 @@ namespace UserInputControllers
         bool IsStartButtonPressed();
 
         byte SubjectMovementChoice();
+
+        void FlushBuffer();
     }
 }
