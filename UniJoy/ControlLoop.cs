@@ -392,7 +392,7 @@ namespace UniJoy
         private WindowsMediaPlayer _windowsMediaPlayer;
 
         //Maayan Edit
-        private RemoteController _remoteController;
+        private ThundermasterJoysticUserInputController _remoteController;
 
         #endregion ATTRIBUTES
 
@@ -473,7 +473,7 @@ namespace UniJoy
             _windowsMediaPlayer = new WindowsMediaPlayer();
 
             //Maayan edit
-            _remoteController = new RemoteController(_logger);
+            _remoteController = new ThundermasterJoysticUserInputController(_logger);
         }
 
         /// <summary>
