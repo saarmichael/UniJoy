@@ -775,12 +775,6 @@ namespace UniJoy
             //reset the trial stopwatch and add the start event trial to the trial events list and timings.
             _controlLoopTrialTimer.Restart();
             _trialEventRealTiming.Clear();
-
-            //TODO: Do I need this?
-            //updatre the trial number for the motoman protocol file creator to send it to the alpha omega.
-            //_motomanController.MotomanProtocolFileCreator.TrialNum = _totalHeadStabilityInCenterDuringDurationTime + 1;
-            //the adiitiom of 1 is because the ++ of one of them is only at the end of the movement.
-            //_motomanController.MotomanProtocolFileCreator.TrialNum = _totalHeadStabilityInCenterDuringDurationTime + _totalHeadFixationBreaks + 1;
         }
 
         /// <summary>
