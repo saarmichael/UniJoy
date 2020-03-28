@@ -270,6 +270,8 @@ namespace UniJoy
         /// </summary>
         public int LEDcolorBlue { get; set; }
 
+        public bool IsMoogConnected { get; set; }
+
         /// <summary>
         /// Timer for raising event to sample the Noldus reponse direction and store it in _currentRatResponse.
         /// </summary>
@@ -1446,23 +1448,26 @@ namespace UniJoy
             //TODO: Maayan - call the Moog to make a move
             int movementDuration = (int)(1000 * _currentTrialTimings.wDuration);
             _robotMotionTask = Task.Factory.StartNew(() => Thread.Sleep(movementDuration));
-            Task.Run(() =>
+            if (IsMoogConnected)
             {
+                Task.Run(() =>
+                {
                 //for (_currentTrialTrajectories.Moog.count)
                 int currentTrialTrajectoriesSize = _currentTrialTrajectories.Item1.Count();
-                for (int i = 0; i < currentTrialTrajectoriesSize; i++)
-                {
+                    for (int i = 0; i < currentTrialTrajectoriesSize; i++)
+                    {
                     //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
                     double MOTION_BASE_CENTER = -0.22077500;
-                    double surge = _currentTrialTrajectories.Item1[i].X;
-                    double lateral = _currentTrialTrajectories.Item1[i].Y;
-                    double heave = _currentTrialTrajectories.Item1[i].Z + MOTION_BASE_CENTER;
-                    double rx = _currentTrialTrajectories.Item1[i].RX;
-                    double ry = _currentTrialTrajectories.Item1[i].RY;
-                    double rz = _currentTrialTrajectories.Item1[i].RZ;
-                    MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
-                }
-            });
+                        double surge = _currentTrialTrajectories.Item1[i].X;
+                        double lateral = _currentTrialTrajectories.Item1[i].Y;
+                        double heave = _currentTrialTrajectories.Item1[i].Z + MOTION_BASE_CENTER;
+                        double rx = _currentTrialTrajectories.Item1[i].RX;
+                        double ry = _currentTrialTrajectories.Item1[i].RY;
+                        double rz = _currentTrialTrajectories.Item1[i].RZ;
+                        MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
+                    }
+                });
+            }
 
             //throw new Exception();
 
@@ -1706,7 +1711,7 @@ namespace UniJoy
 #endif
             //need to get the robot backword only if ther was a rat enterance that trigger thr robot motion.
             Task moveRobotHomePositionTask;
-            if (!duration1HeadInTheCenterStabilityStage)
+            if (!duration1HeadInTheCenterStabilityStage || !IsMoogConnected)
             {
                 _logger.Info("Backward not executed because duration1HeadInTheCenterStabilityStage = false. Calling NullFunction().");
                 moveRobotHomePositionTask = Task.Factory.StartNew(() => NullFunction());

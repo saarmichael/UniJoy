@@ -132,23 +132,24 @@ namespace UniJoy
             _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             _logger.Info("Starting program...");
 
-            try
-            {
-                //connect to the robot.
-                MoogController.MoogController.Connect();
-            }
-            catch
-            {
-                MessageBox.Show("Cannot connect to the robot - check if robot is conncted in listen mode and also not turned off", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //todo::add member indicating if the Moog was connected or not.
-                //return;
-            }
-
             Globals._systemState = SystemState.INITIALIZED;
 
             //make the delegate with it's control object and their nickname as pairs of dictionaries.
             Tuple<Dictionary<string, Control>, Dictionary<string, Delegate>> delegatsControlsTuple = MakeCtrlDelegateAndFunctionDictionary();
             _cntrlLoop = new ControlLoop(delegatsControlsTuple.Item2, delegatsControlsTuple.Item1, _logger);
+
+            try
+            {
+                //connect to the robot.
+                MoogController.MoogController.Connect();
+                _cntrlLoop.IsMoogConnected = true;
+            }
+            catch
+            {
+                _cntrlLoop.IsMoogConnected = false;
+
+                MessageBox.Show("Cannot connect to the robot - check if robot is conncted in listen mode and also not turned off", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
             //reset the selected direction to be empty.
             //_selectedHandRewardDirections = 0;
