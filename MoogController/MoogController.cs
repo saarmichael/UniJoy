@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MoogController
 {
-    public class MoogControllercs
+    public class MoogController
     {
 #if DEBUG
         [DllImport(@"C:\Users\user\source\repos\UniJoy\MoogInterfeace\Debug\MoogInterfeace.dll")]
