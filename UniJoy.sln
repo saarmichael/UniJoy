@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVR", "UnityVR\UnityVR.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoogController", "MoogController\MoogController.csproj", "{9ED96369-184D-42FD-B2BE-715A406442F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnijoyData.Shared", "UnijoyData.Shared\UnijoyData.Shared.csproj", "{697DAF02-0224-4746-AA28-467CD57C5E3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,18 @@ Global
 		{9ED96369-184D-42FD-B2BE-715A406442F0}.Release|x64.Build.0 = Release|Any CPU
 		{9ED96369-184D-42FD-B2BE-715A406442F0}.Release|x86.ActiveCfg = Release|Any CPU
 		{9ED96369-184D-42FD-B2BE-715A406442F0}.Release|x86.Build.0 = Release|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Debug|x64.Build.0 = Debug|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Debug|x86.Build.0 = Debug|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Release|x64.ActiveCfg = Release|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Release|x64.Build.0 = Release|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Release|x86.ActiveCfg = Release|Any CPU
+		{697DAF02-0224-4746-AA28-467CD57C5E3C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
