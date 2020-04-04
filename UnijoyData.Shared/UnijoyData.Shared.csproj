@@ -9,6 +9,10 @@
     <Description>The shared library for Unijoy and UnijoyUnityEngine</Description>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>D:\Unijoy\NugetPackages\Unijoy.Shared</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
