@@ -2263,7 +2263,7 @@ namespace UniJoy
             {
                 try
                 {
-                    _client = new SimpleTcpClient().Connect("127.0.0.1", 9999);
+                    _client = new SimpleTcpClient().Connect("127.0.0.1", 8910);
                 }
                 catch (Exception e)
                 {
