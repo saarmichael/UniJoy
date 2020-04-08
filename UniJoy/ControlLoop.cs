@@ -17,6 +17,7 @@ using MathNet.Numerics.Distributions;
 using UnityVR;
 using Newtonsoft.Json;
 using MoogController;
+using SimpleTCP;
 
 namespace UniJoy
 {
@@ -396,6 +397,8 @@ namespace UniJoy
 
         //Maayan Edit
         private IUserInputController _remoteController;
+
+        private SimpleTcpClient _client;
 
         #endregion ATTRIBUTES
 
@@ -2254,7 +2257,21 @@ namespace UniJoy
 
         public void TryConnectToUnityEngine()
         {
+            int numOfRetries = 0;
 
+            while (_client?.TcpClient?.Connected ?? false == false)
+            {
+                try
+                {
+                    _client = new SimpleTcpClient().Connect("127.0.0.1", 9999);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"Could not connect to the UnityEngine. Retries:{numOfRetries}", "Error");
+
+                    numOfRetries++;
+                }
+            }
         }
 
         /// <summary>
