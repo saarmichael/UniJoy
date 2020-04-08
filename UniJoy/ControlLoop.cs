@@ -17,6 +17,7 @@ using MathNet.Numerics.Distributions;
 using UnityVR;
 using Newtonsoft.Json;
 using MoogController;
+using SimpleTCP;
 
 namespace UniJoy
 {
@@ -397,6 +398,8 @@ namespace UniJoy
         //Maayan Edit
         private IUserInputController _remoteController;
 
+        private SimpleTcpClient _client;
+
         #endregion ATTRIBUTES
 
         #region CONTRUCTORS
@@ -478,6 +481,8 @@ namespace UniJoy
             //Maayan edit
             //_remoteController = new ThundermasterJoysticUserInputController(_logger);
             _remoteController = new KeyBoardUserInputController();
+
+            Task.Run(() => TryConnectToUnityEngine());
         }
 
         /// <summary>
@@ -2248,6 +2253,25 @@ namespace UniJoy
             //choose none rat in the selected rat
             _mainGuiInterfaceControlsDictionary["ResetSelectedRatNameCombobox"].BeginInvoke(_mainGuiControlsDelegatesDictionary["ResetSelectedRatNameCombobox"]);
             //#endif
+        }
+
+        public void TryConnectToUnityEngine()
+        {
+            int numOfRetries = 0;
+
+            while (_client?.TcpClient?.Connected ?? false == false)
+            {
+                try
+                {
+                    _client = new SimpleTcpClient().Connect("127.0.0.1", 8910);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"Could not connect to the UnityEngine. Retries:{numOfRetries}", "Error");
+
+                    numOfRetries++;
+                }
+            }
         }
 
         /// <summary>
