@@ -478,6 +478,8 @@ namespace UniJoy
             //Maayan edit
             //_remoteController = new ThundermasterJoysticUserInputController(_logger);
             _remoteController = new KeyBoardUserInputController();
+
+            Task.Run(() => TryConnectToUnityEngine());
         }
 
         /// <summary>
@@ -2248,6 +2250,11 @@ namespace UniJoy
             //choose none rat in the selected rat
             _mainGuiInterfaceControlsDictionary["ResetSelectedRatNameCombobox"].BeginInvoke(_mainGuiControlsDelegatesDictionary["ResetSelectedRatNameCombobox"]);
             //#endif
+        }
+
+        public void TryConnectToUnityEngine()
+        {
+
         }
 
         /// <summary>
