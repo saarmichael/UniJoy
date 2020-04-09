@@ -21,6 +21,9 @@ using SimpleTCP;
 using Assets.Network.Retrievers;
 using System.IO;
 
+using UnijoyData.Shared.Commands;
+using UniJoy.Network;
+
 namespace UniJoy
 {
     /// <summary>
@@ -400,7 +403,7 @@ namespace UniJoy
         //Maayan Edit
         private IUserInputController _remoteController;
 
-        private SimpleTcpClient _client;
+        private UnityCommandsSender _unityCommandsSender;
 
         #endregion ATTRIBUTES
 
@@ -806,8 +809,10 @@ namespace UniJoy
             };
 
             string serializedData = JsonConvert.SerializeObject(unijoyTrialMetaData);
+            string serializedDataPath = $@"D:\UnijoyMetaData\{Guid.NewGuid()}.json";
+            File.WriteAllText(serializedDataPath, serializedData);
 
-            File.WriteAllText($@"D:\UnijoyMetaData\{Guid.NewGuid()}.json", serializedData);
+            _unityCommandsSender.TrySendCommand(UnityEngineCommands.ReadTrialData, serializedDataPath);
         }
 
         /// <summary>
@@ -1534,17 +1539,12 @@ namespace UniJoy
                 Task.Run(() =>
                 {
                     //---data to send to the unity program (server)---
-                    try
-                    {
-                        string msgToSend = "Space";
-                        string jsonMsgToSend = JsonConvert.SerializeObject(msgToSend.ToArray());
-                        TCPSender.SendString(jsonMsgToSend);
-                        TCPSender.SendMovement(_currentTrialTrajectories.Item1);
-                    }
-                    catch
-                    {
+                    /*string msgToSend = "Space";
+                    string jsonMsgToSend = JsonConvert.SerializeObject(msgToSend.ToArray());
+                    TCPSender.SendString(jsonMsgToSend);
+                    TCPSender.SendMovement(_currentTrialTrajectories.Item1);*/
 
-                    }
+                    _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand , "start");
                 });
             }
 
@@ -2298,18 +2298,14 @@ namespace UniJoy
         {
             int numOfRetries = 0;
 
-            while ((_client?.TcpClient?.Connected ?? false) == false)
-            {
-                try
-                {
-                    _client = new SimpleTcpClient().Connect("127.0.0.1", 8910);
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show($"Could not connect to the UnityEngine. Retries:{numOfRetries}", "Error");
+            _unityCommandsSender = new UnityCommandsSender(8910);
 
-                    numOfRetries++;
-                }
+            while (!_unityCommandsSender.TryStart())
+            {
+
+                MessageBox.Show($"Could not connect to the UnityEngine. Retries:{numOfRetries}", "Error");
+
+                numOfRetries++;
             }
         }
 
