@@ -6,7 +6,11 @@ namespace UnijoyData.Shared.Commands
 {
     public static class UnityEngineCommands
     {
-        public static string MovementCommand = "MovementCommand";
+        public static char CommandKeyValueSeperator = '?';
+
+        public static char CommandsDelimiter = '#';
+
+        public static string VisualOperationCommand = "VisualOperationCommand";
 
         public static string ReadTrialData = "ReadTrialData";
     }
