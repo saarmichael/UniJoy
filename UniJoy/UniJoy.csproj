@@ -118,6 +118,10 @@
       <Project>{b8b173f2-2fc2-4246-9a33-74f59d23d247}</Project>
       <Name>Trajectories</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnijoyData.Shared\UnijoyData.Shared.csproj">
+      <Project>{697DAF02-0224-4746-AA28-467CD57C5E3C}</Project>
+      <Name>UnijoyData.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UnityVR\UnityVR.csproj">
       <Project>{6eb398a2-dbc9-4b42-96e1-13a66f9c8b86}</Project>
       <Name>UnityVR</Name>
