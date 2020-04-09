@@ -18,11 +18,11 @@ using UnityVR;
 using Newtonsoft.Json;
 using MoogController;
 using SimpleTCP;
-using Assets.Network.Retrievers;
 using System.IO;
 
 using UnijoyData.Shared.Commands;
 using UniJoy.Network;
+using UnijoyData.Shared.Data;
 
 namespace UniJoy
 {
@@ -791,14 +791,14 @@ namespace UniJoy
         {
             UnijoyTrialMetaData unijoyTrialMetaData = new UnijoyTrialMetaData()
             {
-                ColorData = new Assets.Data.ColorData()
+                ColorData = new ColorData()
                 {
                     Red = 255,
                     Green = 0,
                     Blue = 0
                 },
                 NumOfObjects = 1,
-                ObjectType = Assets.Data.ObjectType.Triangle,
+                ObjectType = ObjectType.Triangle,
                 Source = "Unijoy",
                 X = _currentTrialTrajectories.Item1.X.Select(item => (float)(item)).ToList(),
                 Y = _currentTrialTrajectories.Item1.Y.Select(item => (float)(item)).ToList(),

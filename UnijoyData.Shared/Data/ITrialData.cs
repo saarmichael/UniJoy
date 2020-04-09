@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Data
+namespace UnijoyData.Shared.Data
 {
     public interface ITrialData : ITrajectoryData, IObjectsMetaData
     {
