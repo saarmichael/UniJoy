@@ -8,6 +8,6 @@ namespace Assets.Data
 {
     public interface ITrialData : ITrajectoryData, IObjectsMetaData
     {
-        int Source { get; set; }
+        string Source { get; set; }
     }
 }
