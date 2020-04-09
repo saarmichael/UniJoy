@@ -75,6 +75,8 @@
     <Compile Include="GuiInterface.Designer.cs">
       <DependentUpon>GuiInterface.cs</DependentUpon>
     </Compile>
+    <Compile Include="Network\ICommandsSender.cs" />
+    <Compile Include="Network\UnityCommandsSender.cs" />
     <Compile Include="OnlinePsychGraphMaker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
