@@ -18,6 +18,8 @@ using UnityVR;
 using Newtonsoft.Json;
 using MoogController;
 using SimpleTCP;
+using Assets.Network.Retrievers;
+using System.IO;
 
 namespace UniJoy
 {
@@ -782,6 +784,32 @@ namespace UniJoy
             _trialEventRealTiming.Clear();
         }
 
+        void SendTrialMetaDataToUnityEngine()
+        {
+            UnijoyTrialMetaData unijoyTrialMetaData = new UnijoyTrialMetaData()
+            {
+                ColorData = new Assets.Data.ColorData()
+                {
+                    Red = 255,
+                    Green = 0,
+                    Blue = 0
+                },
+                NumOfObjects = 1,
+                ObjectType = Assets.Data.ObjectType.Triangle,
+                Source = "Unijoy",
+                X = _currentTrialTrajectories.Item1.X.Select(item => (float)(item)).ToList(),
+                Y = _currentTrialTrajectories.Item1.Y.Select(item => (float)(item)).ToList(),
+                Z = _currentTrialTrajectories.Item1.Z.Select(item => (float)(item)).ToList(),
+                RX = _currentTrialTrajectories.Item1.RX.Select(item => (float)(item)).ToList(),
+                RY = _currentTrialTrajectories.Item1.RY.Select(item => (float)(item)).ToList(),
+                RZ = _currentTrialTrajectories.Item1.RZ.Select(item => (float)(item)).ToList(),
+            };
+
+            string serializedData = JsonConvert.SerializeObject(unijoyTrialMetaData);
+
+            File.WriteAllText($@"D:\UnijoyMetaData\{Guid.NewGuid()}.json", serializedData);
+        }
+
         /// <summary>
         /// Pre trial stage for sending all pre data for the current trial.
         /// </summary>
@@ -802,6 +830,10 @@ namespace UniJoy
             UpdateGuiElements();
 
             _trialEventRealTiming.Add("TrialBegin", _controlLoopTrialTimer.ElapsedMilliseconds);
+
+
+            //send the data to the UnityEngine
+            SendTrialMetaDataToUnityEngine();
 
             //TODO:DELETE
             /* Task sendDataToRobotTask = new Task(() =>
@@ -1502,10 +1534,17 @@ namespace UniJoy
                 Task.Run(() =>
                 {
                     //---data to send to the unity program (server)---
-                    string msgToSend = "Space";
-                    string jsonMsgToSend = JsonConvert.SerializeObject(msgToSend.ToArray());
-                    TCPSender.SendString(jsonMsgToSend);
-                    TCPSender.SendMovement(_currentTrialTrajectories.Item1);
+                    try
+                    {
+                        string msgToSend = "Space";
+                        string jsonMsgToSend = JsonConvert.SerializeObject(msgToSend.ToArray());
+                        TCPSender.SendString(jsonMsgToSend);
+                        TCPSender.SendMovement(_currentTrialTrajectories.Item1);
+                    }
+                    catch
+                    {
+
+                    }
                 });
             }
 
@@ -2259,7 +2298,7 @@ namespace UniJoy
         {
             int numOfRetries = 0;
 
-            while (_client?.TcpClient?.Connected ?? false == false)
+            while ((_client?.TcpClient?.Connected ?? false) == false)
             {
                 try
                 {
