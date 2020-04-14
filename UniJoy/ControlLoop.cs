@@ -799,7 +799,7 @@ namespace UniJoy
                 },
                 NumOfObjects = 1,
                 ObjectType = ObjectType.Triangle,
-                Source = "Unijoy",
+                //Source = "Unijoy",
                 X = _currentTrialTrajectories.Item1.X.Select(item => (float)(item)).ToList(),
                 Y = _currentTrialTrajectories.Item1.Y.Select(item => (float)(item)).ToList(),
                 Z = _currentTrialTrajectories.Item1.Z.Select(item => (float)(item)).ToList(),

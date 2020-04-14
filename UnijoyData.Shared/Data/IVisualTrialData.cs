@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace UnijoyData.Shared.Data
 {
-    public interface ITrialData : ITrajectoryData, IObjectsMetaData
+    public interface IVisualTrialData : ITrajectoryData, IObjectsMetaData
     {
-        string Source { get; set; }
+        //string Source { get; set; }
 
         //int StimulusType { get; set; }
 
