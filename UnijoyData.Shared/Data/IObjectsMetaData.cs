@@ -8,7 +8,7 @@ namespace UnijoyData.Shared.Data
 {
     public interface IObjectsMetaData
     {
-        int NumOfObjects { get; set; }
+        //int NumOfObjects { get; set; }
 
         ColorData ColorData { get; set; }
 
