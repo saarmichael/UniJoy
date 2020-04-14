@@ -10,8 +10,17 @@ namespace UnijoyData.Shared.Commands
 
         public static char CommandsDelimiter = '#';
 
-        public static string VisualOperationCommand = "VisualOperationCommand";
+        public static string VisualOperationCommand = nameof(VisualOperationCommand);
 
         public static string ReadTrialData = "ReadTrialData";
+    }
+
+    public static class VisualOperationCommand
+    {
+        public static string StartRender = "StartRender";
+
+        public static string Stoprender = "StopRender";
+
+        public static string CleanScreen = "CleanScreen";
     }
 }
