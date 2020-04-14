@@ -13,5 +13,21 @@ namespace UnijoyData.Shared.Data
         ColorData ColorData { get; set; }
 
         ObjectType ObjectType { get; set; }
+
+        float Density { get; set; }
+
+        //int LifeTime { get; set; }
+
+        int Coherence { get; set; } //(% out of 100)
+
+        //float DiscAmplitudes { get; set; }
+
+        //float Distance { get; set; }
+
+        //float AdaptationAngle { get; set; }
+
+        float BaseSize { get; set; }
+
+        float HeightSize { get; set; }
     }
 }

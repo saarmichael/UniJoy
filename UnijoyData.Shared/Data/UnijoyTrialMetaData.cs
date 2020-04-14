@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace UnijoyData.Shared.Data
 {
     [JsonObject]
-    public class UnijoyTrialMetaData : ITrialData
+    public class UnijoyTrialMetaData : IVisualTrialData
     {
 
 
-        public string Source { get ; set ; }
+        //public string Source { get ; set ; }
         
         public List<float> X { get; set; }
         
@@ -32,5 +32,13 @@ namespace UnijoyData.Shared.Data
         public ColorData ColorData { get; set; }
         
         public ObjectType ObjectType { get; set; }
+        
+        public float Density { get ; set ; }
+        
+        public int Coherence { get ; set ; }
+        
+        public float BaseSize { get ; set ; }
+        
+        public float HeightSize { get ; set ; }
     }
 }
