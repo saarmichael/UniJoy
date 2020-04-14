@@ -32,5 +32,13 @@ namespace UnijoyData.Shared.Data
         public ColorData ColorData { get; set; }
         
         public ObjectType ObjectType { get; set; }
+        
+        public float Density { get ; set ; }
+        
+        public int Coherence { get ; set ; }
+        
+        public float BaseSize { get ; set ; }
+        
+        public float HeightSize { get ; set ; }
     }
 }

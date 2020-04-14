@@ -9,5 +9,9 @@ namespace UnijoyData.Shared.Data
     public interface ITrialData : ITrajectoryData, IObjectsMetaData
     {
         string Source { get; set; }
+
+        //int StimulusType { get; set; }
+
+        //float Duration { get; set; }
     }
 }
