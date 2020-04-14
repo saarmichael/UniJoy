@@ -27,7 +27,7 @@ namespace UnijoyData.Shared.Data
         
         public List<float> RZ { get; set; }
         
-        public int NumOfObjects { get; set; }
+        //public int NumOfObjects { get; set; }
         
         public ColorData ColorData { get; set; }
         
