@@ -797,8 +797,11 @@ namespace UniJoy
                     Green = 0,
                     Blue = 0
                 },
-                NumOfObjects = 1,
+
                 ObjectType = ObjectType.Triangle,
+                Size = (0.5f, 0.5f),
+                Density = 0.005f,
+
                 //Source = "Unijoy",
                 X = _currentTrialTrajectories.Item1.X.Select(item => (float)(item)).ToList(),
                 Y = _currentTrialTrajectories.Item1.Y.Select(item => (float)(item)).ToList(),
@@ -806,6 +809,14 @@ namespace UniJoy
                 RX = _currentTrialTrajectories.Item1.RX.Select(item => (float)(item)).ToList(),
                 RY = _currentTrialTrajectories.Item1.RY.Select(item => (float)(item)).ToList(),
                 RZ = _currentTrialTrajectories.Item1.RZ.Select(item => (float)(item)).ToList(),
+
+                StarFieldDimension = (130, 130, 130),
+                Coherence = 100,
+
+                ScreenDimension = (127, 149),
+                ClipPlanes = (5, 100),
+                EyeOffsets = (0, 8.5f, 0),
+                HeadCenter = (0, 29.5f, 0)
             };
 
             string serializedData = JsonConvert.SerializeObject(unijoyTrialMetaData);
