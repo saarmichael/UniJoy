@@ -14,11 +14,7 @@ namespace UnijoyData.Shared.Data
 
         ObjectType ObjectType { get; set; }
 
-        float Density { get; set; }
-
         //int LifeTime { get; set; }
-
-        int Coherence { get; set; } //(% out of 100)
 
         //float DiscAmplitudes { get; set; }
 
@@ -26,8 +22,6 @@ namespace UnijoyData.Shared.Data
 
         //float AdaptationAngle { get; set; }
 
-        float BaseSize { get; set; }
-
-        float HeightSize { get; set; }
+        (float, float) Size { get; set; }
     }
 }
