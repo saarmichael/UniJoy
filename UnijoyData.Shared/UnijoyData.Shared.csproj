@@ -7,7 +7,7 @@
     <Company>AdamZaidelLab</Company>
     <Product>Unijoy</Product>
     <Description>The shared library for Unijoy and UnijoyUnityEngine</Description>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

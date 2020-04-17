@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnijoyData.Shared.Data
 {
-    public interface IVisualTrialData : ITrajectoryData, IObjectsMetaData
+    public interface IVisualTrialData : ITrajectoryData, IObjectsMetaData, ISphereFieldMetaData, IRenderData
     {
         //string Source { get; set; }
 

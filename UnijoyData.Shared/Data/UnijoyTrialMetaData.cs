@@ -11,8 +11,6 @@ namespace UnijoyData.Shared.Data
     [JsonObject]
     public class UnijoyTrialMetaData : IVisualTrialData
     {
-
-
         //public string Source { get ; set ; }
         
         public List<float> X { get; set; }
@@ -27,7 +25,7 @@ namespace UnijoyData.Shared.Data
         
         public List<float> RZ { get; set; }
         
-        public int NumOfObjects { get; set; }
+        //public int NumOfObjects { get; set; }
         
         public ColorData ColorData { get; set; }
         
@@ -37,8 +35,17 @@ namespace UnijoyData.Shared.Data
         
         public int Coherence { get ; set ; }
         
-        public float BaseSize { get ; set ; }
-        
-        public float HeightSize { get ; set ; }
+        public (float, float) Size { get ; set ; }
+
+        public (float, float, float) StarFieldDimension { get; set; }
+
+        public (float, float) ClipPlanes { get; set; }
+
+        public (float, float, float) EyeOffsets { get; set; }
+
+        public (float, float, float) HeadCenter { get; set; }
+
+        public (float, float) ScreenDimension { get; set; }
+
     }
 }
