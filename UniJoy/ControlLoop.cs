@@ -1120,6 +1120,9 @@ namespace UniJoy
             }
             _ratSampleResponseTimer.Elapsed -= SetRatReponse;
 
+            //send command to UnityEngine that it should clean all it's rendered data.
+            _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand, VisualOperationCommand.CleanScreen);
+
             _logger.Info("ResponseTimeStage ended. RatDecison = RatDecison.NoDecision; Correct = False.");
             _currentRatDecision = RatDecison.NoDecision;
             return new Tuple<RatDecison, bool>(RatDecison.NoDecision, false);
