@@ -105,11 +105,6 @@ namespace UniJoy
             _currentSavedFileStramWriter.WriteLine(lineBuilder.ToString());
             lineBuilder.Clear();
 
-            //append the leds data options in the current trial.
-            lineBuilder.Append(trialData.LedsData.ToString());
-            _currentSavedFileStramWriter.WriteLine(lineBuilder.ToString());
-            lineBuilder.Clear();
-
             //appends all static variables names and values.
             foreach (string paramName in trialData.StaticVariables.Keys)
             {
@@ -277,11 +272,6 @@ namespace UniJoy
         /// SoundsModes object for all sounds modes values.
         /// </summary>        
         public SoundsMode SoundsMode { get; set; }
-
-        /// <summary>
-        /// Leds data options.
-        /// </summary>
-        public LedsData LedsData { get; set; }
 
         /// <summary>
         /// A dictionary include a key for the ecvent name and a double for the time of the event since the start of the trial. Each trial the dictionary cleared.
