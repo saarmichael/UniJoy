@@ -1022,6 +1022,8 @@ namespace UniJoy
                         _onlinePsychGraphMaker.AddResult("Heading Direction", _currentTrialStimulusType, currentHeadingDirection, AnswerStatus.CORRECT);
 
                         _logger.Info("ResponseTimeStage ended. RatDecison = RatDecison.Left" + "; Correct = True.");
+                        //send command to UnityEngine that it should clean all it's rendered data.
+                        _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand, VisualOperationCommand.CleanScreen);
                         return new Tuple<RatDecison, bool>(RatDecison.Left, true);
                     }
 
@@ -1053,6 +1055,8 @@ namespace UniJoy
                     }
 
                     _logger.Info("ResponseTimeStage ended. RatDecison = RatDecison.Left" + "; Correct = False.");
+                    //send command to UnityEngine that it should clean all it's rendered data.
+                    _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand, VisualOperationCommand.CleanScreen);
                     return new Tuple<RatDecison, bool>(RatDecison.Left, false);
                 }
 
@@ -1083,6 +1087,8 @@ namespace UniJoy
                         _onlinePsychGraphMaker.AddResult("Heading Direction", _currentTrialStimulusType, currentHeadingDirection, AnswerStatus.CORRECT);
 
                         _logger.Info("ResponseTimeStage ended. RatDecison = RatDecison.Right" + "; Correct = True.");
+                        //send command to UnityEngine that it should clean all it's rendered data.
+                        _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand, VisualOperationCommand.CleanScreen);
                         return new Tuple<RatDecison, bool>(RatDecison.Right, true);
                     }
 
@@ -1115,10 +1121,15 @@ namespace UniJoy
                     }
 
                     _logger.Info("ResponseTimeStage ended. RatDecison = RatDecison.Right" + "; Correct = False.");
+                    //send command to UnityEngine that it should clean all it's rendered data.
+                    _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand, VisualOperationCommand.CleanScreen);
                     return new Tuple<RatDecison, bool>(RatDecison.Right, false);
                 }
             }
             _ratSampleResponseTimer.Elapsed -= SetRatReponse;
+
+            //send command to UnityEngine that it should clean all it's rendered data.
+            _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand, VisualOperationCommand.CleanScreen);
 
             _logger.Info("ResponseTimeStage ended. RatDecison = RatDecison.NoDecision; Correct = False.");
             _currentRatDecision = RatDecison.NoDecision;
@@ -1555,7 +1566,7 @@ namespace UniJoy
                     TCPSender.SendString(jsonMsgToSend);
                     TCPSender.SendMovement(_currentTrialTrajectories.Item1);*/
 
-                    _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand , "start");
+                    _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand , VisualOperationCommand.StartRender);
                 });
             }
 
