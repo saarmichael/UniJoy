@@ -451,17 +451,7 @@
             this._ardionoPrtWarningLabel.TabIndex = 0;
             this._ardionoPrtWarningLabel.Text = "The COM4 (Arduino) port is not connected-LEDS not work properly";
             this._ardionoPrtWarningLabel.Visible = false;
-            // 
-            // _checkboxRRDelta
-            // 
-            this._checkboxRRDelta.AutoSize = true;
-            this._checkboxRRDelta.Location = new System.Drawing.Point(2, 61);
-            this._checkboxRRDelta.Name = "_checkboxRRDelta";
-            this._checkboxRRDelta.Size = new System.Drawing.Size(73, 17);
-            this._checkboxRRDelta.TabIndex = 18;
-            this._checkboxRRDelta.Text = "R.R Delta";
-            this._checkboxRRDelta.UseVisualStyleBackColor = true;
-            this._checkboxRRDelta.CheckedChanged += new System.EventHandler(this._checkbixRRDelta_CheckedChanged);
+
             // 
             // _checkBoxRightAndLeftSame
             // 
@@ -473,28 +463,6 @@
             this._checkBoxRightAndLeftSame.Text = "R + L Same";
             this._checkBoxRightAndLeftSame.UseVisualStyleBackColor = true;
             this._checkBoxRightAndLeftSame.CheckedChanged += new System.EventHandler(this._checkBoxRightAndLeftSame_CheckedChanged);
-            // 
-            // _checkBoxFixationOnly
-            // 
-            this._checkBoxFixationOnly.AutoSize = true;
-            this._checkBoxFixationOnly.Location = new System.Drawing.Point(2, 19);
-            this._checkBoxFixationOnly.Name = "_checkBoxFixationOnly";
-            this._checkBoxFixationOnly.Size = new System.Drawing.Size(86, 17);
-            this._checkBoxFixationOnly.TabIndex = 0;
-            this._checkBoxFixationOnly.Text = "Fixation Only";
-            this._checkBoxFixationOnly.UseVisualStyleBackColor = true;
-            this._checkBoxFixationOnly.CheckedChanged += new System.EventHandler(this._fixationOnlyCheckBox_CheckedChanged);
-            // 
-            // _checkBoxEnableGoCue
-            // 
-            this._checkBoxEnableGoCue.AutoSize = true;
-            this._checkBoxEnableGoCue.Location = new System.Drawing.Point(101, 19);
-            this._checkBoxEnableGoCue.Name = "_checkBoxEnableGoCue";
-            this._checkBoxEnableGoCue.Size = new System.Drawing.Size(62, 17);
-            this._checkBoxEnableGoCue.TabIndex = 15;
-            this._checkBoxEnableGoCue.Text = "Go Cue";
-            this._checkBoxEnableGoCue.UseVisualStyleBackColor = true;
-            this._checkBoxEnableGoCue.CheckedChanged += new System.EventHandler(this._tbEnableGoClueSound_CheckedChanged);
             // 
             // _checkboxErrorSoundOn
             // 
@@ -543,30 +511,6 @@
             this._groupboxGoCue.TabIndex = 20;
             this._groupboxGoCue.TabStop = false;
             this._groupboxGoCue.Text = "GoCue";
-            // 
-            // _radiobuttonGoCueCorrectSide
-            // 
-            this._radiobuttonGoCueCorrectSide.AutoSize = true;
-            this._radiobuttonGoCueCorrectSide.Location = new System.Drawing.Point(7, 31);
-            this._radiobuttonGoCueCorrectSide.Name = "_radiobuttonGoCueCorrectSide";
-            this._radiobuttonGoCueCorrectSide.Size = new System.Drawing.Size(83, 17);
-            this._radiobuttonGoCueCorrectSide.TabIndex = 1;
-            this._radiobuttonGoCueCorrectSide.TabStop = true;
-            this._radiobuttonGoCueCorrectSide.Text = "Correct Side";
-            this._radiobuttonGoCueCorrectSide.UseVisualStyleBackColor = true;
-            this._radiobuttonGoCueCorrectSide.CheckedChanged += new System.EventHandler(this._radiobuttonGoCueCorrectSide_CheckedChanged);
-            // 
-            // _radiobuttonGoCueBothSide
-            // 
-            this._radiobuttonGoCueBothSide.AutoSize = true;
-            this._radiobuttonGoCueBothSide.Location = new System.Drawing.Point(7, 14);
-            this._radiobuttonGoCueBothSide.Name = "_radiobuttonGoCueBothSide";
-            this._radiobuttonGoCueBothSide.Size = new System.Drawing.Size(71, 17);
-            this._radiobuttonGoCueBothSide.TabIndex = 0;
-            this._radiobuttonGoCueBothSide.TabStop = true;
-            this._radiobuttonGoCueBothSide.Text = "Both Side";
-            this._radiobuttonGoCueBothSide.UseVisualStyleBackColor = true;
-            this._radiobuttonGoCueBothSide.CheckedChanged += new System.EventHandler(this._radiobuttonGoCueBothSide_CheckedChanged);
             // 
             // GuiInterface
             // 
@@ -672,7 +616,6 @@
         private System.Windows.Forms.Button _btnPause;
         private System.Windows.Forms.Button _btnPark;
         private System.Windows.Forms.Button _btnEnagae;
-        //private System.Windows.Forms.CheckBox _checkboxSecondResponseChance;
         //private System.Windows.Forms.ComboBox _comboBoxStudentName;
         //private System.Windows.Forms.GroupBox _groupboxHandsSounds;
         private System.Windows.Forms.Button _btnBreakFixationSound;

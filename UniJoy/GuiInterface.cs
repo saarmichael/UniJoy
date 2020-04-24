@@ -617,10 +617,6 @@ namespace UniJoy
             //_ledController.CloseConnection();
             //_ledController2.CloseConnection();
 
-            //TODO: Do I need this?
-            //turn off the InfraRed.
-            //_infraredController.WriteEvent(true, InfraRedStatus.TurnedOff);
-
             //stop the control loop.
             if (_cntrlLoop != null)
             {
@@ -1705,38 +1701,13 @@ namespace UniJoy
 
         #region AUTOS
         /// <summary>
-        /// Event for changing the AutoReward status.
-        /// </summary>
-        /// <param name="sender">The checkbox.</param>
-        /// <param name="e">The param.</param>
-        //private void _autoRewardsTextBox_CheckedChanged(object sender, EventArgs e)
-        //{
-            /*if (_checkBoxAutoChoice.Checked)
-                _cntrlLoop.AutoReward = true;
-            else*/
-                //_cntrlLoop.AutoReward = false;
-        //}
-
-        /// <summary>
-        /// Event for changing the AutoFixation status.
-        /// </summary>
-        /// <param name="sender">The checkbox.</param>
-        /// <param name="e">The param.</param>
-        private void _autoFixation_CheckedChanged(object sender, EventArgs e)
-        {
-            /*if (_checkBoxAutoFixation.Checked)
-                _cntrlLoop.AutoFixation = true;
-            else*/
-                _cntrlLoop.AutoFixation = false;
-        }
-
-        /// <summary>
         /// Event for changing the AutoStart status.
         /// </summary>
         /// <param name="sender">The checkbox.</param>
         /// <param name="e">The param.</param>
         private void _autoStartcheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            //todo::we need to activate it again.
             /*if (_checkBoxAutoStart.Checked)
                 _cntrlLoop.AutoStart = true;
             else*/
@@ -1745,31 +1716,6 @@ namespace UniJoy
         #endregion AUTOS
 
         #region MODES
-        /// <summary>
-        /// Event for changing the mode of the experiment.
-        /// </summary>
-        /// <param name="sender">The checkbox.</param>
-        /// <param name="e">The param.</param>
-        private void _fixationOnlyCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_checkBoxFixationOnly.Checked)
-                _cntrlLoop.FixationOnlyMode = true;
-            else
-                _cntrlLoop.FixationOnlyMode = false;
-        }
-
-        /// <summary>
-        /// Event for turnning on/off the sound of the fixation break ahhhhhhh.
-        /// </summary>
-        /// <param name="sender">The checkbox.</param>
-        /// <param name="e">The param.</param>
-        private void _breakFixationSoundEnableCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_checkBoxBreakFixationSoundEnable.Checked)
-                _cntrlLoop.EnableFixationBreakSound = true;
-            else
-                _cntrlLoop.EnableFixationBreakSound = false;
-        }
 
         /// <summary>
         /// Handler for event turnning on/off the SoundOn for error choice.
@@ -1779,47 +1725,6 @@ namespace UniJoy
         private void _checkboxErrorSoundOn_CheckedChanged(object sender, EventArgs e)
         {
             _cntrlLoop.EnableErrorSound = (sender as CheckBox).Checked;
-        }
-
-        /// <summary>
-        /// Handler for event turnning on/off the clue the rat get afet first reward.
-        /// </summary>
-        /// <param name="sender">The sender checkbox.</param>
-        /// <param name="e">The args.</param>
-        private void _tbEnableGoClueSound_CheckedChanged(object sender, EventArgs e)
-        {
-            _cntrlLoop.EnableGoCueSound = (sender as CheckBox).Checked;
-
-            if ((sender as CheckBox).Checked)
-            {
-                _radiobuttonGoCueBothSide.Enabled = true;
-                _radiobuttonGoCueCorrectSide.Enabled = true;
-            }
-            else
-            {
-                _radiobuttonGoCueBothSide.Enabled = false;
-                _radiobuttonGoCueCorrectSide.Enabled = false;
-            }
-        }
-
-        /// <summary>
-        /// Handler for event turnning on/off the clue both side option the rat get afet first reward.
-        /// </summary>
-        /// <param name="sender">The sender checkbox.</param>
-        /// <param name="e">The args.</param>
-        private void _radiobuttonGoCueBothSide_CheckedChanged(object sender, EventArgs e)
-        {
-            _cntrlLoop.EnableCueSoundInBothSide = (sender as RadioButton).Checked;
-        }
-
-        /// <summary>
-        /// Handler for event turnning on/off the clue correct side option the rat get afet first reward.
-        /// </summary>
-        /// <param name="sender">The sender checkbox.</param>
-        /// <param name="e">The args.</param>
-        private void _radiobuttonGoCueCorrectSide_CheckedChanged(object sender, EventArgs e)
-        {
-            _cntrlLoop.EnableCueSoundCorrectSide = (sender as RadioButton).Checked;
         }
 
         /// <summary>
@@ -1833,16 +1738,6 @@ namespace UniJoy
 
             //make the textboxes for all pairs of right and left to be the same (disable the right textboxes and make thier values the same as the left textboxes).
             UpdateRightTextBoxesAvailability((sender as CheckBox).Checked);
-        }
-
-        /// <summary>
-        /// Handles a changed in the state of RRDelta,
-        /// </summary>
-        /// <param name="sender">The checkbox.</param>
-        /// <param name="e">Args.</param>
-        private void _checkbixRRDelta_CheckedChanged(object sender, EventArgs e)
-        {
-            _cntrlLoop.EnableRRDelta = (sender as CheckBox).Checked;
         }
 
         /// <summary>

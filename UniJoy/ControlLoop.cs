@@ -46,6 +46,7 @@ namespace UniJoy
         /// <summary>
         /// The trajectory creator interface for making the trajectory for each trial.
         /// </summary>
+        //todo::why no references?? needed?
         private ITrajectoryCreator _trajectoryCreator;
 
         /// <summary>
@@ -151,29 +152,17 @@ namespace UniJoy
         /// </summary>
         private Random _timingRandomizer;
 
-        //TODO: do I need this?
-        /// <summary>
-        /// The robot reward controller.
-        /// </summary>
-        //private RewardController _rewardController;
-
-        //TODO: do I need this?
+        //todo::replcae this controller with the responsebox/joystick.
         /// <summary>
         /// Controller for the rat Noldus responses.
         /// </summary>
         //private RatResponseController _ratResponseController;
 
-        //TODO: do I need this?
+        //todo::replace that with EEG controller.
         /// <summary>
         /// Controller for writing events for the AlphaOmega.
         /// </summary>
         //private AlphaOmegaEventsWriter _alphaOmegaEventsWriter;
-
-        //TODO: do I need this?
-        /// <summary>
-        /// Infra red controller for turnnig the InfraRed on/off.
-        /// </summary>
-        //private InfraRedController _infraredController;
 
         /// <summary>
         /// Indicated if the control loop should not make another trials.
@@ -201,11 +190,6 @@ namespace UniJoy
         private Stopwatch _controlLoopTrialTimer;
 
         /// <summary>
-        /// A stopwatch for total time of handreward time counter.
-        /// </summary>
-        private Stopwatch _handRewardTotalTimer;
-
-        /// <summary>
         /// A dictionary include a key for the ecvent name and a double for the time of the event since the start of the trial. Each trial the dictionary cleared.
         /// </summary>
         private Dictionary<string, double> _trialEventRealTiming;
@@ -220,11 +204,6 @@ namespace UniJoy
         /// The rat decision about the current trial stimulus direction.
         /// </summary>
         private RatDecison _currentRatDecision;
-
-        /// <summary>
-        /// Indicates if the rat decision should be inverse to the heading due to the random heading direction region.
-        /// </summary>
-        private bool _inverseRRDecision;
 
         /// <summary>
         /// The decision the rat should choose.
@@ -251,42 +230,13 @@ namespace UniJoy
         /// </summary>
         public int NumOfStickOn { get; set; }
 
-        /// <summary>
-        /// The percentage number of turned on LEDS.
-        /// </summary>
-        public double PercentageOfTurnedOnLeds { get; set; }
-
-        /// <summary>
-        /// The LEDs brightness value (0-31).
-        /// </summary>
-        public int LEDBrightness { get; set; }
-
-        /// <summary>
-        /// The red color value for the leds.
-        /// </summary>
-        public int LEDcolorRed { get; set; }
-
-        /// <summary>
-        /// The green color value for the leds.
-        /// </summary>
-        public int LEDcolorGreen { get; set; }
-
-        /// <summary>
-        /// The blue color value for the leds.
-        /// </summary>
-        public int LEDcolorBlue { get; set; }
-
         public bool IsMoogConnected { get; set; }
 
+        //todo::check if needed for the response box
         /// <summary>
         /// Timer for raising event to sample the Noldus reponse direction and store it in _currentRatResponse.
         /// </summary>
         private System.Timers.Timer _ratSampleResponseTimer;
-
-        /// <summary>
-        /// Timer for raising event for counting the water the rat have rewarded so far.
-        /// </summary>
-        private System.Timers.Timer _waterRewardFillingTimer;
 
         /// <summary>
         /// The SavedDataMaker object to create new result file for each experiment.
@@ -309,62 +259,16 @@ namespace UniJoy
         private Task _robotMotionTask;
 
         /// <summary>
-        /// Indictaed wether giving a second reward automatically in the direction side of the stimulus type.
-        /// </summary>
-        public bool AutoReward { get; set; }
-
-        /// <summary>
         /// Indicated if whether to wait for a rat to enter it's head to the center automatically skiping this step.
         /// </summary>
         public bool AutoStart { get; set; }
-
-        /// <summary>
-        /// Indicated if to check the fixation during the duration time or to skip that stage.k
-        /// </summary>
-        public bool AutoFixation { get; set; }
-
-        /// <summary>
-        /// Indicated if to sound a media during the reward with the same direction.
-        /// </summary>
-        public bool CenterRewardSound { get; set; }
-
-        public bool SideRewardSound { get; set; }
-
-        /// <summary>
-        /// Indicates if the mode of the trial is only untill the fixation stage (include).
-        /// </summary>
-        public bool FixationOnlyMode { get; set; }
-
-        /// <summary>
-        /// Indicates if to enable fixation break sound.
-        /// </summary>
-        public bool EnableFixationBreakSound { get; set; }
 
         /// <summary>
         /// Indicates whethear to enable error sound for a wrong choice.
         /// </summary>
         public bool EnableErrorSound { get; set; }
 
-        /// <summary>
-        /// Indicates if to enable clue sound in both sides.
-        /// </summary>
-        public bool EnableCueSoundInBothSide { get; set; }
-
-        /// <summary>
-        /// Indicates if to enable clue sound only in the correct side.
-        /// </summary>
-        public bool EnableCueSoundCorrectSide { get; set; }
-
-        /// <summary>
-        /// Indicates if to enable clue sound (can be one of the both sided or correct side option).
-        /// </summary>
-        public bool EnableGoCueSound { get; set; }
-
-        /// <summary>
-        /// Indicates if to enable random correct answer in delta's protocols while the stimulus direction's are inversed in the sign.
-        /// </summary>
-        public bool EnableRRDelta { get; set; }
-
+        //todo::wtf it is??
         /// <summary>
         /// Indicates if to enable that right parameters values and left parameters values must be equals.
         /// </summary>
@@ -386,11 +290,6 @@ namespace UniJoy
         public SoundsMode _soundsMode { get; set; }
 
         /// <summary>
-        /// Indicated if to give the rat a second response chance if it wrong anser at the first time (but not include no answer).
-        /// </summary>
-        public bool SecondResponseChance { get; set; }
-
-        /// <summary>
         /// Dictionary represent a sound name and it's file path.
         /// </summary>
         private Dictionary<string, string> _soundPlayerPathDB;
@@ -401,8 +300,12 @@ namespace UniJoy
         private WindowsMediaPlayer _windowsMediaPlayer;
 
         //Maayan Edit
+        //todo::there is the rat sample or something like that...
         private IUserInputController _remoteController;
 
+        /// <summary>
+        /// The UnityEngine command interface to send commands with.
+        /// </summary>
         private UnityCommandsSender _unityCommandsSender;
 
         #endregion ATTRIBUTES
@@ -430,37 +333,19 @@ namespace UniJoy
             /*_rewardController = new RewardController("Dev1", "Port1", "Line0:2", "RewardChannels");
             _ratResponseController = new RatResponseController("Dev1", "Port0", "Line0:2", "RatResponseChannels");
             _alphaOmegaEventsWriter = new AlphaOmegaEventsWriter("Dev1", "Port0", "Line3:7", "AlphaOmegaEventsChannels", "Port1", "Line3", "AlphaOmegaStrobeChannel", _logger);
-            _infraredController = infraRedController;*/
+            */
 
             _stopAfterTheEndOfTheCurrentTrial = false;
 
             //configure  rge timer for the sampling Noldus rat response direction.
             _ratSampleResponseTimer = new System.Timers.Timer(Properties.Settings.Default.NoldusRatReponseSampleRate);
+            //todo::this line should be commented, check if can beautify.
             //_ratSampleResponseTimer.Elapsed += SetRatReponse;
 
-            //configure the water filling timer for the water reward estimation interactive window.
-            _waterRewardFillingTimer = new System.Timers.Timer();
-            _waterRewardFillingTimer.Interval = 100;
-            _waterRewardFillingTimer.Elapsed += WaterRewardFillingTimer_Tick;
-
-            //TODO: Do I need this?
-            //take the motoman controller object.
-            //_motomanController = motomanController;
-
-            //TODO: Do I need this?
-            //take the led controller object.
-            //_ledControllerRight = ledController;
-            //_ledControllerLeft = ledController2;
-            //initialize the leds index selector.
-            //_ledSelectorRight = new LedsSelector(150, 10);
-            //_ledSelectorLeft = new LedsSelector(150, 10);
 
             //init the trial events details.
             _trialEventRealTiming = new Dictionary<string, double>();
             _controlLoopTrialTimer = new Stopwatch();
-
-            //init the hand reward stopwatch time account.
-            _handRewardTotalTimer = new Stopwatch();
 
             //initialize the savedDataMaker object once.
             _savedExperimentDataMaker = new SavedDataMaker();
@@ -531,9 +416,6 @@ namespace UniJoy
             _stickOnNumberIndex = NumOfStickOn;
 
             _timingRandomizer = new Random();
-
-            //reset the experiement total reward stopwatch accounting.
-            _handRewardTotalTimer.Reset();
 
             //set the trajectory creator name to the given one that should be called in the trajectoryCreatorHandler.
             //also , set the other properties.
@@ -663,9 +545,6 @@ namespace UniJoy
                         //if the subject pressed the start button before timeOut time.
                         if (subjectPressedStartButtonDuringTheTimeoutDuration)
                         {
-                            //TODO:DELETE THE CONDITION
-                            //if the rat head was stable in the center for the startDelay time as required start the movement.
-                            //if (duration1HeadInTheCenterStabilityStage = CheckDuration1HeadInTheCenterStabilityStage())
                             {
                                 //update the state of the rat decision.
                                 _currentRatDecision = RatDecison.DurationTime;
@@ -677,26 +556,9 @@ namespace UniJoy
                                     _totalHeadStabilityInCenterDuringDurationTime++;
                                     _currentRatDecision = RatDecison.PassDurationTime;
 
-                                    //reward the rat in the center with water for duration of rewardCenterDuration for stable head in the center during the movement.
-                                    RewardCenterStage(AutoReward, CenterRewardSound);
-
-                                    //if not to skip all stages after the fixation stage.
-                                    //if (!FixationOnlyMode)
                                     {
                                         //wait the rat to response to the movement during the response time.
                                         Tuple<RatDecison, bool> decision = ResponseTimeStage();
-
-                                        //second reward stage (condition if needed in the stage) with false for second chance response.
-                                        SecondRewardStage(decision, AutoReward, false);
-
-                                        //if second oppertunity for choice after wrong choice is available.
-                                        if (SecondResponseChance && !AutoReward && !decision.Item1.Equals(RatDecison.NoDecision) && decision.Item2 == false)
-                                        {
-                                            Tuple<RatDecison, bool> secondDecision = SecondChanceResponseTimeStage();
-
-                                            //second reward stage with flag indicate that it was a second chance.
-                                            SecondRewardStage(secondDecision, AutoReward, true);
-                                        }
                                     }
                                 }
 
@@ -707,12 +569,13 @@ namespace UniJoy
                                     _totalHeadFixationBreaks++;
                                 }
 
-                                //Maayan - Do I need this?
+                                //todo::check if this use is needed.
                                 //after the end of rewrad wait a time delay before backword movement to the home poistion.
                                 //RewardToBackwardDelayStage();
                             }
                         }
 
+                        //todo::need to uncomment it no?
                         //sounds the beep with the missing start gead in the center.
                         else
                         {
@@ -851,27 +714,10 @@ namespace UniJoy
             //send the data to the UnityEngine
             SendTrialMetaDataToUnityEngine();
 
-            //TODO:DELETE
-            /* Task sendDataToRobotTask = new Task(() =>
-             {
-                 SendDataToRobots();
-             });*/
-
-            //TODO:DELETE
-            /*Task SendDataToLedControllersTask = new Task(() =>
-            {
-                SendDataToLedControllers();
-            });*/
-
             Task preTrialWaitingTask = new Task(() =>
             {
                 Thread.Sleep((int)(1000 * _currentTrialTimings.wPreTrialTime));
             });
-
-            //TODO:DELETE
-            //sendDataToRobotTask.Start();
-            //TODO:DELETE
-            //SendDataToLedControllersTask.Start();
 
             preTrialWaitingTask.Start();
 
@@ -889,75 +735,6 @@ namespace UniJoy
             ShowTrialDetailsToTheDetailsListView();
             //show the global experiment details for global experiment details.
             ShowGlobalExperimentDetailsListView();
-        }
-
-        /// <summary>
-        /// A stage the rat gets a clue where the correct answer is.
-        /// </summary>
-        public void CueSoundPlayer()
-        {
-            //todo:add all this logic in if statement for the sound should play.
-            _logger.Info("CueSoundPlayer begin. EnableCueSoundInBothSide = " + (EnableCueSoundInBothSide & EnableGoCueSound) +
-                         ";EnableCueSoundCorrectSide" + (EnableCueSoundCorrectSide & EnableGoCueSound) + ".");
-
-#if UPDATE_GLOBAL_DETAILS_LIST_VIEW
-            //update the global details listview with the current stage.
-            _mainGuiInterfaceControlsDictionary["UpdateGlobalExperimentDetailsListView"].BeginInvoke(
-                _mainGuiControlsDelegatesDictionary["UpdateGlobalExperimentDetailsListView"], "Current Stage",
-                "Clue Stage");
-#endif
-
-            //todo:check if it should be here and not outside this function - because the correct answer shoule not determine in this function especailly.
-            //determine the current trial correct answer.
-            DetermineCurrentStimulusAnswer();
-
-            //updates special modes according to the real time values.
-            _soundsMode.EnableGoCueSound = EnableGoCueSound;
-            _soundsMode.EnableCueSoundInBothSide = EnableCueSoundInBothSide;
-            _soundsMode.EnableCueSoundInCorrectSide = EnableCueSoundCorrectSide;
-
-            if (EnableGoCueSound)
-            {
-                //TODO: Do I need this?
-                //write the go cue event to the AlphaOmega system.
-                //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.GoCueSound);
-                _trialEventRealTiming.Add("GoCueSound", _controlLoopTrialTimer.ElapsedMilliseconds);
-
-                //make the sound.
-                if (EnableCueSoundInBothSide)
-                {
-                    _logger.Info("Start playing EnableCueSoundInBothSide");
-
-                    _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding"];
-                    _windowsMediaPlayer.controls.play();
-
-                    _logger.Info("End playing EnableCueSoundInBothSide");
-                }
-                else if (EnableCueSoundCorrectSide)
-                {
-                    if (_correctDecision.Equals(RatDecison.Right))
-                    {
-                        _logger.Info("Start playing EnableCueSoundCorrectSide - Right");
-
-                        _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding-Right"];
-                        _windowsMediaPlayer.controls.play();
-
-                        _logger.Info("End playing EnableCueSoundInBothSide");
-                    }
-
-                    else if (_correctDecision.Equals(RatDecison.Left))
-                    {
-                        _logger.Info("Start playing EnableCueSoundCorrectSide - Left");
-
-                        _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding-Left"];
-                        _windowsMediaPlayer.controls.play();
-
-                        _logger.Info("End playing EnableCueSoundInBothSide");
-                    }
-                }
-            }
-
-            _logger.Info("CueSoundPlayer ended.");
         }
 
         /// <summary>
@@ -984,10 +761,7 @@ namespace UniJoy
             //get the current stimulus direction.
             double currentHeadingDirection = double.Parse(GetVariableValue("HEADING_DIRECTION"));
 
-
-            //make the sound of the clue (after that in the reward stage it was with the ckue sound delay - paralleled).
-            //make it parallel to the response time duration.
-            Task.Run(() => CueSoundPlayer());
+            DetermineCurrentStimulusAnswer();
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -1042,14 +816,9 @@ namespace UniJoy
                             _logger.Info("End playing error sound");
                         });
 
-                        //todo: ask adam about this.
-                        //don't make sound if it is auto reward because the rat dont need to choose.
-                        if (!AutoReward)
-                        {
-                            //TODO: Do I need this?
-                            //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.AudioWrong);
-                            _trialEventRealTiming.Add("AudioWrong", _controlLoopTrialTimer.ElapsedMilliseconds);
-                        }
+                        //todo:: add a.o event?
+                        //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.AudioWrong);
+                        _trialEventRealTiming.Add("AudioWrong", _controlLoopTrialTimer.ElapsedMilliseconds);
 
                         _soundsMode.ErrorChoiceSoundOn = true;
                     }
@@ -1108,14 +877,9 @@ namespace UniJoy
                             _logger.Info("End playing wrong answer");
                         });
 
-                        //todo: ask adam about this.
-                        //don't make sound if it is auto reward because the rat dont need to choose.
-                        if (!AutoReward)
-                        {
-                            //TODO: Do I need this?
-                            //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.AudioWrong);
-                            _trialEventRealTiming.Add("AudioWrong", _controlLoopTrialTimer.ElapsedMilliseconds);
-                        }
+                        //todo::add a.o event
+                        //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.AudioWrong);
+                        _trialEventRealTiming.Add("AudioWrong", _controlLoopTrialTimer.ElapsedMilliseconds);
 
                         _soundsMode.ErrorChoiceSoundOn = true;
                     }
@@ -1134,245 +898,6 @@ namespace UniJoy
             _logger.Info("ResponseTimeStage ended. RatDecison = RatDecison.NoDecision; Correct = False.");
             _currentRatDecision = RatDecison.NoDecision;
             return new Tuple<RatDecison, bool>(RatDecison.NoDecision, false);
-        }
-
-        /// <summary>
-        /// Waiting the rat to second chance response the movement direction with no updating the _totalCorrectAnswers counter and the result psycho graph.
-        /// <returns>The rat decision value and it's correctness.</returns>
-        /// </summary>
-        public Tuple<RatDecison, bool> SecondChanceResponseTimeStage()
-        {
-            //Thread.Sleep(1000*(int)(_currentTrialTimings.wResponseTime));
-
-#if UPDATE_GLOBAL_DETAILS_LIST_VIEW
-            //update the global details listview with the current stage.
-            _mainGuiInterfaceControlsDictionary["UpdateGlobalExperimentDetailsListView"].BeginInvoke(
-            _mainGuiControlsDelegatesDictionary["UpdateGlobalExperimentDetailsListView"], "Current Stage", "Waiting for Second Chance Response");
-#endif
-
-            //save the second chance response is on.
-            _specialModesInRealTime.SecondChoice = true;
-
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            //time to wait for the moving rat response. if decided about a side so break and return the decision and update the _totalCorrectAnsers.
-            while (sw.ElapsedMilliseconds < (int)(1000 * _currentTrialTimings.wResponseTime))
-            {
-                if (_currentRatResponse == (byte)_correctDecision)
-                {
-                    //write the event that te rat enter it's head to the left to the AlphaOmega.
-                    if (_correctDecision == RatDecison.Left)
-                    {
-                        //TODO: Do I need this?
-                        //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.HeadEnterLeftSecondChance);
-
-                        //add the 2nd response real time to the real times dictionary.
-                        _trialEventRealTiming.Add("RatSecondDecision", _controlLoopTrialTimer.ElapsedMilliseconds);
-
-                        return new Tuple<RatDecison, bool>(RatDecison.Left, true);
-                    }
-                    else
-                    {
-                        //TODO: Do I need this?
-                        //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.HeadEnterRightSecondChance);
-
-                        //add the 2nd response real time to the real times dictionary.
-                        _trialEventRealTiming.Add("RatSecondDecision", _controlLoopTrialTimer.ElapsedMilliseconds);
-
-                        return new Tuple<RatDecison, bool>(RatDecison.Right, true);
-                    }
-                }
-            }
-
-            //if no decision or no error correction.
-            _currentRatDecision = RatDecison.NoDecision;
-
-            return new Tuple<RatDecison, bool>(RatDecison.NoDecision, false);
-        }
-
-        /// <summary>
-        /// Reward water to the rat in the given position with during the given time long.
-        /// </summary>
-        /// <param name="position">The cellenoid position side to be opened.</param>
-        /// <param name="rewardDuration">The duration the selected cellenoid eould be opened.</param>
-        /// <param name="rewardDelay">The delay time before opening the selected cellenoid.</param>
-        /// <param name="autoreward">Indecition if to give the reward with no delay.</param>
-        /// <param name="autoRewardSound">Indication if to give the auto reward sound during the reward.</param>
-        /// <param name="responseReward">Indicates if the reward is due to a response or due to the center stability stage.</param>
-        public void Reward(RewardPosition position, double rewardDuration, double rewardDelay, bool autoreward = false, bool autoRewardSound = false, bool responseReward = false)
-        {
-            //if autoReward than play the sound in the slected side of the water reward in order to help the rat to understand the water reward side.
-            _autosOptionsInRealTime.AutoRewardSound = autoRewardSound;
-            if (autoRewardSound)
-            {
-                Task.Run(() =>
-                {
-                    _logger.Info("Start getting the reward position sound.");
-
-                    //play the selected reward side mono sound.
-                    switch (position)
-                    {
-                        case RewardPosition.Center:
-                            //TODO: Do I need this?
-                            //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.CenterRewardSound);
-                            _trialEventRealTiming.Add("CenterRewardSound", _controlLoopTrialTimer.ElapsedMilliseconds);
-                            _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding"];
-                            _windowsMediaPlayer.controls.play();
-                            break;
-                        case RewardPosition.Left:
-                            //TODO: Do I need this?
-                            //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.SideRewardSound);
-                            _trialEventRealTiming.Add("SideRewardSound", _controlLoopTrialTimer.ElapsedMilliseconds);
-                            _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding-Left"];
-                            _windowsMediaPlayer.controls.play();
-                            break;
-                        case RewardPosition.Right:
-                            //TODO: Do I need this?
-                            //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.SideRewardSound);
-                            _trialEventRealTiming.Add("SideRewardSound", _controlLoopTrialTimer.ElapsedMilliseconds);
-                            _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding-Right"];
-                            _windowsMediaPlayer.controls.play();
-                            break;
-                        default:
-                            break;
-                    }
-
-                    _logger.Info("End getting the reward position sound.");
-                });
-            }
-
-            //wait the reward delay time.
-            Thread.Sleep((int)(rewardDelay * 1000));
-
-            //if 0 dont even open the reward tupple.
-            Task rewardTask = Task.Factory.StartNew(() =>
-            {
-                if (rewardDuration > 0)
-                {
-                    //open the center reward for the rat to be rewarded.
-                    //after the reward duration time and than close it.
-                    _logger.Info("Opening the water tupple");
-
-                    //TODO: Do I need this?
-                    //_rewardController.WriteSingleSamplePort(true, (byte)position);
-
-                    //send the alpha omega that a reward is given.
-                    SendAlphaOmegaRewardEvent(position);
-
-                    //wait the reward time and fill the interactive water fill estimation panel.
-                    _logger.Info("Start updating interactive water filling window");
-                    _waterRewardFillingTimer.Start();
-                    Thread.Sleep((int)(rewardDuration * 1000));
-                    _waterRewardFillingTimer.Stop();
-                    _logger.Info("End updating interactive water filling window");
-
-                    //close again the reward port.
-                    _logger.Info("Closing the water tupple");
-                    //TODO: Do I need this?
-                    //_rewardController.WriteSingleSamplePort(true, 0x00);
-                }
-            });
-
-            Task clueDelayTask = null;
-            //if the reward is due to the center stability stage - add clue if needed. Else, if it is due to response stage , don't add clue.
-            if (!responseReward)
-            {
-                clueDelayTask = Task.Factory.StartNew(() =>
-                {
-                    if (!EnableGoCueSound) return;
-                    if (!EnableCueSoundCorrectSide && !EnableCueSoundInBothSide) return;
-                    //give the cue only if it is a cebter reward
-                    if (!position.Equals(RewardPosition.Center)) return;
-                    //and only if it is not a fixation only trial.
-                    //TODO: Maayan - Do I need wClueDelay parameter?
-                    /*if (!FixationOnlyMode)
-                    {
-                        Thread.Sleep((int)(1000 * _currentTrialTimings.wClueDelay));
-                    }*/
-                });
-            }
-
-            if (!responseReward)
-            {
-                clueDelayTask.Wait();
-            }
-            rewardTask.Wait();
-        }
-
-        /// <summary>
-        /// Second reward stage according to the rat response for the stimulus direction.
-        /// </summary>
-        /// <param name="decision">The rat decision about the stimulus direction and if correct or not.</param>
-        /// <param name="autoReward">Indicated if to give reward automatically in the motion side of the stimulus direction.</param>
-        /// <param name="secondChance">Indicates if it was a second chance response.</param>
-        public void SecondRewardStage(Tuple<RatDecison, bool> decision, bool autoReward = false, bool secondChance = false)
-        {
-            _logger.Info("SecondRewardStage begin. AutoReward = " + AutoReward + "; SecondChance =" + secondChance + ".");
-
-            //check if the decision was correct and reward the rat according that decision.
-            if (decision.Item2)
-            {
-                //reward the choosen side cellenoid.
-                switch (decision.Item1)
-                {
-                    case RatDecison.Center:
-                        RewardCenterStage(false, CenterRewardSound, secondChance, true);
-                        break;
-                    case RatDecison.Left:
-                        RewardLeftStage(false, SideRewardSound, secondChance, true);
-                        break;
-                    case RatDecison.Right:
-                        RewardRightStage(false, SideRewardSound, secondChance, true);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            //if to give reward no matter whether the response was correct or not.
-            else if (AutoReward)
-            {
-                //get the current stimulus direction.
-                double currentHeadingDirection = double.Parse(GetVariableValue("HEADING_DIRECTION"));
-
-                //determine the current stimulus direaction.
-                RatDecison currentStimulationSide = (currentHeadingDirection == 0) ? (RatDecison.Center) : ((currentHeadingDirection > 0) ? (RatDecison.Right) : RatDecison.Left);
-
-                //make the rat decision be correct answer.
-                _currentRatDecision = _correctDecision;
-
-                //give the reward according to the robot direction motion with no delay.
-                switch (_correctDecision)
-                {
-                    case RatDecison.Center:
-                        //RewardCenterStage(true , AutoRewardSound);
-                        //make the reward randomly chosen right or left.
-                        if (_inverseRRDecision)
-                        {
-
-                        }
-                        break;
-
-                    case RatDecison.Left:
-                        RewardLeftStage(true, SideRewardSound, false, true);
-                        break;
-
-                    case RatDecison.Right:
-                        RewardRightStage(true, SideRewardSound, false, true);
-                        break;
-
-                    default:
-                        break;
-                }
-
-                //save the auto reward option true.
-                _autosOptionsInRealTime.AutoReward = true;
-            }
-
-            _autosOptionsInRealTime.AutoReward = autoReward;
-
-            _logger.Info("SecondRewardStage ended.");
         }
 
         /// <summary>
@@ -1630,72 +1155,7 @@ namespace UniJoy
             //TODO:DELETE
             //_logger.Info("End MovingTheRobotDurationWithHeadCenterStabilityStage with AutoFixation = " + AutoFixation + ".");
             //return the true state of the heading in the center stability during the duration time or always true when AutoFixation.
-            return headInCenterAllTheTime || AutoFixation;
-        }
-
-        /// <summary>
-        /// Stage to check (after the rat enter the head to the center) that the head is stable in the center for startDelay time.
-        /// </summary>
-        /// <returns></returns>
-        public bool CheckDuration1HeadInTheCenterStabilityStage()
-        {
-            _logger.Info("Head in the center stability stage is begin.");
-
-            //waits the startdelay time before starting the motion of the robot for the rat to ensure stability with head in the center.
-            //reset the stopwatch for new measurement time cycle of startDelay.
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            //check if the head is stable in the center during the startDelay time (before starting the movement).
-            while (sw.ElapsedMilliseconds < (int)(_currentTrialTimings.wStartDelay * 1000))
-            {
-                //todo: add this block in a function called CheckBreakFixation() and also add this function in the block of function MovingTheRobotDurationWithHeadCenterStabilityStage instead the block inside this function.
-                //if AutoFixation no need to check that.
-                if (!AutoFixation)
-                {
-                    //sample the signal indicating if the rat head is in the center only 60 time per second (because the refresh rate of the signal is that frequency).
-                    Thread.Sleep((int)(Properties.Settings.Default.NoldusRatReponseSampleRate));
-
-                    //if the head sample mentioned that the head was not in the center during the startDelay time , break , and move to the post trial time.
-                    if (_currentRatResponse != 2)
-                    {
-                        _logger.Info("Breaking head fixation during the stability stage occured.");
-
-
-                        if (EnableFixationBreakSound)
-                        //sound the break fixation sound - aaaahhhh sound.
-                        {
-                            Task.Run(() =>
-                            {
-                                _logger.Info("Start playing the missing answer sound");
-
-                                _windowsMediaPlayer.URL = _soundPlayerPathDB["MissingAnswer"];
-                                _windowsMediaPlayer.controls.play();
-
-                                _logger.Info("End playing the missing answer sound");
-                            });
-                        }
-
-                        //save the state of the enable fixation break sound on.
-                        _soundsMode.BreakFixationSoundOn = EnableFixationBreakSound;
-                        _autosOptionsInRealTime.AutoFixation = AutoFixation;
-
-                        //write the break fixation event to the AlphaOmega.
-                        //TODO: Do I need this?
-                        //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.HeadStabilityBreak);
-                        _trialEventRealTiming.Add("HeadStabilityBreak", _controlLoopTrialTimer.ElapsedMilliseconds);
-
-                        //increase the head fixation breaks in start delay counter.
-                        _totalHeadFixationBreaksStartDelay++;
-
-                        return false;
-                    }
-                }
-            }
-
-            _logger.Info("Heading stability stage successfull with AutoFixation = " + AutoFixation + ".");
-
-            return true;
+            return headInCenterAllTheTime;
         }
 
         /// <summary>
@@ -1813,22 +1273,18 @@ namespace UniJoy
                 });
             }
 
+            //todo::what is that magi number??
             Thread.Sleep(5000);
 
-            //save the fixation only mode
-            _specialModesInRealTime.FixationOnly = FixationOnlyMode;
-
             bool trialSucceed = true;
-            //if no answer in the response time or not even coming to tge response time.
-            if (!FixationOnlyMode && !(_currentRatDecision.Equals(RatDecison.Left) || _currentRatDecision.Equals(RatDecison.Right)))
-                //reset status of the current trial combination index if there was no reponse stage at all.
-                //_varyingIndexSelector.ResetTrialStatus(_currentVaryingTrialIndex);
-                trialSucceed = false;
 
-            if (FixationOnlyMode && !_currentRatDecision.Equals(RatDecison.PassDurationTime))
+            if (!_currentRatDecision.Equals(RatDecison.PassDurationTime))
+            {
                 //reset status of the current trial combination index if there was no reponse stage at all.
-                //_varyingIndexSelector.ResetTrialStatus(_currentVaryingTrialIndex);
+                //todo::check if ResetTrialStatus
+                _varyingIndexSelector.ResetTrialStatus(_currentVaryingTrialIndex);
                 trialSucceed = false;
+            }
 
             //save the data into the result file only if the trial is within success trials (that have any stimulus)
             if (!_currentRatDecision.Equals(RatDecison.NoEntryToResponseStage))
@@ -1852,9 +1308,7 @@ namespace UniJoy
                         AutosOptions = _autosOptionsInRealTime,
                         SpecialModes = _specialModesInRealTime,
                         SoundsMode = _soundsMode,
-                        LedsData = new LedsData { TurnsOnPercentage = PercentageOfTurnedOnLeds, Brightness = LEDBrightness, RedValue = LEDcolorRed, GreenValue = LEDcolorGreen, BlueValue = LEDcolorBlue },
                         TrialEventsTiming = _trialEventRealTiming,
-                        TotalHabdRewardTime = _handRewardTotalTimer.ElapsedMilliseconds
                     });
                 });
             }
@@ -1865,12 +1319,13 @@ namespace UniJoy
             //TODO: Do I need this?
             moveRobotHomePositionTask.Wait();
             //also send the AlphaOmega that motion backwards ends.
-            //TODO: Do I need this?
+            //todo:: check need
             //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.RobotEndMovingBackward);
 
             //throw new Exception();
 
             _logger.Info("PostTrialStage ended. TrialSucceed = " + trialSucceed + ".");
+            //todo::check what is trial succedd in Moog terms - no response is OK?
             return trialSucceed;
         }
         #endregion
@@ -1958,133 +1413,26 @@ namespace UniJoy
         {
             _logger.Info("Writing AlphaOmega stimulus event start");
 
+            //todo::change _alphaOmegaEventsWriter to EEG and update this writing.
             switch (_currentTrialStimulusType)
             {
                 case 0://none
                     break;
                 case 1://vistibular only.
-                    //TODO: Do I need this?
                     //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart1);
                     break;
 
                 case 2://visual only.
-                    //TODO: Do I need this?
                     //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart2);
                     break;
 
                 case 3://vistibular and visual both.
-                    //TODO: Do I need this?
                     //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart3);
                     break;
-
-                case 4://vistibular and visual both with delta+ for visual.
-                    //TODO: Do I need this?
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart4);
-                    break;
-
-                case 5://vistibular and visual both with delta+ for vistibular.
-                    //TODO: Do I need this?
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart5);
-                    break;
-
-                case 10://visual only in the dark.
-                case 12://will replace visual only in the dark.
-                    //TODO: Do I need this?
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart10);
-                    break;
-
-                case 11://combined in the dark.
-                case 13://will replace combined in the dark.
-                    //TODO: Do I need this?
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart11);
-                    break;
-
-                case 14://vistibular and visual both with delta+ for visual in the dark.
-                    //TODO: Do I need this?
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart14);
-                    break;
-                case 15://vistibular and visual both with delta+ for vistibular in the dark.
-                    //TODO: Do I need this?
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart15);
-                    break;
-
 
                 default://if there is no motion , make a delay of waiting the duration time (the time that should take the robot to move).
                     break;
             }
-        }
-
-        /// <summary>
-        /// Sending the data trajectories to the robots according to the current trial stimulus type (without executing).
-        /// </summary>
-        private void SendDataToRobots()
-        {
-            int movementDuration = (int)(1000 * _currentTrialTimings.wDuration);
-
-            _logger.Info("Sending trajectories data to robots begin.");
-            //The motion of the Yasakawa robot if needed as the current stimulus type (if is both visual&vestibular -3 or only vistibular-1).
-            switch (_currentTrialStimulusType)
-            {
-                case 0://none
-                    _robotMotionTask = Task.Factory.StartNew(() => Thread.Sleep(movementDuration));
-                    break;
-                case 1://vistibular only.
-                    //first update the JBI file in seperately  , and after that negin both moving the robot and play with the leds for percisely simulatenously.
-                    //TODO: Do I need this?
-                    //_motomanController.UpdateYasakawaRobotJBIFile(_currentTrialTrajectories, MotomanProtocolFileCreator.UpdateJobType.Both);
-                    //_robotMotionTask = new Task(() => _motomanController.MoveYasakawaRobotWithTrajectory(YASKAWA_TRAJECTORY_MOVEMENTS_JOB_WAIT_BY_IO, movementDuration));
-                    break;
-
-                case 2://visual only.
-                    //first update the JBI file in seperately  , and after that negin both moving the robot and play with the leds for percisely simulatenously.
-                    //TODO: Do I need this?
-                    //_motomanController.UpdateYasakawaRobotJBIFile(_currentTrialTrajectories, MotomanProtocolFileCreator.UpdateJobType.R2Only);
-                    //_robotMotionTask = new Task(() => _motomanController.MoveYasakawaRobotWithTrajectory(YASKAWA_TRAJECTORY_MOVEMENTS_JOB_WAIT_BY_IO, movementDuration));
-                    break;
-
-                case 3://vistibular and visual both.
-                    //first update the JBI file in seperately  , and after that negin both moving the robot and play with the leds for percisely simulatenously.
-                    //TODO: Do I need this?
-                    //_motomanController.UpdateYasakawaRobotJBIFile(_currentTrialTrajectories, MotomanProtocolFileCreator.UpdateJobType.R1Only);
-                    //_robotMotionTask = new Task(() => _motomanController.MoveYasakawaRobotWithTrajectory(YASKAWA_TRAJECTORY_MOVEMENTS_JOB_WAIT_BY_IO, movementDuration));
-                    break;
-
-                case 4://vistibular and visual both with delta+ for visual.
-                case 5://vistibular and visual both with delta+ for vistibular.
-                case 14://vistibular and visual both with delta+ for visual in the dark.
-                case 15://vistibular and visual both with delta+ for vistibular in the dark.
-                    //first update the JBI file in seperately  , and after that negin both moving the robot and play with the leds for percisely simulatenously.
-                    double deltaHeading = 0;
-                    if (_staticVariablesList.ContainsKey("DELTA"))
-                        deltaHeading = _staticVariablesList["DELTA"];
-                    else if (_crossVaryingVals[_currentVaryingTrialIndex].Keys.Contains("DELTA"))
-                        deltaHeading = _crossVaryingVals[_currentVaryingTrialIndex]["DELTA"];
-                    //if delta is 0 move only the R1 robot.
-                    //TODO: Do I need this?
-                    //_motomanController.UpdateYasakawaRobotJBIFile(_currentTrialTrajectories, (deltaHeading != 0) ? MotomanProtocolFileCreator.UpdateJobType.Both : MotomanProtocolFileCreator.UpdateJobType.R1Only);
-                    //_robotMotionTask = new Task(() => _motomanController.MoveYasakawaRobotWithTrajectory(YASKAWA_TRAJECTORY_MOVEMENTS_JOB_WAIT_BY_IO, movementDuration));
-                    break;
-
-                case 10://visual only in the dark.
-                case 12://will replace visual only in the dark.
-                    //first update the JBI file in seperately  , and after that negin both moving the robot and play with the leds for percisely simulatenously.
-                    //TODO: Do I need this?
-                    //_motomanController.UpdateYasakawaRobotJBIFile(_currentTrialTrajectories, MotomanProtocolFileCreator.UpdateJobType.R2Only);
-                    //_robotMotionTask = new Task(() => _motomanController.MoveYasakawaRobotWithTrajectory(YASKAWA_TRAJECTORY_MOVEMENTS_JOB_WAIT_BY_IO, movementDuration));
-                    break;
-
-                case 11://combined in the dark.
-                case 13://will replace combined in the dark.
-                    //first update the JBI file in seperately  , and after that negin both moving the robot and play with the leds for percisely simulatenously.
-                    //_motomanController.UpdateYasakawaRobotJBIFile(_currentTrialTrajectories, MotomanProtocolFileCreator.UpdateJobType.R1Only);
-                    //_robotMotionTask = new Task(() => _motomanController.MoveYasakawaRobotWithTrajectory(YASKAWA_TRAJECTORY_MOVEMENTS_JOB_WAIT_BY_IO, movementDuration));
-                    break;
-
-                default://if there is no motion , make a delay of waiting the duration time (the time that should take the robot to move).
-                    _robotMotionTask = new Task(() => Thread.Sleep((int)(1000 * _currentTrialTimings.wDuration)));
-                    break;
-            };
-            _logger.Info("Sending trajectories data to robots end.");
         }
 
         //TODO: Maayan - determine whether the subject answer was correct
@@ -2102,64 +1450,10 @@ namespace UniJoy
             //get the current stimulus direction.
             double currentHeadingDirection = double.Parse(GetVariableValue("HEADING_DIRECTION"));
 
-            //determine if the current stimulses sign are invered (may be dur to the delta protocol and etc).
-            bool inversedStimulusesSign = IsVisualAndVistibularInversesSign();
-
             //determine the current stimulus direaction.
             RatDecison currentStimulationSide = (currentHeadingDirection == 0) ? (RatDecison.Center) : ((currentHeadingDirection > 0) ? (RatDecison.Right) : RatDecison.Left);
-            //determine if the current stimulus heading direction is in the random heading direction region.
-            if (Math.Abs(currentHeadingDirection) <= double.Parse(_variablesList._variablesDictionary["RR_HEADINGS"]._description["parameters"]._MoogParameter)
-                || (inversedStimulusesSign && EnableRRDelta))
-            {
-                //get a random side with probability of RR_PROBABILITY to the right side.
-                int sampledBernouli = Bernoulli.Sample(double.Parse(_variablesList._variablesDictionary["RR_PROBABILITY"]._description["parameters"]._MoogParameter));
-
-                RatDecison changedStimulusSide = currentStimulationSide;
-
-                if (sampledBernouli == 1)
-                {
-                    currentStimulationSide = RatDecison.Right;
-                }
-                else
-                {
-                    currentStimulationSide = RatDecison.Left;
-                }
-
-                if (changedStimulusSide.Equals(currentStimulationSide))
-                {
-                    _inverseRRDecision = true;
-                }
-            }
-            else
-            {
-                _inverseRRDecision = false;
-            }
-
-            //update the specail mode RRInverse parameter.
-            _specialModesInRealTime.RRInverse = _inverseRRDecision;
 
             _correctDecision = currentStimulationSide;
-        }
-
-        /// <summary>
-        /// Indicates if the current trial visual heading and visttibular heading are different in the sign.
-        /// </summary>
-        /// <returns>True if headings are inversed , otherwise false.</returns>
-        private bool IsVisualAndVistibularInversesSign()
-        {
-            switch ((int)(double.Parse(GetVariableValue("STIMULUS_TYPE"))))
-            {
-                case 4://stimulus with delta+ for visual.
-                case 5://stimulus with delta+ for vistibular.
-                    //get the current stimulus direction.
-                    double currentHeadingDirection = double.Parse(GetVariableValue("HEADING_DIRECTION"));
-                    double delta = double.Parse(GetVariableValue("DELTA"));
-                    if (Math.Abs(currentHeadingDirection) <= Math.Abs(delta / 2)) ;
-                    return true;
-                    return false;
-                default: //other stimulses
-                    return false;
-            }
         }
 
         /// <summary>
@@ -2294,9 +1588,7 @@ namespace UniJoy
         {
             Globals._systemState = SystemState.FINISHED;
 
-            //set robot's servo off.
-            //TODO: Do I need this?
-            //_motomanController.SetServoOff();
+            //todo::check if to send here clear command to unity engine/Moog.
 
             //reset the repetition index.
             _repetitionIndex = 0;
@@ -2548,95 +1840,6 @@ namespace UniJoy
 
                 default://if there is no motion , make a delay of waiting the duration time (the time that should take the robot to move).
                     break;
-            }
-        }
-
-        /// <summary>
-        /// Giving reward as specified (for the specified directions).
-        /// </summary>
-        /// <param name="value">The specified direction by xxxxxy-y-y where left-center-right.</param>
-        /// <param name="continious">Make the reward continiously (open untill get a close value) or not continiously (by the time of REWARD_CENTER_DURATION parameter.</param>
-        public void GiveRewardHandReward(byte value, bool continious = false)
-        {
-            if (continious)
-            {
-                //TODO: Do I need this?
-                //_rewardController.WriteSingleSamplePort(true, value);
-
-                //for the manual reward stopwatch accounting.
-                if (value != 0)
-                    _handRewardTotalTimer.Start();
-                else
-                    _handRewardTotalTimer.Stop();
-            }
-            else
-            {
-                //wait the delat time before opening the water and make a sound if AutoSound is on.
-                double timeByVariable = DetermineTimeByVariable("REWARD_CENTER_DURATION");
-
-                Task.Run(() =>
-                {
-                    if ((value & (byte)RatDecison.Left) == (byte)RatDecison.Left)
-                    {
-                        if (SideRewardSound)
-                        {
-                            _logger.Info("Start handreward sound - left");
-
-                            _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding-Left"];
-                            _windowsMediaPlayer.controls.play();
-
-                            _logger.Info("End handreward sound - left");
-                        }
-                        timeByVariable = DetermineTimeByVariable("REWARD_LEFT_DURATION");
-                    }
-                    else if ((value & 0x05) == 0x05)//if both sides (right and left).
-                    {
-                        if (CenterRewardSound)
-                        {
-                            _logger.Info("Start handreward sound - center (left and right)");
-
-                            _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding"];
-                            _windowsMediaPlayer.controls.play();
-
-                            _logger.Info("End handreward sound - center (left and right)");
-                        }
-                        timeByVariable = DetermineTimeByVariable("REWARD_CENTER_DURATION");
-                    }
-                    else if ((value & (byte)RatDecison.Center) == (byte)RatDecison.Center)
-                    {
-                        if (CenterRewardSound)
-                        {
-                            _logger.Info("Start handreward sound - center");
-
-                            _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding"];
-                            _windowsMediaPlayer.controls.play();
-
-                            _logger.Info("End handreward sound - center");
-                        }
-                        timeByVariable = DetermineTimeByVariable("REWARD_CENTER_DURATION");
-                    }
-                    else if ((value & (byte)RatDecison.Right) == (byte)RatDecison.Right)
-                    {
-                        if (SideRewardSound)
-                        {
-                            _logger.Info("Start handreward sound - right");
-
-                            _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding-Right"];
-                            _windowsMediaPlayer.controls.play();
-
-                            _logger.Info("End handreward sound - right");
-                        }
-                        timeByVariable = DetermineTimeByVariable("REWARD_RIGHT_DURATION");
-                    }
-                });
-
-                //TODO: Do I need this?
-                //_rewardController.WriteSingleSamplePort(true, value);
-                _handRewardTotalTimer.Start();
-                Thread.Sleep((int)(timeByVariable * 1000));
-                _handRewardTotalTimer.Stop();
-                //TODO: Do I need this?
-                //_rewardController.WriteSingleSamplePort(true, 0);
             }
         }
 
