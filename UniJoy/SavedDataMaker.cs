@@ -190,11 +190,15 @@ namespace UniJoy
         public void CreateNewDirectory(string ratName)
         {
             //create a rat directory if there is no rat dirextory with it's name.
-            if (!Directory.Exists(@"C:\results\" + ratName)) ;
-            Directory.CreateDirectory(@"C:\results\" + ratName);
+            if (!Directory.Exists(@"C:\results\" + ratName))
+            {
+                Directory.CreateDirectory(@"C:\results\" + ratName);
+            }
 
             if (!Directory.Exists(@"C:\results\" + ratName + @"\" + DateTime.Now.ToString("yyyy_MM_dd")))
+            {
                 Directory.CreateDirectory(@"C:\results\" + ratName + @"\" + DateTime.Now.ToString("yyy_MM_dd"));
+            }
         }
     }
 
