@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UniJoy.EventTypes;
 
-namespace UniJoy.EventWriters
+using InputOutputDeviceHandlers.EventHandlers.EventTypes;
+using InputOutputDeviceHandlers.ParallelPort;
+
+namespace InputOutputDeviceHandlers.EventHandlers.EventWriters
 {
     public class LptEventWriter : IEventWriter<UnijoyEvent>
     {
+        private ParallelPortController _parallelPortController;
+
+        public LptEventWriter(int address)
+        {
+            _parallelPortController = new ParallelPortController(address);
+        }
+
         public void WriteEvent(UnijoyEvent eventName)
         {
-            throw new NotImplementedException();
+            _parallelPortController.Write((int)eventName);
         }
     }
 }
