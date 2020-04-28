@@ -64,7 +64,7 @@ namespace UniJoy
         /// The static variables list in double value presentation.
         /// The string is for the variable name.
         /// </summary>
-        private Dictionary<string, double> _staticVariablesList;
+        private Dictionary<string, List<double>> _staticVariablesList;
 
         /// <summary>
         /// The numbers of samples for each trajectory.
@@ -386,7 +386,7 @@ namespace UniJoy
         /// <summary>
         /// Transfer the control from the main gui to the control loop until a new gui event is handled by the user.
         /// </summary>
-        public void Start(Variables variablesList, List<Dictionary<string, double>> crossVaryingList, Dictionary<string, double> staticVariablesList, int frequency, ITrajectoryCreator trajectoryCreatorName)
+        public void Start(Variables variablesList, List<Dictionary<string, double>> crossVaryingList, Dictionary<string, List<double>> staticVariablesList, int frequency, ITrajectoryCreator trajectoryCreatorName)
         {
             //initialize variables.
             _variablesList = variablesList;
@@ -1718,7 +1718,7 @@ namespace UniJoy
                     //move only R1 if delta is 0
                     double deltaHeading = 0;
                     if (_staticVariablesList.ContainsKey("DELTA"))
-                        deltaHeading = _staticVariablesList["DELTA"];
+                        deltaHeading = _staticVariablesList["DELTA"][0];
                     else if (_crossVaryingVals[_currentVaryingTrialIndex].Keys.Contains("DELTA"))
                         deltaHeading = _crossVaryingVals[_currentVaryingTrialIndex]["DELTA"];
                     //TODO: Do I need this?

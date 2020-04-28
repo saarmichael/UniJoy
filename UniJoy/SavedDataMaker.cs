@@ -205,7 +205,7 @@ namespace UniJoy
         /// <summary>
         /// The static variables value for one trial.
         /// </summary>
-        public Dictionary<string, double> StaticVariables { get; set; }
+        public Dictionary<string, List<double>> StaticVariables { get; set; }
 
         /// <summary>
         /// The varying varuiables value for one trial.
