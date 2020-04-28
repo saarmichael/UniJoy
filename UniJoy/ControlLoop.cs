@@ -1043,13 +1043,12 @@ namespace UniJoy
 
             //throw new Exception();
 
-            //TODO:DELETE
             //write alpha omega that the stimulus start.
-            /*Task.Run(() =>
+            Task.Run(() =>
             {
-                WriteAlphaOmegaStimulusBegin();
+                WriteEventWriterStimulusBegin();
                 _trialEventRealTiming.Add("StimulusStart", _controlLoopTrialTimer.ElapsedMilliseconds);
-            });*/
+            });
 
             //execute the leds command if necessary.
             if (_currentTrialStimulusType == 2 ||
@@ -1323,7 +1322,7 @@ namespace UniJoy
         /// <summary>
         /// Writing the stimulus type to the AlphaOmega according to the current stimulus type.
         /// </summary>
-        private void WriteAlphaOmegaStimulusBegin()
+        private void WriteEventWriterStimulusBegin()
         {
             _logger.Info("Writing AlphaOmega stimulus event start");
 
