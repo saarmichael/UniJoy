@@ -16,11 +16,6 @@ namespace UniJoy
     class SavedDataMaker
     {
         /// <summary>
-        /// The current file name (full path) writing to it the data.
-        /// </summary>
-        private string _cuurentFilePath;
-
-        /// <summary>
         /// The current saving file StreamWriter to save the file with.
         /// </summary>
         private StreamWriter _currentSavedFileStramWriter;
@@ -102,11 +97,6 @@ namespace UniJoy
 
             //append the sounds modes options in the current trial.
             lineBuilder.Append(trialData.SoundsMode.ToString());
-            _currentSavedFileStramWriter.WriteLine(lineBuilder.ToString());
-            lineBuilder.Clear();
-
-            //append the leds data options in the current trial.
-            lineBuilder.Append(trialData.LedsData.ToString());
             _currentSavedFileStramWriter.WriteLine(lineBuilder.ToString());
             lineBuilder.Clear();
 
@@ -195,11 +185,15 @@ namespace UniJoy
         public void CreateNewDirectory(string ratName)
         {
             //create a rat directory if there is no rat dirextory with it's name.
-            if (!Directory.Exists(@"C:\results\" + ratName)) ;
-            Directory.CreateDirectory(@"C:\results\" + ratName);
+            if (!Directory.Exists(@"C:\results\" + ratName))
+            {
+                Directory.CreateDirectory(@"C:\results\" + ratName);
+            }
 
             if (!Directory.Exists(@"C:\results\" + ratName + @"\" + DateTime.Now.ToString("yyyy_MM_dd")))
+            {
                 Directory.CreateDirectory(@"C:\results\" + ratName + @"\" + DateTime.Now.ToString("yyy_MM_dd"));
+            }
         }
     }
 
@@ -277,11 +271,6 @@ namespace UniJoy
         /// SoundsModes object for all sounds modes values.
         /// </summary>        
         public SoundsMode SoundsMode { get; set; }
-
-        /// <summary>
-        /// Leds data options.
-        /// </summary>
-        public LedsData LedsData { get; set; }
 
         /// <summary>
         /// A dictionary include a key for the ecvent name and a double for the time of the event since the start of the trial. Each trial the dictionary cleared.
