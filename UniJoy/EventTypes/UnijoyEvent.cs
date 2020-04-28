@@ -8,6 +8,12 @@ namespace InputOutputDeviceHandlers.EventHandlers.EventTypes
 {
     public enum UnijoyEvent
     {
-
+       StimulusStart,
+       UserPressStart,
+       UserPressChoice,
+       StimulusEnd,
+       AudioWaitForStart,
+       MoogStartMovingBackward,
+       MoogEndMovingBackward
     }
 }
