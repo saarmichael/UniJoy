@@ -325,11 +325,11 @@ namespace UniJoy
             //copy the logger reference to writing lof information
             _logger = logger;
 
-            //TODO: Do I need this?
-            /*_rewardController = new RewardController("Dev1", "Port1", "Line0:2", "RewardChannels");
-            _ratResponseController = new RatResponseController("Dev1", "Port0", "Line0:2", "RatResponseChannels");
-            _alphaOmegaEventsWriter = new AlphaOmegaEventsWriter("Dev1", "Port0", "Line3:7", "AlphaOmegaEventsChannels", "Port1", "Line3", "AlphaOmegaStrobeChannel", _logger);
-            */
+
+            //todo::add the EEG initializer
+            //_alphaOmegaEventsWriter = new AlphaOmegaEventsWriter("Dev1", "Port0", "Line3:7", "AlphaOmegaEventsChannels", "Port1", "Line3", "AlphaOmegaStrobeChannel", _logger);
+            //_remoteController = new ThundermasterJoysticUserInputController(_logger);
+            _remoteController = new KeyBoardUserInputController();
 
             _stopAfterTheEndOfTheCurrentTrial = false;
 
@@ -363,10 +363,6 @@ namespace UniJoy
             _soundPlayerPathDB = new Dictionary<string, string>();
             LoadAllSoundPlayers();
             _windowsMediaPlayer = new WindowsMediaPlayer();
-
-            //Maayan edit
-            //_remoteController = new ThundermasterJoysticUserInputController(_logger);
-            _remoteController = new KeyBoardUserInputController();
 
             Task.Run(() => TryConnectToUnityEngine());
         }
@@ -416,14 +412,6 @@ namespace UniJoy
             //set the trajectory creator name to the given one that should be called in the trajectoryCreatorHandler.
             //also , set the other properties.
             _trajectoryCreatorHandler.SetTrajectoryAttributes(trajectoryCreatorName, _variablesList, _crossVaryingVals, _staticVariablesList, _frequency);
-
-            //TODO: Do I need this?
-            //reset the RewardController outputs.
-            //_rewardController.ResetControllerOutputs();
-
-            //TODO: Do I need this?
-            //set the frequency for the JBI file creator.
-            //_motomanController.MotomanProtocolFileCreator.Frequency = _frequency;
 
             //create a new results file for the new experiment.
             _savedExperimentDataMaker.CreateControlNewFile(ProtocolFullName);
@@ -533,10 +521,6 @@ namespace UniJoy
 
                         //TODO:WAIT FOR THE START PRESS BUTTON
                         bool subjectPressedStartButtonDuringTheTimeoutDuration = WaitForStartButtonToBePressed();
-
-                        //TODO:DELETE
-                        //indicates if during duration1 time - the rat stays with the eyes in the center.
-                        //bool duration1HeadInTheCenterStabilityStage = false;
 
                         //if the subject pressed the start button before timeOut time.
                         if (subjectPressedStartButtonDuringTheTimeoutDuration)
@@ -1269,7 +1253,7 @@ namespace UniJoy
                 });
             }
 
-            //todo::what is that magi number??
+            //todo::what is that magic number??
             Thread.Sleep(5000);
 
             bool trialSucceed = true;
