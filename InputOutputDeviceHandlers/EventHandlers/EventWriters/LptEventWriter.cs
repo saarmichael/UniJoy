@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniJoy.EventTypes;
 
-using InputOutputDeviceHandlers.EventHandlers.EventTypes;
-
-namespace InputOutputDeviceHandlers.EventHandlers.EventWriters
+namespace UniJoy.EventWriters
 {
     public class LptEventWriter : IEventWriter<UnijoyEvent>
     {

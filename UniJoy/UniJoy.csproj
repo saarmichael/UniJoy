@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlLoop.cs" />
+    <Compile Include="EventTypes\UnijoyEvent.cs" />
     <Compile Include="EventWriters\IEventWriter.cs" />
     <Compile Include="ExcelProtocolConfigFileLoader.cs" />
     <Compile Include="Globals.cs" />

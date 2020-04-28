@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InputOutputDeviceHandlers.EventHandlers.EventWriters
+namespace UniJoy.EventWriters
 {
     public interface IEventWriter<T>
     {
