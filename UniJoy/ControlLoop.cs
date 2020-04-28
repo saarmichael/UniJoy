@@ -636,14 +636,15 @@ namespace UniJoy
             {
                 ColorData = new ColorData()
                 {
-                    Red = 255,
-                    Green = 0,
-                    Blue = 0
+                    Red = (int)(_staticVariablesList["STAR_COLOR"][0]),
+                    Green = (int)(_staticVariablesList["STAR_COLOR"][1]),
+                    Blue = (int)(_staticVariablesList["STAR_COLOR"][2])
                 },
 
                 ObjectType = ObjectType.Triangle,
-                Size = (0.5f, 0.5f),
-                Density = 0.005f,
+                Size = ((float)(_staticVariablesList["STAR_SIZE"][0]),
+                                        (float)(_staticVariablesList["STAR_SIZE"][1])),
+                Density = (float)(_staticVariablesList["STAR_DENSITY"][0]),
 
                 //Source = "Unijoy",
                 X = _currentTrialTrajectories.Item1.X.Select(item => (float)(item)).ToList(),
@@ -653,13 +654,21 @@ namespace UniJoy
                 RY = _currentTrialTrajectories.Item1.RY.Select(item => (float)(item)).ToList(),
                 RZ = _currentTrialTrajectories.Item1.RZ.Select(item => (float)(item)).ToList(),
 
-                StarFieldDimension = (130, 130, 130),
-                Coherence = 100,
+                StarFieldDimension = ((float)(_staticVariablesList["STAR_VOLUME"][0]),
+                                        (float)(_staticVariablesList["STAR_VOLUME"][1]),
+                                        (float)(_staticVariablesList["STAR_VOLUME"][2])),
+                Coherence = (int)(_staticVariablesList["STAR_MOTION_COHERENCE"][0]),
 
-                ScreenDimension = (127, 149),
-                ClipPlanes = (5, 100),
-                EyeOffsets = (0, 8.5f, 0),
-                HeadCenter = (0, 29.5f, 0)
+                ScreenDimension = ((float)(_staticVariablesList["SCREEN_DIMENSION"][0]),
+                                        (float)(_staticVariablesList["SCREEN_DIMENSION"][1])),
+                ClipPlanes = ((float)(_staticVariablesList["CLIP_PLANES"][0]),
+                                        (float)(_staticVariablesList["CLIP_PLANES"][1])),
+                EyeOffsets = ((float)(_staticVariablesList["EYE_OFFSETS"][0]),
+                                        (float)(_staticVariablesList["EYE_OFFSETS"][1]),
+                                        (float)(_staticVariablesList["EYE_OFFSETS"][2])),
+                HeadCenter = ((float)(_staticVariablesList["HEAD_CENTER"][0]),
+                                        (float)(_staticVariablesList["HEAD_CENTER"][1]),
+                                        (float)(_staticVariablesList["HEAD_CENTER"][2]))
             };
 
             string serializedData = JsonConvert.SerializeObject(unijoyTrialMetaData);
