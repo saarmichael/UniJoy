@@ -421,9 +421,9 @@ namespace UniJoy
             _onlinePsychGraphMaker.VaryingParametrsNames = GetVaryingVariablesList();
             _onlinePsychGraphMaker.HeadingDireactionRegion = new Region
             {
-                LowBound = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["low_bound"]._MoogParameter),
-                Increament = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["increament"]._MoogParameter),
-                HighBound = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["high_bound"]._MoogParameter)
+                LowBound = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["low_bound"].MoogParameter),
+                Increament = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["increament"].MoogParameter),
+                HighBound = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["high_bound"].MoogParameter)
             };
             _onlinePsychGraphMaker.InitSerieses();
 
@@ -1547,11 +1547,11 @@ namespace UniJoy
         /// <returns>The stimulus type.</returns>
         public int DetermineCurrentStimulusType()
         {
-            string stimulusTypeStatus = _variablesList._variablesDictionary["STIMULUS_TYPE"]._description["status"]._MoogParameter;
+            string stimulusTypeStatus = _variablesList._variablesDictionary["STIMULUS_TYPE"]._description["status"].MoogParameter;
             switch (stimulusTypeStatus)
             {
                 case "1"://static
-                    return int.Parse(_variablesList._variablesDictionary["STIMULUS_TYPE"]._description["parameters"]._MoogParameter);
+                    return int.Parse(_variablesList._variablesDictionary["STIMULUS_TYPE"]._description["parameters"].MoogParameter);
                 case "2"://varying
                 case "6"://Vector
                     return (int)(_crossVaryingVals[_currentVaryingTrialIndex]["STIMULUS_TYPE"]);
@@ -1613,8 +1613,8 @@ namespace UniJoy
             //if not found - it is random type varriable.
             if (timeValue == string.Empty)
             {
-                double lowTime = double.Parse(_variablesList._variablesDictionary[timeVarName]._description["low_bound"]._MoogParameter);
-                double highTime = double.Parse(_variablesList._variablesDictionary[timeVarName]._description["high_bound"]._MoogParameter);
+                double lowTime = double.Parse(_variablesList._variablesDictionary[timeVarName]._description["low_bound"].MoogParameter);
+                double highTime = double.Parse(_variablesList._variablesDictionary[timeVarName]._description["high_bound"].MoogParameter);
                 return RandomTimeUniformly(lowTime, highTime);
             }
 
@@ -1627,9 +1627,9 @@ namespace UniJoy
 
             foreach (string item in _variablesList._variablesDictionary.Keys)
             {
-                if (_variablesList._variablesDictionary[item]._description["status"]._MoogParameter[0].Equals("2"))
+                if (_variablesList._variablesDictionary[item]._description["status"].MoogParameter[0].Equals("2"))
                 {
-                    varyingVariablesNames.Add(_variablesList._variablesDictionary[item]._description["nice_name"]._MoogParameter[0].ToString());
+                    varyingVariablesNames.Add(_variablesList._variablesDictionary[item]._description["nice_name"].MoogParameter[0].ToString());
                 }
             }
 
@@ -1646,7 +1646,7 @@ namespace UniJoy
             try
             {
                 //detrmine the status of the variable type.
-                string variableStatus = _variablesList._variablesDictionary[parameterName]._description["status"]._MoogParameter;
+                string variableStatus = _variablesList._variablesDictionary[parameterName]._description["status"].MoogParameter;
 
 
                 //decide the time value of the time type according to it's status.
@@ -1654,7 +1654,7 @@ namespace UniJoy
                 {
                     case "0"://const
                     case "1"://static
-                        return _variablesList._variablesDictionary[parameterName]._description["parameters"]._MoogParameter;
+                        return _variablesList._variablesDictionary[parameterName]._description["parameters"].MoogParameter;
 
                     case "2"://varying
                     case "6":

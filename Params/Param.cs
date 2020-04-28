@@ -25,13 +25,13 @@ namespace Params
         /// <param name="par">The Param to be copied.</param>
         public Param(Param par)
         {
-            _MoogParameter = par._MoogParameter;
+            MoogParameter = par.MoogParameter;
         }
 
         /// <summary>
         /// The Moog parameter values for one attribute of one variable.
         /// </summary>
-        public string _MoogParameter
+        public string MoogParameter
         {
             get;
             set;

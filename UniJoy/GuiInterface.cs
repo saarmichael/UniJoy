@@ -1229,7 +1229,7 @@ namespace UniJoy
             foreach (string varName in varyingCrossValsBoth.ElementAt(0).Keys)
             {
                 //TODO: Moog
-                string varNiceName = _variablesList._variablesDictionary[varName]._description["nice_name"]._MoogParameter;
+                string varNiceName = _variablesList._variablesDictionary[varName]._description["nice_name"].MoogParameter;
                 niceNameList.Add(varNiceName);
             }
 
@@ -1363,7 +1363,7 @@ namespace UniJoy
             foreach (string varName in crossVaryingVals.ElementAt(0).Keys)
             {
                 //TODO: Moog
-                string varNiceName = _variablesList._variablesDictionary[varName]._description["nice_name"]._MoogParameter;
+                string varNiceName = _variablesList._variablesDictionary[varName]._description["nice_name"].MoogParameter;
 
                 Label varyingAttributeLabel = new Label();
                 varyingAttributeLabel.Text = varName;
@@ -1540,7 +1540,7 @@ namespace UniJoy
 
             //update the status in the variables dictionary.
             //TODO: Moog
-            _variablesList._variablesDictionary[varName]._description["status"]._MoogParameter = selectedIndex;
+            _variablesList._variablesDictionary[varName]._description["status"].MoogParameter = selectedIndex;
 
             //Check if both he num of staicases and withinstairs is 1 or 0.
             #region STATUS_NUM_OF_OCCURENCES
@@ -1768,7 +1768,7 @@ namespace UniJoy
                     _dynamicAllocatedTextBoxes[checkboxRightName + "parameters"].Enabled = false;
                     _dynamicAllocatedTextBoxes[checkboxRightName + "parameters"].Text = _dynamicAllocatedTextBoxes[cehckBoxLeftName + "parameters"].Text;
                     //TODO: Moog
-                    _variablesList._variablesDictionary[checkboxRightName]._description["parameters"]._MoogParameter = _variablesList._variablesDictionary[cehckBoxLeftName]._description["parameters"]._MoogParameter;
+                    _variablesList._variablesDictionary[checkboxRightName]._description["parameters"].MoogParameter = _variablesList._variablesDictionary[cehckBoxLeftName]._description["parameters"].MoogParameter;
                 }
                 else
                 {
@@ -1799,15 +1799,15 @@ namespace UniJoy
 
             //filter only the variables where the status is not -1 (not for the checkboxes for the gui).
             //TODO: Moog
-            foreach (string varName in _variablesList._variablesDictionary.Keys.Where(name => int.Parse(_variablesList._variablesDictionary[name]._description["status"]._MoogParameter) != -1))
+            foreach (string varName in _variablesList._variablesDictionary.Keys.Where(name => int.Parse(_variablesList._variablesDictionary[name]._description["status"].MoogParameter) != -1))
             {
-                ShowVariableLabel(_variablesList._variablesDictionary[varName]._description["nice_name"]._MoogParameter,
+                ShowVariableLabel(_variablesList._variablesDictionary[varName]._description["nice_name"].MoogParameter,
                     top,
                     left,
                     width + 40,
                     height,
                     eachDistance,
-                    _variablesList._variablesDictionary[varName]._description["tool_tip"]._MoogParameter);
+                    _variablesList._variablesDictionary[varName]._description["tool_tip"].MoogParameter);
 
                 ShowVariableAttributes(varName,
                     top,
@@ -1816,7 +1816,7 @@ namespace UniJoy
                     height,
                     eachDistance,
                     750,
-                    _variablesList._variablesDictionary[varName]._description["color"]._MoogParameter);
+                    _variablesList._variablesDictionary[varName]._description["color"].MoogParameter);
 
                 top += 35;
             }
@@ -1839,7 +1839,7 @@ namespace UniJoy
 
             //filter only the variables where the status is  -1 (for the checkboxes for the gui).
             //TODO: Moog
-            IEnumerable<string> variablesList = _variablesList._variablesDictionary.Keys.Where(name => int.Parse(_variablesList._variablesDictionary[name]._description["status"]._MoogParameter) == -1);
+            IEnumerable<string> variablesList = _variablesList._variablesDictionary.Keys.Where(name => int.Parse(_variablesList._variablesDictionary[name]._description["status"].MoogParameter) == -1);
             foreach (string varName in variablesList)
             {
                 if (_buttonbasesDictionary[varName] is RadioButton)
@@ -1847,7 +1847,7 @@ namespace UniJoy
                     (_buttonbasesDictionary[varName] as RadioButton).Checked = false;
 
                     if (int.Parse(_variablesList._variablesDictionary[varName]._description["parameters"]
-                            ._MoogParameter) == 1)
+                            .MoogParameter) == 1)
                     {
                         (_buttonbasesDictionary[varName] as RadioButton).Checked = true;
                     }
@@ -1857,7 +1857,7 @@ namespace UniJoy
                     (_buttonbasesDictionary[varName] as CheckBox).Checked = false;
 
                     if (int.Parse(_variablesList._variablesDictionary[varName]._description["parameters"]
-                            ._MoogParameter) == 1)
+                            .MoogParameter) == 1)
                     {
                         (_buttonbasesDictionary[varName] as CheckBox).Checked = true;
                     }
@@ -1933,7 +1933,7 @@ namespace UniJoy
 
             //decide which items on the ComboBox is selected according to the data in the excel sheet.
             //TODO: Moog
-            switch (_variablesList._variablesDictionary[varName]._description["status"]._MoogParameter)
+            switch (_variablesList._variablesDictionary[varName]._description["status"].MoogParameter)
             {
                 case "0":
                     statusCombo.SelectedText = "Const";
@@ -1987,7 +1987,7 @@ namespace UniJoy
 
             //show the _MoogParameter.
             //TODO: Moog
-            string lowBoundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["increament"]._MoogParameter);
+            string lowBoundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["increament"].MoogParameter);
             incrementTextBox.Text = lowBoundTextVal;
 
             _dynamicParametersPanel.Controls.Add(incrementTextBox);
@@ -2013,7 +2013,7 @@ namespace UniJoy
 
             //show the _MoogParameter.
             //TODO: Moog
-            string highBoundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["high_bound"]._MoogParameter);
+            string highBoundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["high_bound"].MoogParameter);
             highBoundTextBox.Text = highBoundTextVal;
 
             _dynamicParametersPanel.Controls.Add(highBoundTextBox);
@@ -2039,7 +2039,7 @@ namespace UniJoy
 
             //show the _MoogParameter.
             //TODO: Moog
-            lowBoundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["low_bound"]._MoogParameter);
+            lowBoundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["low_bound"].MoogParameter);
             lowBoundTextBox.Text = lowBoundTextVal;
 
             _dynamicParametersPanel.Controls.Add(lowBoundTextBox);
@@ -2060,13 +2060,13 @@ namespace UniJoy
 
             //print the parameter in the gui according to the representation of each status.
             //TODO: Moog
-            switch (_variablesList._variablesDictionary[varName]._description["status"]._MoogParameter)
+            switch (_variablesList._variablesDictionary[varName]._description["status"].MoogParameter)
             {
                 case "0":   //const
                 case "1":   //static
                 case "6":   //vector
                     //show the _MoogParameter.
-                    parametersTextBox.Text = string.Join(",", _variablesList._variablesDictionary[varName]._description["parameters"]._MoogParameter); ;
+                    parametersTextBox.Text = string.Join(",", _variablesList._variablesDictionary[varName]._description["parameters"].MoogParameter); ;
                     break;
 
                 case "2":   //varying
@@ -2074,9 +2074,9 @@ namespace UniJoy
                 case "4":   //withinstair
                 case "5":
                     //show the _MoogParameter.
-                    string lowboundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["low_bound"]._MoogParameter);
-                    string highboundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["high_bound"]._MoogParameter);
-                    string increasingTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["increament"]._MoogParameter);
+                    string lowboundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["low_bound"].MoogParameter);
+                    string highboundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["high_bound"].MoogParameter);
+                    string increasingTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["increament"].MoogParameter);
 
                     parametersTextBox.Text = ThreeStagesRepresentation(sBuilder, lowboundTextVal, increasingTextVal, highboundTextVal);
                     break;
@@ -2274,7 +2274,7 @@ namespace UniJoy
         {
             //if const disabled textbox and break no matter what.
             //TODO: Moog
-            if (_variablesList._variablesDictionary[varName]._description["status"]._MoogParameter == "0")
+            if (_variablesList._variablesDictionary[varName]._description["status"].MoogParameter == "0")
             {
                 textBox.Enabled = false;
                 return;
@@ -2282,7 +2282,7 @@ namespace UniJoy
 
             //decide which items on the ComboBox is selected according to the data in the excel sheet.
             //TODO: Moog
-            switch (_variablesList._variablesDictionary[varName]._description["status"]._MoogParameter)
+            switch (_variablesList._variablesDictionary[varName]._description["status"].MoogParameter)
             {
                 case "1":
                 case "6":
@@ -2317,15 +2317,15 @@ namespace UniJoy
             //if one attribute only (can be a scalar either a vector).
 
             //split each vector of data for robot to a list of components.
-            par._MoogParameter = attributeValue;
+            par.MoogParameter = attributeValue;
 
             //if the input can be only a scalar
             //TODO: Moog
-            if (_variablesList._variablesDictionary[varName]._description["status"]._MoogParameter != "6")
+            if (_variablesList._variablesDictionary[varName]._description["status"].MoogParameter != "6")
             {
                 //if the input for one value contains more than one dot for precison dot or chars that are not digits.
                 //if true , update the values in the variables dictionary.
-                if (DigitsNumberChecker(par._MoogParameter))
+                if (DigitsNumberChecker(par.MoogParameter))
                 {
                     _variablesList._variablesDictionary[varName]._description[attributeName] = par;
 
@@ -2342,7 +2342,7 @@ namespace UniJoy
             //if the input can be a scalar either a vector.
             else
             {
-                if (VectorNumberChecker(par._MoogParameter))
+                if (VectorNumberChecker(par.MoogParameter))
                 {
                     _variablesList._variablesDictionary[varName]._description[attributeName] = par;
 
@@ -2371,7 +2371,7 @@ namespace UniJoy
             {
                 int firstLeftBracketIndex = toCheckVector[varName].IndexOf('[');
                 int firstRightBracketIndex = toCheckVector[varName].IndexOf(']');
-                string varNiceName = _variablesList._variablesDictionary[varName]._description["nice_name"]._MoogParameter;
+                string varNiceName = _variablesList._variablesDictionary[varName]._description["nice_name"].MoogParameter;
 
                 //if there are brackets for a scalar.
                 if (firstRightBracketIndex > -1 || firstLeftBracketIndex > -1)
@@ -2483,7 +2483,7 @@ namespace UniJoy
             //TODO: Moog
             statusVal = StatusIndexByNameDecoder(statusVal);
             return _variablesList._variablesDictionary.Count(variable =>
-                _variablesList._variablesDictionary[variable.Key]._description["status"]._MoogParameter == statusVal);
+                _variablesList._variablesDictionary[variable.Key]._description["status"].MoogParameter == statusVal);
         }
 
         /// <summary>
@@ -2525,13 +2525,13 @@ namespace UniJoy
 
             //print the parameter in the gui according to the representation of each status.
             //TODO: Moog
-            switch (_variablesList._variablesDictionary[varName]._description["status"]._MoogParameter)
+            switch (_variablesList._variablesDictionary[varName]._description["status"].MoogParameter)
             {
                 case "0":   //const
                 case "1":   //static
                 case "6":
                     //show the _MoogParameter.
-                    string parametersTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["parameters"]._MoogParameter);
+                    string parametersTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["parameters"].MoogParameter);
                     parametersTextBox.Text = parametersTextVal;
                     break;
 
@@ -2540,9 +2540,9 @@ namespace UniJoy
                 case "4":   //withinstair
                 case "5":   //ramdom
                     //show the _MoogParameter.
-                    string lowboundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["low_bound"]._MoogParameter);
-                    string highboundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["high_bound"]._MoogParameter);
-                    string increasingTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["increament"]._MoogParameter);
+                    string lowboundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["low_bound"].MoogParameter);
+                    string highboundTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["high_bound"].MoogParameter);
+                    string increasingTextVal = string.Join(",", _variablesList._variablesDictionary[varName]._description["increament"].MoogParameter);
 
                     parametersTextBox.Text = ThreeStagesRepresentation(sBuilder, lowboundTextVal, increasingTextVal, highboundTextVal);
                     break;

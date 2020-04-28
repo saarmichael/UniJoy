@@ -91,7 +91,7 @@ namespace UniJoy
                 {
                     Param param = new Param();
 
-                    param._MoogParameter = excelStringValuesArray[k, i];
+                    param.MoogParameter = excelStringValuesArray[k, i];
 
                     if (excelStringValuesArray[k, i] != null)
                         param = DisassamblyDataAttributeValue(excelStringValuesArray[k, i]);
@@ -112,11 +112,11 @@ namespace UniJoy
                 {
                     //adding the variable (line in the excel data file) into the dictionary of variables 
                     //with the variable name as the key.
-                    variables._variablesDictionary.Add(var._description["name"]._MoogParameter, var);
+                    variables._variablesDictionary.Add(var._description["name"].MoogParameter, var);
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("The sheet contain a parameter named " + var._description["name"]._MoogParameter
+                    MessageBox.Show("The sheet contain a parameter named " + var._description["name"].MoogParameter
                         + " showing twice.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
@@ -163,7 +163,7 @@ namespace UniJoy
                     foreach (string titleName in item.Value._description.Keys)
                     {
                         //write the column to the variable
-                        workSheet.Cells[rowIndex, columnIndex] = item.Value._description[titleName]._MoogParameter;
+                        workSheet.Cells[rowIndex, columnIndex] = item.Value._description[titleName].MoogParameter;
                         //go to next column for the same variable.
                         columnIndex++;
                     }
@@ -294,7 +294,7 @@ namespace UniJoy
             Param par = new Param();
 
             //split each vector of data for each robot to a list of components.
-            par._MoogParameter = attributeValue;
+            par.MoogParameter = attributeValue;
 
             return par;
         }

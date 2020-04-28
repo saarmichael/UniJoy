@@ -409,7 +409,7 @@ namespace Trajectories.TrajectoryCreators
             }
             else if (_crossVaryingVals[index].Keys.Contains("STIMULUS_TYPE"))
             {
-                _stimulusType = int.Parse(_variablesList._variablesDictionary["STIMULUS_TYPE"]._description["parameters"]._MoogParameter);
+                _stimulusType = int.Parse(_variablesList._variablesDictionary["STIMULUS_TYPE"]._description["parameters"].MoogParameter);
             }
         }
 

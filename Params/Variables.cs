@@ -46,7 +46,7 @@ namespace Params
 
             foreach (string varName in _variablesDictionary.Keys)
             {
-                if (statuses.Count(s => s == _variablesDictionary[varName]._description["status"]._MoogParameter) == 1)
+                if (statuses.Count(s => s == _variablesDictionary[varName]._description["status"].MoogParameter) == 1)
                 {
                     filteredVariables._variablesDictionary[varName] = new Variable(_variablesDictionary[varName]);
                 }
