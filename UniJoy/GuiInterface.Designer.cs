@@ -604,12 +604,6 @@
         //private System.Windows.Forms.CheckBox _checkBoxCenterRewardSound;
         //private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox _checkBoxFixationOnly;
-        private System.Windows.Forms.CheckBox _checkBoxBreakFixationSoundEnable;
-        //private System.Windows.Forms.GroupBox _groupboxLedsController;
-        //private System.Windows.Forms.TextBox _textboxPercentageOfTurnOnLeds;
-        //private System.Windows.Forms.Label _labelPercentageOfturnedOnLeds;
-        //private System.Windows.Forms.Label _labelBrightness;
-        //private System.Windows.Forms.TextBox _textboxLEDBrightness;
         private System.Windows.Forms.Label _labelStickOnNumber;
         private System.Windows.Forms.TextBox _textboxStickOnNumber;
         private System.Windows.Forms.Button _btnResume;

@@ -36,10 +36,6 @@ namespace UniJoy
         const bool UPDATE_GLOBAL_DETAILS_LIST_VIEW = false;
 
         #region CONSTANTS
-        /// <summary>
-        /// Indicates if when moving the forward and backward trajectories need to wait the job end by the bsc yasakawa i/o indicator or by the given force timing parameter.
-        /// </summary>
-        bool YASKAWA_TRAJECTORY_MOVEMENTS_JOB_WAIT_BY_IO = false;
         #endregion CONSTANTS
 
         #region ATTRIBUTES
@@ -1331,81 +1327,6 @@ namespace UniJoy
         #endregion
 
         #region STAGES_ADDIION_FUNCTION
-        /// <summary>
-        /// Sending the leds data to the leds controllers (without execution).
-        /// </summary>
-        private void SendDataToLedControllers()
-        {
-            _logger.Info("Send data to LEDs controller begin.");
-
-            //TODO: Do I need this?
-            //LEDsData ledsDataRight;
-            //LEDsData ledsDataLeft;
-
-            double coherenceLeftStrip = double.Parse(GetVariableValue("COHERENCE_LEFT_STRIP")) / 100;
-            double coherenceRightStrip = double.Parse(GetVariableValue("COHERENCE_RIGHT_STRIP")) / 100;
-            int flickerLeft = int.Parse(GetVariableValue("FLICKER_LEFT"));
-            int flickerRight = int.Parse(GetVariableValue("FLICKER_RIGHT"));
-
-            //The motion of the Yasakawa robot if needed as the current stimulus type (if is both visual&vestibular -3 or only vistibular-1).
-            switch (_currentTrialStimulusType)
-            {
-                case 0://none
-                    break;
-
-                case 1://vistibular only.
-                    break;
-
-                case 2://visual only.
-                case 3://vistibular and visual both.
-                case 4://vistibular and visual both with delta+ for visual.
-                       //TODO: Do I need this?
-                       /*case 5://vistibular and visual both with delta+ for vistibular.
-                           ledsDataRight = new LEDsData((byte)LEDBrightness, (byte)(LEDcolorRed), (byte)(LEDcolorGreen), (byte)(LEDcolorBlue), _ledSelectorRight.FillWithBinaryRandomCombination(PercentageOfTurnedOnLeds, coherenceRightStrip, flickerRight));
-                           _ledControllerRight.LEDsDataCommand = ledsDataRight;
-                           _ledControllerRight.SendData();
-                           ledsDataLeft = new LEDsData((byte)LEDBrightness, (byte)(LEDcolorRed), (byte)(LEDcolorGreen), (byte)(LEDcolorBlue), _ledSelectorLeft.FillWithBinaryRandomCombination(PercentageOfTurnedOnLeds, coherenceLeftStrip, flickerLeft));
-                           _ledControllerLeft.LEDsDataCommand = ledsDataLeft;
-                           _ledControllerLeft.SendData();
-                           break;*/
-
-                case 10://visual only in the dark.
-                case 12://will replace visual only in the dark.
-                    break;
-
-                case 11://combined in the dark.
-                case 13://will replace combined in the dark.
-                case 14://vistibular and visual both with delta+ for visual in the dark.
-                case 15://vistibular and visual both with delta+ for vistibular in the dark.
-                    break;
-
-                default://if there is no motion , make a delay of waiting the duration time (the time that should take the robot to move).
-                    break;
-            }
-
-            _logger.Info("Send data to LEDs controller end.");
-        }
-
-        /// <summary>
-        /// Executing the leds command (tell the controllers to execute the commands have sent to them before).
-        /// </summary>
-        private void ExecuteLedControllersCommand()
-        {
-            Task.Run(() =>
-            {
-                _logger.Info("New Data Leds Execution for COHERENCE frame for LedController1");
-                //TODO: Do I need this?
-                //_ledControllerRight.ExecuteAllFrames();
-            });
-
-            Task.Run(() =>
-            {
-                _logger.Info("New Data Leds Execution for COHERENCE frame for LedController2");
-                //TODO: Do I need this?
-                //_ledControllerLeft.ExecuteAllFrames();
-            });
-        }
-
         /// <summary>
         /// Writing the stimulus type to the AlphaOmega according to the current stimulus type.
         /// </summary>

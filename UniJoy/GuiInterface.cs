@@ -1750,25 +1750,7 @@ namespace UniJoy
             UpdateRightCheckBoxAvailability("REWARD_RIGHT_DURATION", "REWARD_LEFT_DURATION", equals);
             UpdateRightCheckBoxAvailability("REWARD_RIGHT_DELAY_SC", "REWARD_LEFT_DELAY_SC", equals);
             UpdateRightCheckBoxAvailability("REWARD_RIGHT_DURATION_SC", "REWARD_LEFT_DURATION_SC", equals);
-            UpdateRightCheckBoxAvailability("COHERENCE_RIGHT_STRIP", "COHERENCE_LEFT_STRIP", equals);
             UpdateRightCheckBoxAvailability("FLICKER_RIGHT", "FLICKER_LEFT", equals);
-        }
-
-        /// <summary>
-        /// Updates the cue radio buttons disable/enable status according to the cue checkbox status.
-        /// </summary>
-        public void UpdateCueGroupRadioButtons()
-        {
-            if ((_buttonbasesDictionary["GO_CUE_SOUND"] as CheckBox).Checked)
-            {
-                (_buttonbasesDictionary["CORRECT_CUE_SOUND"] as RadioButton).Enabled = true;
-                (_buttonbasesDictionary["BOTH_SIDE_CUE_SOUND"] as RadioButton).Enabled = true;
-            }
-            else
-            {
-                (_buttonbasesDictionary["CORRECT_CUE_SOUND"] as RadioButton).Enabled = false;
-                (_buttonbasesDictionary["BOTH_SIDE_CUE_SOUND"] as RadioButton).Enabled = false;
-            }
         }
 
         /// <summary>
@@ -1884,7 +1866,6 @@ namespace UniJoy
 
             //update if right equals to left according to the checkbox status.
             UpdateRightTextBoxesAvailability(_checkBoxRightAndLeftSame.Checked);
-            UpdateCueGroupRadioButtons();
         }
 
         /// <summary>
@@ -2139,13 +2120,9 @@ namespace UniJoy
         {
             _buttonbasesDictionary = new Dictionary<string, ButtonBase>();
 
-            _buttonbasesDictionary.Add("GO_CUE_SOUND", _checkBoxEnableGoCue);
-            _buttonbasesDictionary.Add("CORRECT_CUE_SOUND", _radiobuttonGoCueCorrectSide);
-            _buttonbasesDictionary.Add("BOTH_SIDE_CUE_SOUND", _radiobuttonGoCueBothSide);
             _buttonbasesDictionary.Add("ERROR_SOUND", _checkboxErrorSoundOn);
             _buttonbasesDictionary.Add("FIXATION_ONLY", _checkBoxFixationOnly);
             _buttonbasesDictionary.Add("RIGHT_LEFT_PARAMETERS_EQUALS", _checkBoxRightAndLeftSame);
-            _buttonbasesDictionary.Add("RR_DELTA", _checkboxRRDelta);
         }
 
         /// <summary>
