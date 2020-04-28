@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlLoop.cs" />
+    <Compile Include="EventWriters\IEventWriter.cs" />
     <Compile Include="ExcelProtocolConfigFileLoader.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="GuiInterface.cs">
@@ -75,6 +76,7 @@
     <Compile Include="GuiInterface.Designer.cs">
       <DependentUpon>GuiInterface.cs</DependentUpon>
     </Compile>
+    <Compile Include="EventWriters\LptEventWriter.cs" />
     <Compile Include="Network\ICommandsSender.cs" />
     <Compile Include="Network\UnityCommandsSender.cs" />
     <Compile Include="OnlinePsychGraphMaker.cs" />
