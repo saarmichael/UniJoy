@@ -64,7 +64,7 @@ namespace UniJoy
         /// The static variables list in double value presentation.
         /// The string is for the variable name.
         /// </summary>
-        private Dictionary<string, double> _staticVariablesList;
+        private Dictionary<string, List<double>> _staticVariablesList;
 
         /// <summary>
         /// The numbers of samples for each trajectory.
@@ -386,7 +386,7 @@ namespace UniJoy
         /// <summary>
         /// Transfer the control from the main gui to the control loop until a new gui event is handled by the user.
         /// </summary>
-        public void Start(Variables variablesList, List<Dictionary<string, double>> crossVaryingList, Dictionary<string, double> staticVariablesList, int frequency, ITrajectoryCreator trajectoryCreatorName)
+        public void Start(Variables variablesList, List<Dictionary<string, double>> crossVaryingList, Dictionary<string, List<double>> staticVariablesList, int frequency, ITrajectoryCreator trajectoryCreatorName)
         {
             //initialize variables.
             _variablesList = variablesList;
@@ -421,9 +421,9 @@ namespace UniJoy
             _onlinePsychGraphMaker.VaryingParametrsNames = GetVaryingVariablesList();
             _onlinePsychGraphMaker.HeadingDireactionRegion = new Region
             {
-                LowBound = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["low_bound"]._MoogParameter),
-                Increament = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["increament"]._MoogParameter),
-                HighBound = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["high_bound"]._MoogParameter)
+                LowBound = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["low_bound"].MoogParameter),
+                Increament = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["increament"].MoogParameter),
+                HighBound = double.Parse(_variablesList._variablesDictionary["HEADING_DIRECTION"]._description["high_bound"].MoogParameter)
             };
             _onlinePsychGraphMaker.InitSerieses();
 
@@ -1547,11 +1547,11 @@ namespace UniJoy
         /// <returns>The stimulus type.</returns>
         public int DetermineCurrentStimulusType()
         {
-            string stimulusTypeStatus = _variablesList._variablesDictionary["STIMULUS_TYPE"]._description["status"]._MoogParameter;
+            string stimulusTypeStatus = _variablesList._variablesDictionary["STIMULUS_TYPE"]._description["status"].MoogParameter;
             switch (stimulusTypeStatus)
             {
                 case "1"://static
-                    return int.Parse(_variablesList._variablesDictionary["STIMULUS_TYPE"]._description["parameters"]._MoogParameter);
+                    return int.Parse(_variablesList._variablesDictionary["STIMULUS_TYPE"]._description["parameters"].MoogParameter);
                 case "2"://varying
                 case "6"://Vector
                     return (int)(_crossVaryingVals[_currentVaryingTrialIndex]["STIMULUS_TYPE"]);
@@ -1568,21 +1568,6 @@ namespace UniJoy
             TrialTimings currentTrialTimings;
             currentTrialTimings.wStartDelay = DetermineTimeByVariable("START_DELAY");
 
-            // TODO: Maayan - Do I need this?
-            /*currentTrialTimings.wRewardCenterDelay = DetermineTimeByVariable("REWARD_CENTER_DELAY");
-            currentTrialTimings.wRewardRightDelay = DetermineTimeByVariable("REWARD_RIGHT_DELAY");
-            currentTrialTimings.wRewardLeftDelay = DetermineTimeByVariable("REWARD_LEFT_DELAY");
-            currentTrialTimings.wRewardLeftDelaySecondChance = DetermineTimeByVariable("REWARD_LEFT_DELAY_SC");
-            currentTrialTimings.wRewardRightDelaySecondChance = DetermineTimeByVariable("REWARD_RIGHT_DELAY_SC");
-
-            currentTrialTimings.wRewardCenterDuration = DetermineTimeByVariable("REWARD_CENTER_DURATION");
-            currentTrialTimings.wRewardRightDuration = DetermineTimeByVariable("REWARD_RIGHT_DURATION");
-            currentTrialTimings.wRewardLeftDuration = DetermineTimeByVariable("REWARD_LEFT_DURATION");
-            currentTrialTimings.wRewardLeftDurationSecondChance = DetermineTimeByVariable("REWARD_LEFT_DURATION");
-            currentTrialTimings.wRewardRightDurationSecondChance = DetermineTimeByVariable("REWARD_RIGHT_DURATION");
-
-            currentTrialTimings.wRewardToBackwardDelay = DetermineTimeByVariable("REWARD_BACKWARD_TIME");*/
-
             currentTrialTimings.wPreTrialTime = DetermineTimeByVariable("PRE_TRIAL_TIME");
 
             currentTrialTimings.wPostTrialTime = DetermineTimeByVariable("POST_TRIAL_TIME");
@@ -1592,9 +1577,6 @@ namespace UniJoy
             currentTrialTimings.wResponseTime = DetermineTimeByVariable("RESPONSE_TIME");
 
             currentTrialTimings.wDuration = DetermineTimeByVariable("STIMULUS_DURATION");
-
-            // TODO: Maayan - Do I need this?
-            //currentTrialTimings.wClueDelay = DetermineTimeByVariable("REWARD_CLUE_SOUND_DELAY");
 
             return currentTrialTimings;
         }
@@ -1613,8 +1595,8 @@ namespace UniJoy
             //if not found - it is random type varriable.
             if (timeValue == string.Empty)
             {
-                double lowTime = double.Parse(_variablesList._variablesDictionary[timeVarName]._description["low_bound"]._MoogParameter);
-                double highTime = double.Parse(_variablesList._variablesDictionary[timeVarName]._description["high_bound"]._MoogParameter);
+                double lowTime = double.Parse(_variablesList._variablesDictionary[timeVarName]._description["low_bound"].MoogParameter);
+                double highTime = double.Parse(_variablesList._variablesDictionary[timeVarName]._description["high_bound"].MoogParameter);
                 return RandomTimeUniformly(lowTime, highTime);
             }
 
@@ -1627,9 +1609,9 @@ namespace UniJoy
 
             foreach (string item in _variablesList._variablesDictionary.Keys)
             {
-                if (_variablesList._variablesDictionary[item]._description["status"]._MoogParameter[0].Equals("2"))
+                if (_variablesList._variablesDictionary[item]._description["status"].MoogParameter[0].Equals("2"))
                 {
-                    varyingVariablesNames.Add(_variablesList._variablesDictionary[item]._description["nice_name"]._MoogParameter[0].ToString());
+                    varyingVariablesNames.Add(_variablesList._variablesDictionary[item]._description["nice_name"].MoogParameter[0].ToString());
                 }
             }
 
@@ -1646,7 +1628,7 @@ namespace UniJoy
             try
             {
                 //detrmine the status of the variable type.
-                string variableStatus = _variablesList._variablesDictionary[parameterName]._description["status"]._MoogParameter;
+                string variableStatus = _variablesList._variablesDictionary[parameterName]._description["status"].MoogParameter;
 
 
                 //decide the time value of the time type according to it's status.
@@ -1654,7 +1636,7 @@ namespace UniJoy
                 {
                     case "0"://const
                     case "1"://static
-                        return _variablesList._variablesDictionary[parameterName]._description["parameters"]._MoogParameter;
+                        return _variablesList._variablesDictionary[parameterName]._description["parameters"].MoogParameter;
 
                     case "2"://varying
                     case "6":
@@ -1736,7 +1718,7 @@ namespace UniJoy
                     //move only R1 if delta is 0
                     double deltaHeading = 0;
                     if (_staticVariablesList.ContainsKey("DELTA"))
-                        deltaHeading = _staticVariablesList["DELTA"];
+                        deltaHeading = _staticVariablesList["DELTA"][0];
                     else if (_crossVaryingVals[_currentVaryingTrialIndex].Keys.Contains("DELTA"))
                         deltaHeading = _crossVaryingVals[_currentVaryingTrialIndex]["DELTA"];
                     //TODO: Do I need this?

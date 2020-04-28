@@ -39,7 +39,7 @@ namespace Trajectories
         /// The static variables list in double value presentation.
         /// The string is for the variable name.
         /// </summary>
-        private Dictionary<string, double> _staticVals;
+        private Dictionary<string, List<double>> _staticVals;
 
         /// <summary>
         /// The numbers of samples for each trajectory.
@@ -73,7 +73,7 @@ namespace Trajectories
         /// <param name="crossVaryingVals">Final list holds all the current cross varying vals by dictionary of variables with values for each line(trial) for both ratHouseParameters.</param>
         /// <param name="staticVariables">The static variables list in double value presentation.</param>
         /// <param name="frequency">The numbers of samples for each trajectory.</param>
-        public void SetTrajectoryAttributes(ITrajectoryCreator trajectoryCreator, Variables variableList, List<Dictionary<string, double>> crossVaryingVals, Dictionary<string, double> staticVariables, int frequency)
+        public void SetTrajectoryAttributes(ITrajectoryCreator trajectoryCreator, Variables variableList, List<Dictionary<string, double>> crossVaryingVals, Dictionary<string, List<double>> staticVariables, int frequency)
         {
             //set the variables.
             _variablesList = variableList;

@@ -156,18 +156,18 @@ namespace VaryingValuesGenerators
             {
                 Vector<double> oneVarVector;
 
-                if (item.Value._description["status"]._MoogParameter == "2")
+                if (item.Value._description["status"].MoogParameter == "2")
                 {
-                    double low_bound = double.Parse(item.Value._description["low_bound"]._MoogParameter);
-                    double high_bound = double.Parse(item.Value._description["high_bound"]._MoogParameter);
-                    double increament = double.Parse(item.Value._description["increament"]._MoogParameter);
+                    double low_bound = double.Parse(item.Value._description["low_bound"].MoogParameter);
+                    double high_bound = double.Parse(item.Value._description["high_bound"].MoogParameter);
+                    double increament = double.Parse(item.Value._description["increament"].MoogParameter);
 
                     //add the vector to the return list.
                     oneVarVector = CreateVectorFromBounds(low_bound, high_bound, increament);
                 }
                 else // equals "6"
                 {
-                    oneVarVector = CreateVectorFromStringVector(item.Value._description["parameters"]._MoogParameter);
+                    oneVarVector = CreateVectorFromStringVector(item.Value._description["parameters"].MoogParameter);
                 }
 
                 varyingVectorsList.Add(item.Key, oneVarVector);
