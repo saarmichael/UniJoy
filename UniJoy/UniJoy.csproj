@@ -104,6 +104,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InputOutputDeviceHandlers\InputOutputDeviceHandlers.csproj">
+      <Project>{F815A7D8-4A48-4F0F-A14E-622197F164CC}</Project>
+      <Name>InputOutputDeviceHandlers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MoogController\MoogController.csproj">
       <Project>{9ed96369-184d-42fd-b2be-715a406442f0}</Project>
       <Name>MoogController</Name>

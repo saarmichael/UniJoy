@@ -23,6 +23,8 @@ using System.IO;
 using UnijoyData.Shared.Commands;
 using UniJoy.Network;
 using UnijoyData.Shared.Data;
+using InputOutputDeviceHandlers.EventHandlers.EventWriters;
+using InputOutputDeviceHandlers.EventHandlers.EventTypes;
 
 namespace UniJoy
 {
@@ -156,9 +158,9 @@ namespace UniJoy
 
         //todo::replace that with EEG controller.
         /// <summary>
-        /// Controller for writing events for the AlphaOmega.
+        /// Controller for writing events for the EEG.
         /// </summary>
-        //private AlphaOmegaEventsWriter _alphaOmegaEventsWriter;
+        IEventWriter<UnijoyEvent> _evenstWriter;
 
         /// <summary>
         /// Indicated if the control loop should not make another trials.
@@ -325,9 +327,7 @@ namespace UniJoy
             //copy the logger reference to writing lof information
             _logger = logger;
 
-
-            //todo::add the EEG initializer
-            //_alphaOmegaEventsWriter = new AlphaOmegaEventsWriter("Dev1", "Port0", "Line3:7", "AlphaOmegaEventsChannels", "Port1", "Line3", "AlphaOmegaStrobeChannel", _logger);
+            _evenstWriter = new LptEventWriter(0);
             //_remoteController = new ThundermasterJoysticUserInputController(_logger);
             _remoteController = new KeyBoardUserInputController();
 
@@ -1043,13 +1043,12 @@ namespace UniJoy
 
             //throw new Exception();
 
-            //TODO:DELETE
             //write alpha omega that the stimulus start.
-            /*Task.Run(() =>
+            Task.Run(() =>
             {
-                WriteAlphaOmegaStimulusBegin();
+                WriteEventWriterStimulusBegin();
                 _trialEventRealTiming.Add("StimulusStart", _controlLoopTrialTimer.ElapsedMilliseconds);
-            });*/
+            });
 
             //execute the leds command if necessary.
             if (_currentTrialStimulusType == 2 ||
@@ -1229,7 +1228,7 @@ namespace UniJoy
             {
                 //send the AlphaOmega that motion backward starts.
                 //TODO: Do I need this?
-                //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.RobotStartMovingBackward);
+                _evenstWriter.WriteEvent(UnijoyEvent.MoogStartMovingBackward);
                 _trialEventRealTiming.Add("RobotStartMovingBackward", _controlLoopTrialTimer.ElapsedMilliseconds);
 
 
@@ -1323,7 +1322,7 @@ namespace UniJoy
         /// <summary>
         /// Writing the stimulus type to the AlphaOmega according to the current stimulus type.
         /// </summary>
-        private void WriteAlphaOmegaStimulusBegin()
+        private void WriteEventWriterStimulusBegin()
         {
             _logger.Info("Writing AlphaOmega stimulus event start");
 
@@ -1333,15 +1332,15 @@ namespace UniJoy
                 case 0://none
                     break;
                 case 1://vistibular only.
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart1);
+                    _evenstWriter.WriteEvent(UnijoyEvent.StimulusStart1);
                     break;
 
                 case 2://visual only.
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart2);
+                    _evenstWriter.WriteEvent(UnijoyEvent.StimulusStart2);
                     break;
 
                 case 3://vistibular and visual both.
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.StimulusStart3);
+                    _evenstWriter.WriteEvent(UnijoyEvent.StimulusStart3);
                     break;
 
                 default://if there is no motion , make a delay of waiting the duration time (the time that should take the robot to move).
@@ -1395,40 +1394,6 @@ namespace UniJoy
 
                 throw new ArgumentException("The current trial timing for robot movement is not a 0.1 multiplication than 1 second.",
                     "_currentTrialTimings.wDuration");
-            }
-        }
-
-        /// <summary>
-        /// Send Alpha Omega that a reward is given in the specific position.
-        /// </summary>
-        /// <param name="position">The position the reward is giiven at.</param>
-        private void SendAlphaOmegaRewardEvent(RewardPosition position)
-        {
-            switch (position)
-            {
-                //write that the rat get center reward to the AlphaOmega.
-                case RewardPosition.Center:
-                    //TODO: Do I need this?
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.CenterReward);
-                    _trialEventRealTiming.Add("CenterReward", _controlLoopTrialTimer.ElapsedMilliseconds);
-                    break;
-
-                //write that the rat get left reward to the AlphaOmega.
-                case RewardPosition.Left:
-                    //TODO: Do I need this?
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.LeftReward);
-                    _trialEventRealTiming.Add("LeftReward", _controlLoopTrialTimer.ElapsedMilliseconds);
-                    break;
-
-                //write that the rat get right reward to the AlphaOmega.
-                case RewardPosition.Right:
-                    //TODO: Do I need this?
-                    //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.RightReward);
-                    _trialEventRealTiming.Add("RightReward", _controlLoopTrialTimer.ElapsedMilliseconds);
-                    break;
-
-                default:
-                    break;
             }
         }
 
