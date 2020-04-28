@@ -1568,21 +1568,6 @@ namespace UniJoy
             TrialTimings currentTrialTimings;
             currentTrialTimings.wStartDelay = DetermineTimeByVariable("START_DELAY");
 
-            // TODO: Maayan - Do I need this?
-            /*currentTrialTimings.wRewardCenterDelay = DetermineTimeByVariable("REWARD_CENTER_DELAY");
-            currentTrialTimings.wRewardRightDelay = DetermineTimeByVariable("REWARD_RIGHT_DELAY");
-            currentTrialTimings.wRewardLeftDelay = DetermineTimeByVariable("REWARD_LEFT_DELAY");
-            currentTrialTimings.wRewardLeftDelaySecondChance = DetermineTimeByVariable("REWARD_LEFT_DELAY_SC");
-            currentTrialTimings.wRewardRightDelaySecondChance = DetermineTimeByVariable("REWARD_RIGHT_DELAY_SC");
-
-            currentTrialTimings.wRewardCenterDuration = DetermineTimeByVariable("REWARD_CENTER_DURATION");
-            currentTrialTimings.wRewardRightDuration = DetermineTimeByVariable("REWARD_RIGHT_DURATION");
-            currentTrialTimings.wRewardLeftDuration = DetermineTimeByVariable("REWARD_LEFT_DURATION");
-            currentTrialTimings.wRewardLeftDurationSecondChance = DetermineTimeByVariable("REWARD_LEFT_DURATION");
-            currentTrialTimings.wRewardRightDurationSecondChance = DetermineTimeByVariable("REWARD_RIGHT_DURATION");
-
-            currentTrialTimings.wRewardToBackwardDelay = DetermineTimeByVariable("REWARD_BACKWARD_TIME");*/
-
             currentTrialTimings.wPreTrialTime = DetermineTimeByVariable("PRE_TRIAL_TIME");
 
             currentTrialTimings.wPostTrialTime = DetermineTimeByVariable("POST_TRIAL_TIME");
@@ -1592,9 +1577,6 @@ namespace UniJoy
             currentTrialTimings.wResponseTime = DetermineTimeByVariable("RESPONSE_TIME");
 
             currentTrialTimings.wDuration = DetermineTimeByVariable("STIMULUS_DURATION");
-
-            // TODO: Maayan - Do I need this?
-            //currentTrialTimings.wClueDelay = DetermineTimeByVariable("REWARD_CLUE_SOUND_DELAY");
 
             return currentTrialTimings;
         }
