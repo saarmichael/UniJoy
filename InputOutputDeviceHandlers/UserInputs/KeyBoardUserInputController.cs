@@ -4,9 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UserInputControllers;
 
-namespace UserInputControllers
+using InputOutputDeviceHandlers.UserInputs;
+
+namespace InputOutputDeviceHandlers.UserInputs
 {
     public class KeyBoardUserInputController : IUserInputController
     {
@@ -23,22 +24,34 @@ namespace UserInputControllers
 
         public bool IsStartButtonPressed()
         {
-            return true;
-            return _inputStream.ReadByte() == 's';
-        }
 
-        public byte SubjectMovementChoice()
-        {
-            return 1;
-            int byteRead = _inputStream.ReadByte();
-            return (byte)
-                (byteRead == 'a' ? 1 :
-                (byteRead == 'b' ? 2 : 0));
+            int press =_inputStream.ReadByte();
+            while (press != -1)
+            {
+                if(press == 's')
+                {
+                    return true;
+                }
+
+                press = _inputStream.ReadByte();
+            }
+
+            return false;
         }
 
         public void FlushBuffer()
         {
             _inputStream.Flush();
+        }
+
+        public bool LoadButtonsMapping()
+        {
+            throw new NotImplementedException();
+        }
+
+        public PressType SubjectChoice()
+        {
+            throw new NotImplementedException();
         }
     }
 }

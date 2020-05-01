@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SlimDX.DirectInput;
 using SlimDX.XInput;
 
-namespace UserInputControllers
+namespace InputOutputDeviceHandlers.UserInputs.ThundermasterJoystick
 {
     public class ThundermasterJoystickController
     {

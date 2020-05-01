@@ -5,24 +5,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using log4net;
 using SharpDX.XInput;
 
-namespace UserInputControllers
+namespace InputOutputDeviceHandlers.UserInputs.ThundermasterJoystick
 {
     public class ThundermasterJoysticUserInputController: IUserInputController
     {
-        private ILog log;
         private Controller controller;
         private bool isConnected = false;
         private ThundermasterJoystickController _joystick;
-
-        public ThundermasterJoysticUserInputController(ILog logger = null)
-        {
-            log = logger;
-            Initialize();
-            _joystick = new ThundermasterJoystickController();
-        }
 
         public ThundermasterJoysticUserInputController()
         {
@@ -97,7 +88,7 @@ namespace UserInputControllers
 
         }
 
-        public byte SubjectMovementChoice()
+        public byte SubjectChoiceOLD()
         {
             //According to RatDecision enum: Left = 1 Right = 2, Up = 3, Down = 4
             int value = _joystick.KeyPressed();
@@ -107,12 +98,21 @@ namespace UserInputControllers
                 return (byte)value;
             }
             return 0;
-
         }
 
         public void FlushBuffer()
         {
+            throw new NotImplementedException();
+        }
 
+        public bool LoadButtonsMapping()
+        {
+            throw new NotImplementedException();
+        }
+
+        public PressType SubjectChoice()
+        {
+            throw new NotImplementedException();
         }
     }
 }

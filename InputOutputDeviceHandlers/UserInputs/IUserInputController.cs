@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UserInputControllers
+namespace InputOutputDeviceHandlers.UserInputs
 {
     public interface IUserInputController
     {
+        bool LoadButtonsMapping();
+
         bool IsStartButtonPressed();
 
-        byte SubjectMovementChoice();
+        PressType SubjectChoice();
 
         void FlushBuffer();
     }

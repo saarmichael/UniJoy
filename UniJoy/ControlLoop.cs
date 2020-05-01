@@ -8,7 +8,6 @@ using System.Diagnostics;
 using Trajectories;
 using Trajectories.TrajectoryCreators;
 using Params;
-using UserInputControllers;
 using WMPLib;
 using log4net;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -25,6 +24,8 @@ using UniJoy.Network;
 using UnijoyData.Shared.Data;
 using InputOutputDeviceHandlers.EventHandlers.EventWriters;
 using InputOutputDeviceHandlers.EventHandlers.EventTypes;
+using InputOutputDeviceHandlers.UserInputs;
+using InputOutputDeviceHandlers.UserInputs.GuiButtonsInput;
 
 namespace UniJoy
 {
@@ -329,8 +330,9 @@ namespace UniJoy
 
             _evenstWriter = new LptEventWriter(0);
             //_remoteController = new ThundermasterJoysticUserInputController(_logger);
-            _remoteController = new KeyBoardUserInputController();
+            //_remoteController = new KeyBoardUserInputController();
 
+            _remoteController = new WindowButtonsInput();
             _stopAfterTheEndOfTheCurrentTrial = false;
 
             //configure  rge timer for the sampling Noldus rat response direction.
@@ -1715,7 +1717,8 @@ namespace UniJoy
             //update the variable saving the current rat head direction.
             //_currentRatResponse = _ratResponseController.ReadSingleSamplePort();
             // Maayan edit
-            _currentRatResponse = _remoteController.SubjectMovementChoice();
+            //todo:fix the kiskish with the byte conversion.
+            _currentRatResponse = (byte)_remoteController.SubjectChoice();
 
             //Console.Beep(10000,500);
 
