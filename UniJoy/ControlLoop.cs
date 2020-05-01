@@ -8,7 +8,6 @@ using System.Diagnostics;
 using Trajectories;
 using Trajectories.TrajectoryCreators;
 using Params;
-using UserInputControllers;
 using WMPLib;
 using log4net;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -25,6 +24,7 @@ using UniJoy.Network;
 using UnijoyData.Shared.Data;
 using InputOutputDeviceHandlers.EventHandlers.EventWriters;
 using InputOutputDeviceHandlers.EventHandlers.EventTypes;
+using InputOutputDeviceHandlers.UserInputs;
 
 namespace UniJoy
 {

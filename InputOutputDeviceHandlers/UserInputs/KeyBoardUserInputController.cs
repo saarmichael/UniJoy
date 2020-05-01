@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UserInputControllers;
 
-namespace UserInputControllers
+namespace InputOutputDeviceHandlers.UserInputs
 {
     public class KeyBoardUserInputController : IUserInputController
     {

@@ -5,24 +5,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using log4net;
 using SharpDX.XInput;
 
-namespace UserInputControllers
+namespace InputOutputDeviceHandlers.UserInputs.ThundermasterJoystick
 {
     public class ThundermasterJoysticUserInputController: IUserInputController
     {
-        private ILog log;
         private Controller controller;
         private bool isConnected = false;
         private ThundermasterJoystickController _joystick;
-
-        public ThundermasterJoysticUserInputController(ILog logger = null)
-        {
-            log = logger;
-            Initialize();
-            _joystick = new ThundermasterJoystickController();
-        }
 
         public ThundermasterJoysticUserInputController()
         {
