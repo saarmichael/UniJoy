@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -7,10 +8,14 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
 {
     public partial class WindowButtonsInput:IUserInputController
     {
+        private ConcurrentQueue<PressType> _pressesQueue;
+
         public WindowButtonsInput()
         {
             _responseForm = new Form();
             _responseForm.SizeChanged += _responseForm_SizeChanged;
+
+            _pressesQueue = new ConcurrentQueue<PressType>();
 
             AddPressButtoms();
             _responseForm.Show();
@@ -18,12 +23,22 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
 
         public void FlushBuffer()
         {
-            throw new NotImplementedException();
+            while (_pressesQueue.TryDequeue(out _))
+            {
+
+            }
+           
         }
 
         public bool IsStartButtonPressed()
         {
-            throw new NotImplementedException();
+            PressType pressType;
+            while (_pressesQueue.TryDequeue(out pressType) && pressType!=PressType.Start)
+            {
+
+            }
+
+            return pressType == PressType.Start;
         }
 
         public bool LoadButtonsMapping()
@@ -31,9 +46,12 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
             throw new NotImplementedException();
         }
 
-        public byte SubjectChoice()
+        public PressType SubjectChoice()
         {
-            throw new NotImplementedException();
+            PressType pressType = PressType.None;
+            _pressesQueue.TryDequeue(out pressType);
+
+            return pressType;
         }
     }
 
@@ -95,27 +113,27 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
 
         private void UpButtom_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _pressesQueue.Enqueue(PressType.Up);
         }
 
         private void DownButttom_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _pressesQueue.Enqueue(PressType.Down);
         }
 
         private void LeftButtom_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _pressesQueue.Enqueue(PressType.Left);
         }
 
         private void RightButtom_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _pressesQueue.Enqueue(PressType.Right);
         }
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _pressesQueue.Enqueue(PressType.Start);
         }
     }
 }
