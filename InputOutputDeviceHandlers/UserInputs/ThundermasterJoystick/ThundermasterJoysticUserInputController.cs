@@ -88,7 +88,7 @@ namespace InputOutputDeviceHandlers.UserInputs.ThundermasterJoystick
 
         }
 
-        public byte SubjectChoice()
+        public byte SubjectChoiceOLD()
         {
             //According to RatDecision enum: Left = 1 Right = 2, Up = 3, Down = 4
             int value = _joystick.KeyPressed();
@@ -98,7 +98,6 @@ namespace InputOutputDeviceHandlers.UserInputs.ThundermasterJoystick
                 return (byte)value;
             }
             return 0;
-
         }
 
         public void FlushBuffer()
@@ -107,6 +106,11 @@ namespace InputOutputDeviceHandlers.UserInputs.ThundermasterJoystick
         }
 
         public bool LoadButtonsMapping()
+        {
+            throw new NotImplementedException();
+        }
+
+        public PressType SubjectChoice()
         {
             throw new NotImplementedException();
         }

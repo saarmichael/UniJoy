@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using InputOutputDeviceHandlers.UserInputs;
+
 namespace InputOutputDeviceHandlers.UserInputs
 {
     public class KeyBoardUserInputController : IUserInputController
@@ -37,21 +39,17 @@ namespace InputOutputDeviceHandlers.UserInputs
             return false;
         }
 
-        public byte SubjectChoice()
-        {
-            return 1;
-            int byteRead = _inputStream.ReadByte();
-            return (byte)
-                (byteRead == 'a' ? 1 :
-                (byteRead == 'b' ? 2 : 0));
-        }
-
         public void FlushBuffer()
         {
             _inputStream.Flush();
         }
 
         public bool LoadButtonsMapping()
+        {
+            throw new NotImplementedException();
+        }
+
+        public PressType SubjectChoice()
         {
             throw new NotImplementedException();
         }

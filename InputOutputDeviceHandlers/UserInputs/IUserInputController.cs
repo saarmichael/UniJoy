@@ -12,7 +12,7 @@ namespace InputOutputDeviceHandlers.UserInputs
 
         bool IsStartButtonPressed();
 
-        byte SubjectChoice();
+        PressType SubjectChoice();
 
         void FlushBuffer();
     }
