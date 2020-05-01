@@ -1679,30 +1679,6 @@ namespace UniJoy
             }
         }
 
-        /// <summary>
-        /// An event raises every [Properties.Settings.Default.NoldusRatReponseSampleRate] second for sampling the rat head direction.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="args">Args.</param>
-        private void SetRatReponse(object sender, System.Timers.ElapsedEventArgs args)
-        {
-            //TODO: Do I need this?
-            //update the variable saving the current rat head direction.
-            //_currentRatResponse = _ratResponseController.ReadSingleSamplePort();
-            // Maayan edit
-            //todo:fix the kiskish with the byte conversion.
-            _currentRatResponse = (byte)_remoteController.SubjectChoice();
-
-            //Console.Beep(10000,500);
-
-#if UPDATE_GLOBAL_DETAILS_LIST_VIEW
-            //only if the system is running , update the interactive window.
-            if(Globals._systemState.Equals(SystemState.RUNNING))
-                _mainGuiInterfaceControlsDictionary["SetNoldusRatResponseInteractivePanel"].BeginInvoke(_mainGuiControlsDelegatesDictionary["SetNoldusRatResponseInteractivePanel"] , _currentRatResponse);
-#endif
-        }
-        #endregion
-
         #region EVENTS
         /// <summary>
         /// Handler for raising interval time evemt for the water fill estimation panel.
