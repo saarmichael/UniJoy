@@ -7,13 +7,6 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
 {
     public partial class WindowButtonsInput:IUserInputController
     {
-        Form _responseForm;
-        Button _startButtom;
-        Button _rightButtom;
-        Button _leftButtom;
-        Button _downButttom;
-        Button _upButtom;
-
         public WindowButtonsInput()
         {
             _responseForm = new Form();
@@ -47,6 +40,14 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
     //partial class for the gui events and gui initializations.
     partial class WindowButtonsInput
     {
+
+        Form _responseForm;
+        Button _startButtom;
+        Button _rightButtom;
+        Button _leftButtom;
+        Button _downButttom;
+        Button _upButtom;
+
         private void _responseForm_SizeChanged(object sender, EventArgs e)
         {
             ChangePressButtonsLocations();
