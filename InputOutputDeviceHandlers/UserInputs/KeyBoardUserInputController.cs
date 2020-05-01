@@ -22,11 +22,22 @@ namespace InputOutputDeviceHandlers.UserInputs
 
         public bool IsStartButtonPressed()
         {
-            return true;
-            return _inputStream.ReadByte() == 's';
+
+            int press =_inputStream.ReadByte();
+            while (press != -1)
+            {
+                if(press == 's')
+                {
+                    return true;
+                }
+
+                press = _inputStream.ReadByte();
+            }
+
+            return false;
         }
 
-        public byte SubjectMovementChoice()
+        public byte SubjectChoice()
         {
             return 1;
             int byteRead = _inputStream.ReadByte();
@@ -38,6 +49,11 @@ namespace InputOutputDeviceHandlers.UserInputs
         public void FlushBuffer()
         {
             _inputStream.Flush();
+        }
+
+        public bool LoadButtonsMapping()
+        {
+            throw new NotImplementedException();
         }
     }
 }

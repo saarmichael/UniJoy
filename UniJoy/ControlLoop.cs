@@ -1715,7 +1715,7 @@ namespace UniJoy
             //update the variable saving the current rat head direction.
             //_currentRatResponse = _ratResponseController.ReadSingleSamplePort();
             // Maayan edit
-            _currentRatResponse = _remoteController.SubjectMovementChoice();
+            _currentRatResponse = _remoteController.SubjectChoice();
 
             //Console.Beep(10000,500);
 

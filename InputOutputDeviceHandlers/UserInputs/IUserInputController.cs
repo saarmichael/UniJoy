@@ -8,9 +8,11 @@ namespace InputOutputDeviceHandlers.UserInputs
 {
     public interface IUserInputController
     {
+        bool LoadButtonsMapping();
+
         bool IsStartButtonPressed();
 
-        byte SubjectMovementChoice();
+        byte SubjectChoice();
 
         void FlushBuffer();
     }
