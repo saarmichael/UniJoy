@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
 {
-    public class WindowButtonsInput:IUserInputController
+    public partial class WindowButtonsInput:IUserInputController
     {
         Form _responseForm;
         Button _startButtom;
@@ -23,6 +23,30 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
             _responseForm.Show();
         }
 
+        public void FlushBuffer()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsStartButtonPressed()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool LoadButtonsMapping()
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte SubjectChoice()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    //partial class for the gui events and gui initializations.
+    partial class WindowButtonsInput
+    {
         private void _responseForm_SizeChanged(object sender, EventArgs e)
         {
             ChangePressButtonsLocations();
@@ -30,27 +54,27 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
 
         private void AddPressButtoms()
         {
-             _startButtom = new Button();
+            _startButtom = new Button();
             _startButtom.Text = "Start";
             _startButtom.Click += StartButton_Click;
             _responseForm.Controls.Add(_startButtom);
 
-             _rightButtom = new Button();
+            _rightButtom = new Button();
             _rightButtom.Text = "Right";
             _rightButtom.Click += RightButtom_Click;
             _responseForm.Controls.Add(_rightButtom);
 
-             _leftButtom = new Button();
+            _leftButtom = new Button();
             _leftButtom.Text = "Left";
             _leftButtom.Click += LeftButtom_Click;
             _responseForm.Controls.Add(_leftButtom);
 
-             _downButttom = new Button();
+            _downButttom = new Button();
             _downButttom.Text = "Down";
             _downButttom.Click += DownButttom_Click;
             _responseForm.Controls.Add(_downButttom);
 
-             _upButtom = new Button();
+            _upButtom = new Button();
             _upButtom.Text = "Up";
             _upButtom.Click += UpButtom_Click;
             _responseForm.Controls.Add(_upButtom);
@@ -61,11 +85,11 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
 
         private void ChangePressButtonsLocations()
         {
-            _startButtom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width / 2 - _startButtom.Size.Width/2, _responseForm.ClientSize.Height / 2);
+            _startButtom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width / 2 - _startButtom.Size.Width / 2, _responseForm.ClientSize.Height / 2);
             _rightButtom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width - _rightButtom.Size.Width, _responseForm.ClientSize.Height / 2);
             _leftButtom.Location = new System.Drawing.Point(0, _responseForm.ClientSize.Height / 2);
-            _downButttom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width / 2 - _downButttom.Size.Width/2, _responseForm.ClientSize.Height-_downButttom.Size.Height);
-            _upButtom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width / 2 - _upButtom.Size.Width/2, 0);
+            _downButttom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width / 2 - _downButttom.Size.Width / 2, _responseForm.ClientSize.Height - _downButttom.Size.Height);
+            _upButtom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width / 2 - _upButtom.Size.Width / 2, 0);
         }
 
         private void UpButtom_Click(object sender, EventArgs e)
@@ -89,26 +113,6 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
         }
 
         private void StartButton_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void FlushBuffer()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsStartButtonPressed()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool LoadButtonsMapping()
-        {
-            throw new NotImplementedException();
-        }
-
-        public byte SubjectChoice()
         {
             throw new NotImplementedException();
         }
