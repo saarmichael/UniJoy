@@ -621,7 +621,6 @@ namespace UniJoy
             if (_cntrlLoop != null)
             {
                 _cntrlLoop.Stop();
-                _cntrlLoop.Dispose();
             }
         }
         #endregion GLOBAL_EVENTS_HANDLE_FUNCTIONS

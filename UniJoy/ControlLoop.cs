@@ -34,7 +34,7 @@ namespace UniJoy
     /// It calls all the needed other inerfaces to make what's needed to be created.
     /// The function is called by the GuiInterface after the statButton is clicked.
     /// </summary>
-    public class ControlLoop : IDisposable
+    public class ControlLoop
     {
         const bool UPDATE_GLOBAL_DETAILS_LIST_VIEW = false;
 
@@ -231,12 +231,6 @@ namespace UniJoy
 
         public bool IsMoogConnected { get; set; }
 
-        //todo::check if needed for the response box
-        /// <summary>
-        /// Timer for raising event to sample the Noldus reponse direction and store it in _currentRatResponse.
-        /// </summary>
-        private System.Timers.Timer _ratSampleResponseTimer;
-
         /// <summary>
         /// The SavedDataMaker object to create new result file for each experiment.
         /// </summary>
@@ -335,12 +329,6 @@ namespace UniJoy
             _remoteController = new WindowButtonsInput();
             _stopAfterTheEndOfTheCurrentTrial = false;
 
-            //configure  rge timer for the sampling Noldus rat response direction.
-            _ratSampleResponseTimer = new System.Timers.Timer(Properties.Settings.Default.NoldusRatReponseSampleRate);
-            //todo::this line should be commented, check if can beautify.
-            //_ratSampleResponseTimer.Elapsed += SetRatReponse;
-
-
             //init the trial events details.
             _trialEventRealTiming = new Dictionary<string, double>();
             _controlLoopTrialTimer = new Stopwatch();
@@ -367,18 +355,6 @@ namespace UniJoy
             _windowsMediaPlayer = new WindowsMediaPlayer();
 
             Task.Run(() => TryConnectToUnityEngine());
-        }
-
-        /// <summary>
-        /// Clear all the control loop items and timers.
-        /// </summary>
-        public void Dispose()
-        {
-            //stop the timer for sampling the rat Noldus response.
-            _ratSampleResponseTimer.Stop();
-
-            //remove the timer for rat Noldus response.
-            //_ratSampleResponseTimer.Elapsed -= SetRatReponse;
         }
         #endregion CONTRUCTORS
 
@@ -438,7 +414,6 @@ namespace UniJoy
             //run the main control loop function in other thread from the main thread ( that handling events and etc).
             _stopAfterTheEndOfTheCurrentTrial = false;
             Globals._systemState = SystemState.RUNNING;
-            _ratSampleResponseTimer.Start();
             Task.Run(() => MainControlLoop());
         }
 
@@ -756,7 +731,6 @@ namespace UniJoy
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            _ratSampleResponseTimer.Elapsed += SetRatReponse;
             //time to wait for the moving rat response. if decided about a side so break and return the decision and update the _totalCorrectAnsers.
             while (sw.ElapsedMilliseconds < (int)(1000 * _currentTrialTimings.wResponseTime))
             {
@@ -881,7 +855,6 @@ namespace UniJoy
                     return new Tuple<RatDecison, bool>(RatDecison.Right, false);
                 }
             }
-            _ratSampleResponseTimer.Elapsed -= SetRatReponse;
 
             //send command to UnityEngine that it should clean all it's rendered data.
             _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand, VisualOperationCommand.CleanScreen);
