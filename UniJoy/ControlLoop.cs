@@ -197,7 +197,7 @@ namespace UniJoy
         /// The current rat sampling response come from the Noldus.
         /// The sampling rate is readen from solution settings configuration.
         /// </summary>
-        private byte _currentRatResponse;
+        private byte _currentUserResponse;
 
         /// <summary>
         /// The rat decision about the current trial stimulus direction.
@@ -734,7 +734,9 @@ namespace UniJoy
             //time to wait for the moving rat response. if decided about a side so break and return the decision and update the _totalCorrectAnsers.
             while (sw.ElapsedMilliseconds < (int)(1000 * _currentTrialTimings.wResponseTime))
             {
-                if (_currentRatResponse == (byte)RatDecison.Left)
+                _currentUserResponse = (byte)_remoteController.SubjectChoice();
+
+                if (_currentUserResponse == (byte)RatDecison.Left)
                 {
                     Console.Beep(5000, 500);
 
@@ -794,7 +796,7 @@ namespace UniJoy
                     return new Tuple<RatDecison, bool>(RatDecison.Left, false);
                 }
 
-                else if (_currentRatResponse == (byte)RatDecison.Right)
+                else if (_currentUserResponse == (byte)RatDecison.Right)
                 {
                     Console.Beep(10000, 500);
 
