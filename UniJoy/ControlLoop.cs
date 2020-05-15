@@ -732,6 +732,7 @@ namespace UniJoy
 
             DetermineCurrentStimulusAnswer();
 
+            _remoteController.FlushBuffer();
             Stopwatch sw = new Stopwatch();
             sw.Start();
             //time to wait for the moving rat response. if decided about a side so break and return the decision and update the _totalCorrectAnsers.
