@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IVaryingValuesGenerator.cs" />
+    <Compile Include="VaryingValuesGeneratorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VaryingValuesGenerator.cs" />
     <Compile Include="VaryingValuesGeneratorHeadingDiscrimnation.cs" />

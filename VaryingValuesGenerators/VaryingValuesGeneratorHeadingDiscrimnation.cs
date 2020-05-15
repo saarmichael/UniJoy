@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace VaryingValuesGenerators
 {
-    public class VaryingValuesGeneratorHeadingDiscrimination : IVaryingValuesGenerator
+    public class VaryingValuesGeneratorHeadingDiscrimination : VaryingValuesGeneratorBase
     {
         private bool _containsStimulusType0;
 

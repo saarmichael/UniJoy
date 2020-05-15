@@ -57,7 +57,7 @@ namespace UniJoy
         /// <summary>
         /// Holds the AcrossVectorValuesGenerator generator.
         /// </summary>
-        private IVaryingValuesGenerator _acrossVectorValuesGenerator;
+        private VaryingValuesGeneratorBase _acrossVectorValuesGenerator;
 
         /// <summary>
         /// Holds the StaticValuesGenerator generator.
@@ -198,7 +198,7 @@ namespace UniJoy
         /// Decide which of the VaryingVectorsGenerator to call by the protocol type.
         /// </summary>
         /// <returns>The mathed IVaryingVectorGenerator for the protocol type.</returns>
-        private IVaryingValuesGenerator DecideVaryinVectorsGeneratorByProtocolName()
+        private VaryingValuesGeneratorBase DecideVaryinVectorsGeneratorByProtocolName()
         {
             //take the name before the .xlsx and the generic name before the additional name (if added with '-' char).
             switch (_selectedProtocolName)

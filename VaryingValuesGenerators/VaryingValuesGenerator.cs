@@ -12,7 +12,7 @@ namespace VaryingValuesGenerators
     /// This class attempt to create all the needed trials  for the Azimuth1D protocol and the ThreeStepAdaptation protocol.
     /// parmaeters for the whole experiment according to the protocol and th GuiInterfae inputs.
     /// </summary>
-    public class VaryingValuesGenerator : IVaryingValuesGenerator
+    public class VaryingValuesGenerator : VaryingValuesGeneratorBase
     {
         #region CONSTRUCTOR
         /// <summary>

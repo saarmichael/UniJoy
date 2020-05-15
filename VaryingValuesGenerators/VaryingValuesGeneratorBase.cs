@@ -8,7 +8,7 @@ using Params;
 
 namespace VaryingValuesGenerators
 {
-    public abstract class IVaryingValuesGenerator
+    public abstract class VaryingValuesGeneratorBase
     {
         #region ATTRIBUTES
         /// <summary>
