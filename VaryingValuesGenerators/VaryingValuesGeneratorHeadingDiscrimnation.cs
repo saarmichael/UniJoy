@@ -186,13 +186,17 @@ namespace VaryingValuesGenerators
                         _containsStimulusType0 = true;
                     }
                     else
+                    {
                         oneVarVector = CreateVectorFromBounds(low_bound, high_bound, increament);
+                    }
                 }
                 else // equals "6"
                 {
                     string[] splittedVectorValues = item.Value._description["parameters"].MoogParameter.Split(' ');
                     if (splittedVectorValues.Contains("0"))
+                    {
                         _containsStimulusType0 = true;
+                    }
                     oneVarVector = CreateVectorFromStringVector(string.Join(" ", splittedVectorValues.Where(s => s != "0")));
                 }
 
@@ -202,48 +206,6 @@ namespace VaryingValuesGenerators
 
             return varyingVectorsList;
         }
-
-        /// <summary>
-        /// Creates a vector include values from the selected bounds.
-        /// </summary>
-        /// <param name="lowBound">The low bound to start with.</param>
-        /// <param name="highBound">The high bound to end with.</param>
-        /// <param name="increment">The increament between each elemrnt in the generated vector.</param>
-        /// <returns>The generated vector from the input bounds.</returns>
-        public override Vector<double> CreateVectorFromBounds(double lowBound, double highBound, double increment)
-        {
-            Vector<double> createdVector = Vector<double>.Build.Dense((int)((highBound - lowBound) / increment + 1));
-            int index = 0;
-
-            while (lowBound <= highBound)
-            {
-                createdVector.At(index, lowBound);
-                lowBound += increment;
-                index++;
-            }
-
-            return createdVector;
-        }
-
-        /// <summary>
-        /// Converts a tring numbers array to a double Vector.
-        /// </summary>
-        /// <param name="vector">The string vector nums.</param>
-        /// <returns>The double vector.</returns>
-        public Vector<double> CreateVectorFromStringVector(string vector)
-        {
-            string[] seperatedValues = vector.Split(' ');
-
-            double[] seperatedDoubleValues = new double[seperatedValues.Length];
-
-            for (int i = 0; i < seperatedValues.Length; i++)
-            {
-                seperatedDoubleValues[i] = double.Parse(seperatedValues[i]);
-            }
-
-            return Vector<double>.Build.Dense(seperatedDoubleValues);
-        }
-
         #endregion FUNCTIONS
     }
 }
