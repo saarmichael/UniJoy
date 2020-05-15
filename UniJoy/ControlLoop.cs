@@ -34,7 +34,7 @@ namespace UniJoy
     /// It calls all the needed other inerfaces to make what's needed to be created.
     /// The function is called by the GuiInterface after the statButton is clicked.
     /// </summary>
-    public class ControlLoop : IDisposable
+    public class ControlLoop
     {
         const bool UPDATE_GLOBAL_DETAILS_LIST_VIEW = false;
 
@@ -197,17 +197,17 @@ namespace UniJoy
         /// The current rat sampling response come from the Noldus.
         /// The sampling rate is readen from solution settings configuration.
         /// </summary>
-        private byte _currentRatResponse;
+        private PressType _currentUserResponse;
 
         /// <summary>
         /// The rat decision about the current trial stimulus direction.
         /// </summary>
-        private RatDecison _currentRatDecision;
+        private PressType _currentRatDecision;
 
         /// <summary>
         /// The decision the rat should choose.
         /// </summary>
-        private RatDecison _correctDecision;
+        private PressType _correctDecision;
 
         /// <summary>
         /// The selected rat name (that makes the experiment).
@@ -230,12 +230,6 @@ namespace UniJoy
         public int NumOfStickOn { get; set; }
 
         public bool IsMoogConnected { get; set; }
-
-        //todo::check if needed for the response box
-        /// <summary>
-        /// Timer for raising event to sample the Noldus reponse direction and store it in _currentRatResponse.
-        /// </summary>
-        private System.Timers.Timer _ratSampleResponseTimer;
 
         /// <summary>
         /// The SavedDataMaker object to create new result file for each experiment.
@@ -335,12 +329,6 @@ namespace UniJoy
             _remoteController = new WindowButtonsInput();
             _stopAfterTheEndOfTheCurrentTrial = false;
 
-            //configure  rge timer for the sampling Noldus rat response direction.
-            _ratSampleResponseTimer = new System.Timers.Timer(Properties.Settings.Default.NoldusRatReponseSampleRate);
-            //todo::this line should be commented, check if can beautify.
-            //_ratSampleResponseTimer.Elapsed += SetRatReponse;
-
-
             //init the trial events details.
             _trialEventRealTiming = new Dictionary<string, double>();
             _controlLoopTrialTimer = new Stopwatch();
@@ -367,18 +355,6 @@ namespace UniJoy
             _windowsMediaPlayer = new WindowsMediaPlayer();
 
             Task.Run(() => TryConnectToUnityEngine());
-        }
-
-        /// <summary>
-        /// Clear all the control loop items and timers.
-        /// </summary>
-        public void Dispose()
-        {
-            //stop the timer for sampling the rat Noldus response.
-            _ratSampleResponseTimer.Stop();
-
-            //remove the timer for rat Noldus response.
-            //_ratSampleResponseTimer.Elapsed -= SetRatReponse;
         }
         #endregion CONTRUCTORS
 
@@ -438,7 +414,6 @@ namespace UniJoy
             //run the main control loop function in other thread from the main thread ( that handling events and etc).
             _stopAfterTheEndOfTheCurrentTrial = false;
             Globals._systemState = SystemState.RUNNING;
-            _ratSampleResponseTimer.Start();
             Task.Run(() => MainControlLoop());
         }
 
@@ -468,7 +443,7 @@ namespace UniJoy
 
             Task.Run(() => MainControlLoop());
         }
-        #endregion
+        #endregion GUI_COMMANDS
 
         #region STAGES_FUNCTION
         public void MainControlLoop()
@@ -529,14 +504,15 @@ namespace UniJoy
                         {
                             {
                                 //update the state of the rat decision.
-                                _currentRatDecision = RatDecison.DurationTime;
+                                //todo::chnage that _currentRatDecision
+                                //_currentRatDecision = RatDecison.DurationTime;
 
                                 //moving the robot with duration time , and checking for the stability of the head in the center.
                                 if (MovingTheRobotDurationWithHeadCenterStabilityStage())
                                 {
                                     //update the number of total head in the center with stability during the duration time.
                                     _totalHeadStabilityInCenterDuringDurationTime++;
-                                    _currentRatDecision = RatDecison.PassDurationTime;
+                                    //_currentRatDecision = RatDecison.PassDurationTime;
 
                                     {
                                         //wait the rat to response to the movement during the response time.
@@ -617,7 +593,9 @@ namespace UniJoy
             _currentTrialStimulusType = DetermineCurrentStimulusType();
 
             //set the reposne to the stimulus direction as no entry to descision stage (and change it after if needed as well).
-            _currentRatDecision = RatDecison.NoEntryToResponseStage;
+            //todo::chnage that _currentRatDecision
+            //_currentRatDecision = RatDecison.NoEntryToResponseStage;
+
             //set the auto option to default values.
             _autosOptionsInRealTime = new AutosOptions();
             //initialize the trial spcial mode options.
@@ -754,13 +732,15 @@ namespace UniJoy
 
             DetermineCurrentStimulusAnswer();
 
+            _remoteController.FlushBuffer();
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            _ratSampleResponseTimer.Elapsed += SetRatReponse;
             //time to wait for the moving rat response. if decided about a side so break and return the decision and update the _totalCorrectAnsers.
             while (sw.ElapsedMilliseconds < (int)(1000 * _currentTrialTimings.wResponseTime))
             {
-                if (_currentRatResponse == (byte)RatDecison.Left)
+                _currentUserResponse = _remoteController.SubjectChoice();
+
+                if (_currentUserResponse.Equals(PressType.Left))
                 {
                     Console.Beep(5000, 500);
 
@@ -769,7 +749,7 @@ namespace UniJoy
 
                     //update the current rat decision state.
                     //Console.Beep(10000, 100);
-                    _currentRatDecision = RatDecison.Left;
+                    _currentRatDecision = PressType.Left;
 
                     //add the response real time to the real times dictionary.
                     _trialEventRealTiming.Add("RatDecision", _controlLoopTrialTimer.ElapsedMilliseconds);
@@ -778,7 +758,7 @@ namespace UniJoy
                     //write the event that te rat enter it's head to the left to the AlphaOmega.
                     //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.HeadEnterLeft);
 
-                    if (_correctDecision.Equals(RatDecison.Left))
+                    if (_correctDecision.Equals(PressType.Left))
                     {
                         //increase the total correct answers.
                         _totalCorrectAnswers++;
@@ -820,12 +800,12 @@ namespace UniJoy
                     return new Tuple<RatDecison, bool>(RatDecison.Left, false);
                 }
 
-                else if (_currentRatResponse == (byte)RatDecison.Right)
+                else if (_currentUserResponse.Equals(PressType.Right))
                 {
                     Console.Beep(10000, 500);
 
                     //update current rat decision state.
-                    _currentRatDecision = RatDecison.Right;
+                    _currentRatDecision = PressType.Right;
 
                     //increase the total choices for wromg or correct choices (some choices).
                     _totalChoices++;
@@ -838,7 +818,7 @@ namespace UniJoy
                     //write the event that te rat enter it's head to the right to the AlphaOmega.
                     //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.HeadEnterRight);
 
-                    if (_correctDecision.Equals(RatDecison.Right))
+                    if (_correctDecision.Equals(PressType.Right))
                     {
                         //increase the total coreect answers.
                         _totalCorrectAnswers++;
@@ -881,13 +861,12 @@ namespace UniJoy
                     return new Tuple<RatDecison, bool>(RatDecison.Right, false);
                 }
             }
-            _ratSampleResponseTimer.Elapsed -= SetRatReponse;
 
             //send command to UnityEngine that it should clean all it's rendered data.
             _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand, VisualOperationCommand.CleanScreen);
 
             _logger.Info("ResponseTimeStage ended. RatDecison = RatDecison.NoDecision; Correct = False.");
-            _currentRatDecision = RatDecison.NoDecision;
+            _currentRatDecision = PressType.None;
             return new Tuple<RatDecison, bool>(RatDecison.NoDecision, false);
         }
 
@@ -1291,7 +1270,8 @@ namespace UniJoy
                         ProtocolName = ProtocolFullName,
                         RatName = RatName,
                         StudentName = StudentName,
-                        RatDecison = _currentRatDecision,
+                        //todo::chnage that _currentRatDecision
+                        //RatDecison = _currentRatDecision,
                         TrialNum = _totalHeadStabilityInCenterDuringDurationTime + _totalHeadFixationBreaks,
                         StickOnNumber = NumOfStickOn,
                         NumOfRepetitions = NumOfRepetitions,
@@ -1318,7 +1298,7 @@ namespace UniJoy
             //todo::check what is trial succedd in Moog terms - no response is OK?
             return trialSucceed;
         }
-        #endregion
+        #endregion STAGES_FUNCTION
 
         #region STAGES_ADDIION_FUNCTION
         /// <summary>
@@ -1359,14 +1339,14 @@ namespace UniJoy
             //if stim tupe 0 chose uniformly random side.
             if (GetVariableValue("STIMULUS_TYPE") == "0")
             {
-                _correctDecision = (Bernoulli.Sample(0.5) == 1) ? RatDecison.Right : RatDecison.Left;
+                _correctDecision = (Bernoulli.Sample(0.5) == 1) ? PressType.Right : PressType.Left;
             }
 
             //get the current stimulus direction.
             double currentHeadingDirection = double.Parse(GetVariableValue("HEADING_DIRECTION"));
 
             //determine the current stimulus direaction.
-            RatDecison currentStimulationSide = (currentHeadingDirection == 0) ? (RatDecison.Center) : ((currentHeadingDirection > 0) ? (RatDecison.Right) : RatDecison.Left);
+            PressType currentStimulationSide = (currentHeadingDirection == 0) ? (PressType.Center) : ((currentHeadingDirection > 0) ? (PressType.Right) : PressType.Left);
 
             _correctDecision = currentStimulationSide;
         }
@@ -1459,7 +1439,7 @@ namespace UniJoy
                 _mainGuiControlsDelegatesDictionary["UpdateCurrentTrialDetailsViewList"], varName, currentParameterDetails);
             }
         }
-        #endregion
+        #endregion GUI_CONTROLS_FUNCTIONS
 
         #region ADDITIONAL_FUNCTIONS
         /// <summary>
@@ -1705,71 +1685,7 @@ namespace UniJoy
                     break;
             }
         }
-
-        /// <summary>
-        /// An event raises every [Properties.Settings.Default.NoldusRatReponseSampleRate] second for sampling the rat head direction.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="args">Args.</param>
-        private void SetRatReponse(object sender, System.Timers.ElapsedEventArgs args)
-        {
-            //TODO: Do I need this?
-            //update the variable saving the current rat head direction.
-            //_currentRatResponse = _ratResponseController.ReadSingleSamplePort();
-            // Maayan edit
-            //todo:fix the kiskish with the byte conversion.
-            _currentRatResponse = (byte)_remoteController.SubjectChoice();
-
-            //Console.Beep(10000,500);
-
-#if UPDATE_GLOBAL_DETAILS_LIST_VIEW
-            //only if the system is running , update the interactive window.
-            if(Globals._systemState.Equals(SystemState.RUNNING))
-                _mainGuiInterfaceControlsDictionary["SetNoldusRatResponseInteractivePanel"].BeginInvoke(_mainGuiControlsDelegatesDictionary["SetNoldusRatResponseInteractivePanel"] , _currentRatResponse);
-#endif
-        }
-        #endregion
-
-        #region EVENTS
-        /// <summary>
-        /// Handler for raising interval time evemt for the water fill estimation panel.
-        /// </summary>
-        /// <param name="sender">Sender.</param>
-        /// <param name="e">Args.</param>
-        void WaterRewardFillingTimer_Tick(object sender, EventArgs e)
-        {
-#if UPDATE_GLOBAL_DETAILS_LIST_VIEW
-            _mainGuiInterfaceControlsDictionary["SetWaterRewardsMeasure"].BeginInvoke(
-                _mainGuiControlsDelegatesDictionary["SetWaterRewardsMeasure"] , false);
-#endif
-        }
-        #endregion
-
-        #region GUI_EVENTS
-        /// <summary>
-        /// Plays the Ding sound file.
-        /// </summary>
-        public void PlayRewardSound()
-        {
-            _logger.Info("Start playing reward sound from gui");
-
-            _windowsMediaPlayer.URL = _soundPlayerPathDB["Ding"]; _windowsMediaPlayer.controls.play();
-
-            _logger.Info("End playing reward sound from gui");
-        }
-
-        /// <summary>
-        /// Plays the WrongAnswer sound file.
-        /// </summary>
-        public void PlayBreakFixationSound()
-        {
-            _logger.Info("Start playing break fixation sound from gui");
-
-            _windowsMediaPlayer.URL = _soundPlayerPathDB["WrongAnswer"]; _windowsMediaPlayer.controls.play();
-
-            _logger.Info("End playing break fixation sound from gui");
-        }
-        #endregion GUI_EVENTS
+        #endregion ADDITIONAL_FUNCTIONS
 
         #region STRUCT_ENUMS
         /// <summary>
@@ -1943,7 +1859,9 @@ namespace UniJoy
             /// </summary>
             Right = 0x04,
         };
-        #endregion
+        #endregion STRUCT_ENUMS
+
+
         #endregion FUNCTIONS
     }
 }
