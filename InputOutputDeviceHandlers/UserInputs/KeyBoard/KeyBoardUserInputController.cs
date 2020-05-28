@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using InputOutputDeviceHandlers.UserInputs;
 
-namespace InputOutputDeviceHandlers.UserInputs
+namespace InputOutputDeviceHandlers.UserInputs.KeyBoard
 {
     public class KeyBoardUserInputController : IUserInputController
     {
