@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
@@ -104,11 +105,11 @@ namespace InputOutputDeviceHandlers.UserInputs.GuiButtonsInput
 
         private void ChangePressButtonsLocations()
         {
-            _startButtom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width / 2 - _startButtom.Size.Width / 2, _responseForm.ClientSize.Height / 2);
-            _rightButtom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width - _rightButtom.Size.Width, _responseForm.ClientSize.Height / 2);
-            _leftButtom.Location = new System.Drawing.Point(0, _responseForm.ClientSize.Height / 2);
-            _downButttom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width / 2 - _downButttom.Size.Width / 2, _responseForm.ClientSize.Height - _downButttom.Size.Height);
-            _upButtom.Location = new System.Drawing.Point(_responseForm.ClientSize.Width / 2 - _upButtom.Size.Width / 2, 0);
+            _startButtom.Location = new Point(_responseForm.ClientSize.Width / 2 - _startButtom.Size.Width / 2, _responseForm.ClientSize.Height / 2);
+            _rightButtom.Location = new Point(_responseForm.ClientSize.Width - _rightButtom.Size.Width, _responseForm.ClientSize.Height / 2);
+            _leftButtom.Location = new Point(0, _responseForm.ClientSize.Height / 2);
+            _downButttom.Location = new Point(_responseForm.ClientSize.Width / 2 - _downButttom.Size.Width / 2, _responseForm.ClientSize.Height - _downButttom.Size.Height);
+            _upButtom.Location = new Point(_responseForm.ClientSize.Width / 2 - _upButtom.Size.Width / 2, 0);
         }
 
         private void UpButtom_Click(object sender, EventArgs e)
