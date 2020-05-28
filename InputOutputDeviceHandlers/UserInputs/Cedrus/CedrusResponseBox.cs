@@ -7,7 +7,7 @@ namespace InputOutputDeviceHandlers.UserInputs.Cedrus
 {
     public class CedrusResponseBox : IUserInputController
     {
-        private SerialPort
+        //private SerialPort
 
         public void FlushBuffer()
         {
