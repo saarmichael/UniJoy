@@ -41,7 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventHandlers\EventTypes\UnijoyEvent.cs" />
+    <Compile Include="EventHandlers\EventWriters\IEventWriter.cs" />
+    <Compile Include="EventHandlers\EventWriters\LptEventWriter.cs" />
+    <Compile Include="ParallelPort\ParallelPortController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInputs\Cedrus\CedrusResponseBox.cs" />
+    <Compile Include="UserInputs\GuiButtonsInput\WindowButtonsInput.cs" />
+    <Compile Include="UserInputs\IUserInputController.cs" />
+    <Compile Include="UserInputs\KeyBoard\KeyBoardUserInputController.cs" />
+    <Compile Include="UserInputs\PressType.cs" />
+    <Compile Include="UserInputs\ThundermasterJoystick\ThundermasterJoystickController.cs" />
+    <Compile Include="UserInputs\ThundermasterJoystick\ThundermasterJoysticUserInputController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ParallelPort\inpout32.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
