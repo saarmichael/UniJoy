@@ -8,7 +8,7 @@ using Params;
 
 namespace VaryingValuesGenerators
 {
-    public abstract class IVaryingValuesGenerator
+    public abstract class VaryingValuesGeneratorBase
     {
         #region ATTRIBUTES
         /// <summary>
@@ -80,7 +80,40 @@ namespace VaryingValuesGenerators
         /// <param name="highBound">The high bound to end with.</param>
         /// <param name="increment">The increament between each elemrnt in the generated vector.</param>
         /// <returns>The generated vector from the input bounds.</returns>
-        public abstract Vector<double> CreateVectorFromBounds(double lowBound, double highBound, double increment);
+        public Vector<double> CreateVectorFromBounds(double lowBound, double highBound, double increment)
+        {
+            Vector<double> createdVector = Vector<double>.Build.Dense((int)((highBound - lowBound) / increment + 1));
+            int index = 0;
+
+            while (lowBound <= highBound)
+            {
+                createdVector.At(index, lowBound);
+                lowBound += increment;
+                index++;
+            }
+
+            return createdVector;
+        }
+
+        /// <summary>
+        /// Converts a tring numbers array to a double Vector.
+        /// </summary>
+        /// <param name="vector">The string vector nums.</param>
+        /// <returns>The double vector.</returns>
+        public Vector<double> CreateVectorFromStringVector(string vector)
+        {
+            string[] seperatedValues = vector.Split(' ');
+
+            double[] seperatedDoubleValues = new double[seperatedValues.Length];
+
+            for (int i = 0; i < seperatedValues.Length; i++)
+            {
+                seperatedDoubleValues[i] = double.Parse(seperatedValues[i]);
+            }
+
+            return Vector<double>.Build.Dense(seperatedDoubleValues);
+        }
+
         #endregion FUNCTIONS
     }
 }
