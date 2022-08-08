@@ -162,7 +162,7 @@ namespace Trajectories.TrajectoryCreators
         }
 
         /// <summary>
-        /// Computes the trajectoy tuple (for the ratHouseTrajectory and for the landscapeHouseTrajectory).
+        /// Computes the trajectory tuple (for the ratHouseTrajectory and for the landscapeHouseTrajectory).
         /// </summary>
         /// <param name="index">The index from the crossVaryingList to take the attributes of he varying variables from.</param>
         /// <returns>The trajectory tuple (for the ratHouseTrajectory and for the landscapeHouseTrajectory). </returns>

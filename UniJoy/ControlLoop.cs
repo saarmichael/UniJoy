@@ -30,8 +30,8 @@ using InputOutputDeviceHandlers.UserInputs.GuiButtonsInput;
 namespace UniJoy
 {
     /// <summary>
-    /// This class is the main program controll loop.
-    /// It calls all the needed other inerfaces to make what's needed to be created.
+    /// This class is the main program control loop.
+    /// It calls all the needed other interfaces to make what's needed to be created.
     /// The function is called by the GuiInterface after the statButton is clicked.
     /// </summary>
     public class ControlLoop
@@ -681,7 +681,7 @@ namespace UniJoy
 
 
             //send the data to the UnityEngine
-            SendTrialMetaDataToUnityEngine();
+            //SendTrialMetaDataToUnityEngine();
 
             Task preTrialWaitingTask = new Task(() =>
             {
@@ -999,18 +999,28 @@ namespace UniJoy
             //_robotMotionTask.Start();
 
             //TODO: Maayan - call the Moog to make a move
-            int movementDuration = (int)(1000 * _currentTrialTimings.wDuration);
-            _robotMotionTask = Task.Factory.StartNew(() => Thread.Sleep(movementDuration));
+            int movementDuration = (int)(1000 * _currentTrialTimings.wDuration) + 5000; // ~(Michael Saar)~ added the 5000 
+            _robotMotionTask = Task.Factory.StartNew(() =>
+            {
+                // write to the log file the start of movement sleeping for the duration time. // ~(Michael Saar)~
+                // write also the thread id to the log file. // ~(Michael Saar)~
+                _logger.Info("Started sleeping during movement." + "Thread id: " + Thread.CurrentThread.ManagedThreadId 
+                             + " sleeping for: " + movementDuration); // ~(Michael Saar)~
+                Thread.Sleep(movementDuration);
+                _logger.Info("Finished Sleeping"); // ~(Michael Saar)~
+            });
+            
             if (IsMoogConnected)
             {
                 Task.Run(() =>
                 {
                 //for (_currentTrialTrajectories.Moog.count)
+                _logger.Info("Sending to MOOG forward movement Task --begin"); // ~(Michael Saar)~
                 int currentTrialTrajectoriesSize = _currentTrialTrajectories.Item1.Count();
+                double MOTION_BASE_CENTER = -0.22077500;
                     for (int i = 0; i < currentTrialTrajectoriesSize; i++)
                     {
-                    //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
-                    double MOTION_BASE_CENTER = -0.22077500;
+                        //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
                         double surge = _currentTrialTrajectories.Item1[i].X;
                         double lateral = _currentTrialTrajectories.Item1[i].Y;
                         double heave = _currentTrialTrajectories.Item1[i].Z + MOTION_BASE_CENTER;
@@ -1019,8 +1029,10 @@ namespace UniJoy
                         double rz = _currentTrialTrajectories.Item1[i].RZ;
                         MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
                     }
+                    _logger.Info("Sending to MOOG forward movement Task --end"); // ~(Michael Saar)~
                 });
             }
+            
 
             //throw new Exception();
 
@@ -1111,7 +1123,11 @@ namespace UniJoy
             //wait the robot task to finish the movement.
             if (_currentTrialStimulusType != 0)
             {
+                // log the _robotMotionTask Thread id // ~(Michael Saar)~
+                _logger.Info("Waiting for _robotMotionTask to finish the movement." 
+                             + "_robotMotionTask Thread id: " + _robotMotionTask.Id); // ~(Michael Saar)~
                 _robotMotionTask.Wait();
+                _logger.Info("_robotMotionTask finished the movement.");
             }
             //TODO: ADD THE SAME WAIT FOR THE VISUAL
 
@@ -1124,7 +1140,8 @@ namespace UniJoy
             //TODO:DELETE
             //_logger.Info("End MovingTheRobotDurationWithHeadCenterStabilityStage with AutoFixation = " + AutoFixation + ".");
             //return the true state of the heading in the center stability during the duration time or always true when AutoFixation.
-            return headInCenterAllTheTime;
+            //return headInCenterAllTheTime;
+            return true;
         }
 
         /// <summary>
@@ -1188,7 +1205,7 @@ namespace UniJoy
         /// <param name="duration1HeadInTheCenterStabilityStage">Indicated if one of the robots ot both moved due to suration 1 head in the center stability stage.</param>
         /// <returns>True if trial succeed otherwise returns false.</returns>
         /// </summary>
-        public bool PostTrialStage(bool duration1HeadInTheCenterStabilityStage)
+        public bool PostTrialStage(bool duration1HeadInTheCenterStabilityStage) // duration1HeadInTheCenterStabilityStage is always true
         {
             _logger.Info("PostTrialStage begin.");
 
@@ -1198,7 +1215,7 @@ namespace UniJoy
             _mainGuiInterfaceControlsDictionary["UpdateGlobalExperimentDetailsListView"].BeginInvoke(
             _mainGuiControlsDelegatesDictionary["UpdateGlobalExperimentDetailsListView"], "Current Stage", "Post trial time.");
 #endif
-            //need to get the robot backword only if ther was a rat enterance that trigger thr robot motion.
+            //need to get the robot backwards only if there was a rat enterance that trigger thr robot motion.
             Task moveRobotHomePositionTask;
             if (!duration1HeadInTheCenterStabilityStage || !IsMoogConnected)
             {
@@ -1213,10 +1230,10 @@ namespace UniJoy
                 _trialEventRealTiming.Add("RobotStartMovingBackward", _controlLoopTrialTimer.ElapsedMilliseconds);
 
 
-                _logger.Info("Creating backward traj.");
+                _logger.Info("Creating backward trajectory.");
                 //TODO: Do I need this? yes
                 Tuple<Trajectory, Trajectory> returnTrajectory = _trajectoryCreatorHandler.CreateTrajectory(_currentVaryingTrialIndex, true);
-                _logger.Info("Finish creating backward traj.");
+                _logger.Info("Finish creating backward trajectory.");
 
                 moveRobotHomePositionTask = Task.Factory.StartNew(() =>
                 {
@@ -1241,15 +1258,18 @@ namespace UniJoy
                     _logger.Info("Backward ended.");
                 });
             }
-
+            
+            // ---DEBUG LOG: why is there a sleep here? // ~(Michael Saar)~ 
+            _logger.Info("before post trial 5000 milliseconds sleep.");
             //todo::what is that magic number??
             Thread.Sleep(5000);
+            _logger.Info("after post trial 5000 milliseconds sleep.");
 
             bool trialSucceed = true;
 
             if (!_currentRatDecision.Equals(RatDecison.PassDurationTime))
             {
-                //reset status of the current trial combination index if there was no reponse stage at all.
+                //reset status of the current trial combination index if there was no response stage at all.
                 //todo::check if ResetTrialStatus
                 _varyingIndexSelector.ResetTrialStatus(_currentVaryingTrialIndex);
                 trialSucceed = false;
@@ -1283,7 +1303,9 @@ namespace UniJoy
                 });
             }
 
+            _logger.Info("before post trial (int)(_currentTrialTimings.wPostTrialTime * 1000) sleep."); // ~(Michael Saar)~
             Thread.Sleep((int)(_currentTrialTimings.wPostTrialTime * 1000));
+            _logger.Info("before post trial (int)(_currentTrialTimings.wPostTrialTime * 1000) sleep."); // ~(Michael Saar)~
 
             //wait the maximum time of the postTrialTime and the going home position time.
             //TODO: Do I need this?
@@ -1474,7 +1496,8 @@ namespace UniJoy
             int numOfRetries = 0;
 
             _unityCommandsSender = new UnityCommandsSender(8910);
-
+            
+            /*
             while (!_unityCommandsSender.TryStart())
             {
 
@@ -1482,6 +1505,7 @@ namespace UniJoy
 
                 numOfRetries++;
             }
+            */
         }
 
         /// <summary>
