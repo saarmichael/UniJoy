@@ -1000,6 +1000,7 @@ namespace UniJoy
 
             //TODO: Maayan - call the Moog to make a move
             int movementDuration = (int)(1000 * _currentTrialTimings.wDuration) + 5000; // ~(Michael Saar)~ added the 5000 
+            /*
             _robotMotionTask = Task.Factory.StartNew(() =>
             {
                 // write to the log file the start of movement sleeping for the duration time. // ~(Michael Saar)~
@@ -1009,11 +1010,12 @@ namespace UniJoy
                 Thread.Sleep(movementDuration);
                 _logger.Info("Finished Sleeping"); // ~(Michael Saar)~
             });
+            */
             
             if (IsMoogConnected)
             {
-                Task.Run(() =>
-                {
+                //Task.Run(() =>
+                //{
                 //for (_currentTrialTrajectories.Moog.count)
                 _logger.Info("Sending to MOOG forward movement Task --begin"); // ~(Michael Saar)~
                 int currentTrialTrajectoriesSize = _currentTrialTrajectories.Item1.Count();
@@ -1030,7 +1032,7 @@ namespace UniJoy
                         MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
                     }
                     _logger.Info("Sending to MOOG forward movement Task --end"); // ~(Michael Saar)~
-                });
+                //});
             }
             
 
@@ -1124,9 +1126,8 @@ namespace UniJoy
             if (_currentTrialStimulusType != 0)
             {
                 // log the _robotMotionTask Thread id // ~(Michael Saar)~
-                _logger.Info("Waiting for _robotMotionTask to finish the movement." 
-                             + "_robotMotionTask Thread id: " + _robotMotionTask.Id); // ~(Michael Saar)~
-                _robotMotionTask.Wait();
+                //_logger.Info("Waiting for _robotMotionTask to finish the movement." + "_robotMotionTask Thread id: " + _robotMotionTask.Id); // ~(Michael Saar)~
+                //_robotMotionTask.Wait();
                 _logger.Info("_robotMotionTask finished the movement.");
             }
             //TODO: ADD THE SAME WAIT FOR THE VISUAL
