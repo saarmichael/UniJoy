@@ -167,6 +167,9 @@ bool CMBCInterface::Open(CConfigFile* pConfig)
 	// Get Configuration
 	m_eHostInterface = eINTERFACE_ETHERNET;
 	m_iUpdateRateHz = atoi(pConfig->Read("MBC", "UpdateRateHz", "30"));
+	// ~(Michael Saar)~ --- DEBUG
+	std::cout << " #~Debug~# MBC Update Rate: [" << m_iUpdateRateHz << "]" << std::endl;
+	// ~(Michael Saar)~ --- DEBUG END
 	pszParam = pConfig->Read("MBC", "RedundantCommands", "False");
 	m_bRedundantCommands = (_stricmp(pszParam, "True") == 0) ? true : false;
 
@@ -186,11 +189,11 @@ bool CMBCInterface::Open(CConfigFile* pConfig)
 	m_iSCCPort = atoi(pszParam);
 
     // ~(Michael Saar) --- DEBUG
-    std::cout << "MBC IP Address: " << m_szMBCIpAddress << std::endl;
-    std::cout << "MBC Port: " << m_iMBCPort << std::endl;
-    std::cout << "SCC IP Address: " << m_szSCCIpAddress << std::endl;
-    std::cout << "SCC Netmask: " << m_szSCCNetmask << std::endl;
-    std::cout << "SCC Port: " << m_iSCCPort << std::endl;
+    //std::cout << "MBC IP Address: " << m_szMBCIpAddress << std::endl;
+    //std::cout << "MBC Port: " << m_iMBCPort << std::endl;
+    //std::cout << "SCC IP Address: " << m_szSCCIpAddress << std::endl;
+    //std::cout << "SCC Netmask: " << m_szSCCNetmask << std::endl;
+    //std::cout << "SCC Port: " << m_iSCCPort << std::endl;
     // ~(Michael Saar) --- DEBUG END
 	LogWriteLn("Opening Ethernet Sockets");
 	LogWriteLn("Host(%s:%d) MBC(%s:%d)", m_szSCCIpAddress, m_iSCCPort, m_szMBCIpAddress, m_iMBCPort);
@@ -530,6 +533,9 @@ bool CMBCInterface::SendCommandMessage()
 		//todo:what happened if not all the data for the packet is sent? Does the sendto is blocking function here , or not (with option) ?
 		// send the pkt
 		sendto(m_hostSocket, m_txBuffer, iPacketLength , 0, (sockaddr *)&m_destAddress, sizeof(m_destAddress));
+		// ~(Michael Saar)~ --- DEBUG
+		//std::cout << "~Debug~ Sent packet: [" << m_txBuffer << "]" << std::endl;
+		// ~(Michael Saar)~ --- END DEBUG
 	}
 	return true;
 }

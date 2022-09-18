@@ -375,5 +375,3 @@ int CConfigFile::ReadLine(char* szDestination, int iMaxLen)
 //
 //---------------------------------------------------------------
 
-
-
