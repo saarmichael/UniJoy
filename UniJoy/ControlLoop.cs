@@ -742,7 +742,7 @@ namespace UniJoy
 
                 if (_currentUserResponse.Equals(PressType.Left))
                 {
-                    Console.Beep(5000, 500);
+                    Console.Beep(1500, 500);
 
                     //increase the total choices for wrong or correct choices (some choices).
                     _totalChoices++;
@@ -802,7 +802,7 @@ namespace UniJoy
 
                 else if (_currentUserResponse.Equals(PressType.Right))
                 {
-                    Console.Beep(10000, 500);
+                    Console.Beep(900, 500);
 
                     //update current rat decision state.
                     _currentRatDecision = PressType.Right;
@@ -1022,7 +1022,7 @@ namespace UniJoy
                 double MOTION_BASE_CENTER = -0.22077500;
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
-                    for (int i = 0; i < currentTrialTrajectoriesSize; i++)
+                    for (int i = 0; i < currentTrialTrajectoriesSize; i += 16) // ~(Michael Saar)~ jump 16 points in order to get 1000H
                     {
                         //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
                         double surge = _currentTrialTrajectories.Item1[i].X;
@@ -1131,7 +1131,7 @@ namespace UniJoy
             if (_currentTrialStimulusType != 0)
             {
                 // log the _robotMotionTask Thread id // ~(Michael Saar)~
-                _logger.Info("Waiting for _robotMotionTask to finish the movement." + "_robotMotionTask Thread id: " + _robotMotionTask.Id); // ~(Michael Saar)~
+                //_logger.Info("Waiting for _robotMotionTask to finish the movement." + "_robotMotionTask Thread id: " + _robotMotionTask.Id); // ~(Michael Saar)~
                 //_robotMotionTask.Wait();
                 _logger.Info("_robotMotionTask finished the movement.");
             }
