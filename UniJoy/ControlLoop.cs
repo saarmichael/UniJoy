@@ -765,14 +765,24 @@ namespace UniJoy
             return new Tuple<PressType, bool>(_currentUserResponse, isCorrect);
         }
 
+        private void PlaySound(int freq, int duration)
+        {
+         // play sound in a new thread
+            Task.Run(() =>
+            {
+                Console.Beep(freq, duration);
+            });
+            
+        }
         private void PlayWrongAnswerSound()
         {
-            Console.Beep(800, 500);
+            // play the sound in a new thread.
+            PlaySound(800, 500);
         }
 
         private void PlayCorrectAnswerSound()
         {
-            Console.Beep(1600, 500);
+            PlaySound(1750, 500);
         }
 
 
