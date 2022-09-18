@@ -45,7 +45,7 @@ namespace UniJoy
         /// <summary>
         /// The trajectory creator interface for making the trajectory for each trial.
         /// </summary>
-        //todo::why no references?? needed?
+        //todoo::why no references?? needed?
         private ITrajectoryCreator _trajectoryCreator;
 
         /// <summary>
@@ -151,13 +151,13 @@ namespace UniJoy
         /// </summary>
         private Random _timingRandomizer;
 
-        //todo::replcae this controller with the responsebox/joystick.
+        //todoo::replcae this controller with the responsebox/joystick.
         /// <summary>
         /// Controller for the rat Noldus responses.
         /// </summary>
         //private RatResponseController _ratResponseController;
 
-        //todo::replace that with EEG controller.
+        //todoo::replace that with EEG controller.
         /// <summary>
         /// Controller for writing events for the EEG.
         /// </summary>
@@ -261,7 +261,7 @@ namespace UniJoy
         /// </summary>
         public bool EnableErrorSound { get; set; }
 
-        //todo::wtf it is??
+        //todoo::wtf it is??
         /// <summary>
         /// Indicates if to enable that right parameters values and left parameters values must be equals.
         /// </summary>
@@ -293,7 +293,7 @@ namespace UniJoy
         private WindowsMediaPlayer _windowsMediaPlayer;
 
         //Maayan Edit
-        //todo::there is the rat sample or something like that...
+        //todoo::there is the rat sample or something like that...
         private IUserInputController _remoteController;
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace UniJoy
                         //Sending all needed data to all interfaces and makes the beep sound.
                         PreTrialStage();
 
-                        //TODO:WAIT FOR THE START PRESS BUTTON
+                        //TODOO:WAIT FOR THE START PRESS BUTTON
                         bool subjectPressedStartButtonDuringTheTimeoutDuration = WaitForStartButtonToBePressed();
 
                         //if the subject pressed the start button before timeOut time.
@@ -504,7 +504,7 @@ namespace UniJoy
                         {
                             {
                                 //update the state of the rat decision.
-                                //todo::chnage that _currentRatDecision
+                                //todoo::chnage that _currentRatDecision
                                 //_currentRatDecision = RatDecison.DurationTime;
 
                                 //moving the robot with duration time , and checking for the stability of the head in the center.
@@ -527,13 +527,13 @@ namespace UniJoy
                                     _totalHeadFixationBreaks++;
                                 }
 
-                                //todo::check if this use is needed.
+                                //todoo::check if this use is needed.
                                 //after the end of rewrad wait a time delay before backword movement to the home poistion.
                                 //RewardToBackwardDelayStage();
                             }
                         }
 
-                        //todo::need to uncomment it no?
+                        //todoo::need to uncomment it no?
                         //sounds the beep with the missing start gead in the center.
                         else
                         {
@@ -541,7 +541,7 @@ namespace UniJoy
                         }
 
                         //the post trial stage for saving the trial data and for the delay between trials.
-                        //TODO: What changes need to be made?
+                        //TODOO: What changes need to be made?
                         bool duration1HeadInTheCenterStabilityStage = true; //to delete
                         if (PostTrialStage(duration1HeadInTheCenterStabilityStage))
                             _stickOnNumberIndex++;
@@ -576,7 +576,7 @@ namespace UniJoy
         /// </summary>
         public void ResetVariables()
         {
-            //TODO : change the index of the trial to be identical to the trial number in the result file.
+            //TODOO : change the index of the trial to be identical to the trial number in the result file.
             _logger.Info("Initialization Stage of trial #" + (_totalHeadStabilityInCenterDuringDurationTime + 1));
 
 #if UPDATE_GLOBAL_DETAILS_LIST_VIEW
@@ -593,7 +593,7 @@ namespace UniJoy
             _currentTrialStimulusType = DetermineCurrentStimulusType();
 
             //set the reposne to the stimulus direction as no entry to descision stage (and change it after if needed as well).
-            //todo::chnage that _currentRatDecision
+            //todoo::chnage that _currentRatDecision
             //_currentRatDecision = RatDecison.NoEntryToResponseStage;
 
             //set the auto option to default values.
@@ -729,7 +729,7 @@ namespace UniJoy
 
             //get the current stimulus direction.
             double currentHeadingDirection = double.Parse(GetVariableValue("HEADING_DIRECTION"));
-
+            // ~(Michael Saar)~ here the correct answer is determined.
             DetermineCurrentStimulusAnswer();
 
             _remoteController.FlushBuffer();
@@ -754,7 +754,7 @@ namespace UniJoy
                     //add the response real time to the real times dictionary.
                     _trialEventRealTiming.Add("RatDecision", _controlLoopTrialTimer.ElapsedMilliseconds);
 
-                    //TODO: Do I need this?
+                    //TODOO: Do I need this?
                     //write the event that te rat enter it's head to the left to the AlphaOmega.
                     //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.HeadEnterLeft);
 
@@ -787,7 +787,7 @@ namespace UniJoy
                             _logger.Info("End playing error sound");
                         });
 
-                        //todo:: add a.o event?
+                        //todoo:: add a.o event?
                         //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.AudioWrong);
                         _trialEventRealTiming.Add("AudioWrong", _controlLoopTrialTimer.ElapsedMilliseconds);
 
@@ -814,7 +814,7 @@ namespace UniJoy
                     _trialEventRealTiming.Add("RatDecision", _controlLoopTrialTimer.ElapsedMilliseconds);
                     //Console.Beep(10000,100);
 
-                    //TODO: Do I need this?
+                    //TODOO: Do I need this?
                     //write the event that te rat enter it's head to the right to the AlphaOmega.
                     //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.HeadEnterRight);
 
@@ -848,7 +848,7 @@ namespace UniJoy
                             _logger.Info("End playing wrong answer");
                         });
 
-                        //todo::add a.o event
+                        //todoo::add a.o event
                         //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.AudioWrong);
                         _trialEventRealTiming.Add("AudioWrong", _controlLoopTrialTimer.ElapsedMilliseconds);
 
@@ -886,7 +886,7 @@ namespace UniJoy
             _mainGuiInterfaceControlsDictionary["UpdateGlobalExperimentDetailsListView"].BeginInvoke(
             _mainGuiControlsDelegatesDictionary["UpdateGlobalExperimentDetailsListView"], "Current Stage", "Getting Reward (Left)");
 #endif
-            //TODO: Maayan - Do I need this?
+            //TODOO: Maayan - Do I need this?
             /*if (!secondChance)
                 Reward(RewardPosition.Left, _currentTrialTimings.wRewardLeftDuration, _currentTrialTimings.wRewardLeftDelay, autoReward, RewardSound, responseReward);
             else
@@ -912,7 +912,7 @@ namespace UniJoy
             _mainGuiInterfaceControlsDictionary["UpdateGlobalExperimentDetailsListView"].BeginInvoke(
             _mainGuiControlsDelegatesDictionary["UpdateGlobalExperimentDetailsListView"], "Current Stage", "Getting Reward (Right)");
 #endif
-            //TODO: Maayan - Do I need this?
+            //TODOO: Maayan - Do I need this?
             /*if (!secondChance)
                 Reward(RewardPosition.Right, _currentTrialTimings.wRewardRightDuration, _currentTrialTimings.wRewardRightDelay, autoReward, RewardSound, responseReward);
             else
@@ -937,7 +937,7 @@ namespace UniJoy
             _mainGuiInterfaceControlsDictionary["UpdateGlobalExperimentDetailsListView"].BeginInvoke(
             _mainGuiControlsDelegatesDictionary["UpdateGlobalExperimentDetailsListView"], "Current Stage", "Getting Reward (Center)");
 #endif
-            //TODO: Maayan - Do I need this?
+            //TODOO: Maayan - Do I need this?
             //Reward(RewardPosition.Center, _currentTrialTimings.wRewardCenterDuration, _currentTrialTimings.wRewardCenterDelay, autoReward, autoRewardSound, responseReward);
 
             _logger.Info("RewardCenterStage ended.");
@@ -950,7 +950,7 @@ namespace UniJoy
         {
             _logger.Info("RewardToBackwardDelayStage begin.");
 
-            //TODO: Maayan - Do I need this?
+            //TODOO: Maayan - Do I need this?
             /*Task waitRewardBackwardDelay = new Task(() =>
             {
                 Thread.Sleep((int)(_currentTrialTimings.wRewardToBackwardDelay * 1000));
@@ -968,11 +968,11 @@ namespace UniJoy
 
             //update the JBI file after the little delay.
             updateBackwordTrajectory.Start();
-            //TODO: Maayan - Do I need this?
+            //TODOO: Maayan - Do I need this?
             //waitRewardBackwardDelay.Start();
 
             //wait the other half time and the JBI writing file time.
-            //TODO: Maayan - Do I need this?
+            //TODOO: Maayan - Do I need this?
             //waitRewardBackwardDelay.Wait();
             updateBackwordTrajectory.Wait();
             _logger.Info("RewardToBackwardDelayStage ended.");
@@ -995,10 +995,10 @@ namespace UniJoy
 
             //start moving the robot according to the stimulus type.
             _logger.Info("Send Executing robot trajectory data start command");
-            //TODO:DELETE
+            //TODOO:DELETE
             //_robotMotionTask.Start();
 
-            //TODO: Maayan - call the Moog to make a move
+            //TODOO: Maayan - call the Moog to make a move
             int movementDuration = (int)(1000 * _currentTrialTimings.wDuration) + 5000; // ~(Michael Saar)~ added the 5000 
             /*
             _robotMotionTask = Task.Factory.StartNew(() =>
@@ -1056,13 +1056,13 @@ namespace UniJoy
                 _currentTrialStimulusType == 4 ||
                 _currentTrialStimulusType == 5)
             {
-                //TODO:DELETE
+                //TODOO:DELETE
                 /*Task.Run(() =>
                 {
                     ExecuteLedControllersCommand();
                 });*/
 
-                //TODO: Maayan - call the unity visualization
+                //TODOO: Maayan - call the unity visualization
                 /*Task.Run(() =>
                 {
                     for ()
@@ -1083,7 +1083,7 @@ namespace UniJoy
                 });
             }
 
-            //TODO:DELETE ALL BLOCK
+            //TODOO:DELETE ALL BLOCK
             //also run the rat center head checking in parallel to the movement time.
             bool headInCenterAllTheTime = true;
             /*Task.Run(() =>
@@ -1118,7 +1118,7 @@ namespace UniJoy
                             _soundsMode.BreakFixationSoundOn = EnableFixationBreakSound;
 
                             //write the break fixation event to the AlphaOmega.
-                            //TODO: Do I need this?
+                            //TODOO: Do I need this?
                             //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.HeadStabilityBreak);
                             _trialEventRealTiming.Add("HeadStabilityBreak", _controlLoopTrialTimer.ElapsedMilliseconds);
                         }
@@ -1135,15 +1135,15 @@ namespace UniJoy
                 //_robotMotionTask.Wait();
                 _logger.Info("_robotMotionTask finished the movement.");
             }
-            //TODO: ADD THE SAME WAIT FOR THE VISUAL
+            //TODOO: ADD THE SAME WAIT FOR THE VISUAL
 
-            //TODO:DELETE
+            //TODOO:DELETE
             //also send the AlphaOmega that motion forward ends.
-            //TODO: Do I need this?
+            //TODOO: Do I need this?
             //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.RobotEndMovingForward);
             _trialEventRealTiming.Add("RobotEndMovingForward", _controlLoopTrialTimer.ElapsedMilliseconds);
 
-            //TODO:DELETE
+            //TODOO:DELETE
             //_logger.Info("End MovingTheRobotDurationWithHeadCenterStabilityStage with AutoFixation = " + AutoFixation + ".");
             //return the true state of the heading in the center stability during the duration time or always true when AutoFixation.
             //return headInCenterAllTheTime;
@@ -1163,7 +1163,7 @@ namespace UniJoy
                 Console.Beep(2000, 200);
             });
 
-            //TODO: Do I need this?
+            //TODOO: Do I need this?
             //write the beep start event to the AlphaOmega.
             //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.AudioStart);
             _trialEventRealTiming.Add("AudioStart", _controlLoopTrialTimer.ElapsedMilliseconds);
@@ -1231,13 +1231,13 @@ namespace UniJoy
             else
             {
                 //send the AlphaOmega that motion backward starts.
-                //TODO: Do I need this?
+                //TODOO: Do I need this?
                 _evenstWriter.WriteEvent(UnijoyEvent.MoogStartMovingBackward);
                 _trialEventRealTiming.Add("RobotStartMovingBackward", _controlLoopTrialTimer.ElapsedMilliseconds);
 
 
                 _logger.Info("Creating backward trajectory.");
-                //TODO: Do I need this? yes
+                //TODOO: Do I need this? yes
                 Tuple<Trajectory, Trajectory> returnTrajectory = _trajectoryCreatorHandler.CreateTrajectory(_currentVaryingTrialIndex, true);
                 _logger.Info("Finish creating backward trajectory.");
 
@@ -1247,7 +1247,7 @@ namespace UniJoy
                     _logger.Info("Backward started.");
 
                     int rtuenTrajectorySize = returnTrajectory.Item1.Count();
-                    for (int i = 0; i < rtuenTrajectorySize; i++)
+                    for (int i = 0; i < rtuenTrajectorySize; i += 16) // ~(Michael Saar)~ increment by 16 in order to imitate 1000Hz behavior
                     {
                         //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
                         double MOTION_BASE_CENTER = -0.22077500;
@@ -1267,7 +1267,7 @@ namespace UniJoy
             
             // ---DEBUG LOG: why is there a sleep here? // ~(Michael Saar)~ 
             _logger.Info("before post trial 5000 milliseconds sleep.");
-            //todo::what is that magic number??
+            //todoo::what is that magic number??
             Thread.Sleep(5000);
             _logger.Info("after post trial 5000 milliseconds sleep.");
 
@@ -1276,7 +1276,7 @@ namespace UniJoy
             if (!_currentRatDecision.Equals(RatDecison.PassDurationTime))
             {
                 //reset status of the current trial combination index if there was no response stage at all.
-                //todo::check if ResetTrialStatus
+                //todoo::check if ResetTrialStatus
                 _varyingIndexSelector.ResetTrialStatus(_currentVaryingTrialIndex);
                 trialSucceed = false;
             }
@@ -1296,7 +1296,7 @@ namespace UniJoy
                         ProtocolName = ProtocolFullName,
                         RatName = RatName,
                         StudentName = StudentName,
-                        //todo::chnage that _currentRatDecision
+                        //todoo::chnage that _currentRatDecision
                         //RatDecison = _currentRatDecision,
                         TrialNum = _totalHeadStabilityInCenterDuringDurationTime + _totalHeadFixationBreaks,
                         StickOnNumber = NumOfStickOn,
@@ -1314,16 +1314,16 @@ namespace UniJoy
             _logger.Info("before post trial (int)(_currentTrialTimings.wPostTrialTime * 1000) sleep."); // ~(Michael Saar)~
 
             //wait the maximum time of the postTrialTime and the going home position time.
-            //TODO: Do I need this?
+            //TODOO: Do I need this?
             moveRobotHomePositionTask.Wait();
             //also send the AlphaOmega that motion backwards ends.
-            //todo:: check need
+            //todoo:: check need
             //_alphaOmegaEventsWriter.WriteEvent(true, AlphaOmegaEvent.RobotEndMovingBackward);
 
             //throw new Exception();
 
             _logger.Info("PostTrialStage ended. TrialSucceed = " + trialSucceed + ".");
-            //todo::check what is trial succedd in Moog terms - no response is OK?
+            //todoo::check what is trial succedd in Moog terms - no response is OK?
             return trialSucceed;
         }
         #endregion STAGES_FUNCTION
@@ -1336,7 +1336,7 @@ namespace UniJoy
         {
             _logger.Info("Writing AlphaOmega stimulus event start");
 
-            //todo::change _alphaOmegaEventsWriter to EEG and update this writing.
+            //todoo::change _alphaOmegaEventsWriter to EEG and update this writing.
             switch (_currentTrialStimulusType)
             {
                 case 0://none
@@ -1358,7 +1358,7 @@ namespace UniJoy
             }
         }
 
-        //TODO: Maayan - determine whether the subject answer was correct
+        //TODOO: Maayan - determine whether the subject answer was correct
         /// <summary>
         /// Determine the current trial correct side.
         /// </summary>
@@ -1477,7 +1477,7 @@ namespace UniJoy
         {
             Globals._systemState = SystemState.FINISHED;
 
-            //todo::check if to send here clear command to unity engine/Moog.
+            //todoo::check if to send here clear command to unity engine/Moog.
 
             //reset the repetition index.
             _repetitionIndex = 0;
@@ -1679,21 +1679,21 @@ namespace UniJoy
                 case 0://none
                     break;
                 case 1://vistibular only.
-                    //TODO: Do I need this?
+                    //TODOO: Do I need this?
                     //_motomanController.UpdateYasakawaRobotJBIFile(_currentTrialTrajectories, MotomanProtocolFileCreator.UpdateJobType.Both, true);
                     break;
 
                 case 2://visual only.
                 case 10://visual only in the dark.
                 case 12://will replace visual only in the dark.
-                    //TODO: Do I need this?
+                    //TODOO: Do I need this?
                     //_motomanController.UpdateYasakawaRobotJBIFile(_currentTrialTrajectories, MotomanProtocolFileCreator.UpdateJobType.R2Only, true);
                     break;
 
                 case 3://vistibular and visual both.
                 case 11://vistibular and visual both in the dark.
                 case 13://will replace vistibular and visual both in the dark.
-                    //TODO: Do I need this?
+                    //TODOO: Do I need this?
                     //_motomanController.UpdateYasakawaRobotJBIFile(_currentTrialTrajectories, MotomanProtocolFileCreator.UpdateJobType.R1Only, true);
                     break;
 
@@ -1707,7 +1707,7 @@ namespace UniJoy
                         deltaHeading = _staticVariablesList["DELTA"][0];
                     else if (_crossVaryingVals[_currentVaryingTrialIndex].Keys.Contains("DELTA"))
                         deltaHeading = _crossVaryingVals[_currentVaryingTrialIndex]["DELTA"];
-                    //TODO: Do I need this?
+                    //TODOO: Do I need this?
                     //_motomanController.UpdateYasakawaRobotJBIFile(_currentTrialTrajectories, (deltaHeading != 0) ? MotomanProtocolFileCreator.UpdateJobType.Both : MotomanProtocolFileCreator.UpdateJobType.R1Only, true);
                     break;
 
@@ -1728,7 +1728,7 @@ namespace UniJoy
             /// </summary>
             public double wStartDelay;
 
-            //TODO: Maayan - Do I need all these parameters?
+            //TODOO: Maayan - Do I need all these parameters?
             /*
             /// <summary>
             /// The delay between the center head tracking (for the trial begin) and the center reward.
@@ -1811,7 +1811,7 @@ namespace UniJoy
             /// </summary>
             public double wDuration;
 
-            //TODO: Maayan - Do I need this parameter?
+            //TODOO: Maayan - Do I need this parameter?
             /// <summary>
             /// The delay time between the end of water center reward and the Clue sound.
             /// </summary>
