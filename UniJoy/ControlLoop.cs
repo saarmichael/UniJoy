@@ -516,7 +516,8 @@ namespace UniJoy
 
                                     {
                                         //wait the rat to response to the movement during the response time.
-                                        Tuple<RatDecison, bool> decision = ResponseTimeStage();
+                                        //Tuple<RatDecison, bool> decision = ResponseTimeStage();
+                                        Tuple<PressType, bool> decision = ResponseTimeStage();
                                     }
                                 }
 
@@ -706,13 +707,82 @@ namespace UniJoy
             ShowGlobalExperimentDetailsListView();
         }
 
+        public Tuple<PressType, bool> ResponseTimeStage()
+        {
+            _logger.Info("ResponseTimeStage begin.");
+            // ~(Michael Saar)~ here the correct answer is determined. the correct choice is stored in the variable _correctDecision.
+            DetermineCurrentStimulusAnswer();
+            
+            _remoteController.FlushBuffer();
+            Stopwatch sw = new Stopwatch();
+            
+            sw.Start();
+            // wait for the press (until the response is NOT None) or until the time is up
+            while (sw.ElapsedMilliseconds < (int)(1000 * _currentTrialTimings.wResponseTime) && _currentUserResponse == PressType.None)
+            {
+                // get the response (if there is one) from the remote controller.
+                _currentUserResponse = _remoteController.SubjectChoice();
+            }
+            sw.Stop();
+            
+            // if the response is None, then the user did not respond in time.
+            if (_currentUserResponse == PressType.None)
+            {
+                // todo: understand the role of this line here - why need to send the command to the unity engine? 
+                //send command to UnityEngine that it should clean all it's rendered data.
+                _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand, VisualOperationCommand.CleanScreen);
+                _logger.Info("ResponseTimeStage end. User did not respond in time.");
+                return new Tuple<PressType, bool>(PressType.None, false);
+            }
+            
+            // if the response is not None, then the user responded in time- check if the response is correct.
+            _totalChoices++;
+            //add the response real time to the real times dictionary.
+            _trialEventRealTiming.Add("HumanDecision", _controlLoopTrialTimer.ElapsedMilliseconds);
+            //get the current stimulus direction.
+            double currentHeadingDirection = double.Parse(GetVariableValue("HEADING_DIRECTION"));
+            // if the response is correct
+            bool isCorrect = _currentUserResponse == _correctDecision;
+            if (isCorrect)
+            {
+                // play the sound for correct answer.
+                PlayCorrectAnswerSound();
+                //increase the total correct answers.
+                _totalCorrectAnswers++;
+                //update the psycho online graph.
+                _onlinePsychGraphMaker.AddResult("Heading Direction", _currentTrialStimulusType, currentHeadingDirection, AnswerStatus.CORRECT);
+            }
+            else
+            {
+                // play the sound for wrong answer.
+                PlayWrongAnswerSound();
+                //update the psycho online graph.
+                _onlinePsychGraphMaker.AddResult("Heading Direction", _currentTrialStimulusType, currentHeadingDirection, AnswerStatus.WRONG);
+            }
+            // log the response data to the log file.
+            _logger.Info($"ResponseTimeStage end. User responded in time. User response: {_currentUserResponse}. Correct answer: {_correctDecision}. Is correct: {isCorrect}.");
+            return new Tuple<PressType, bool>(_currentUserResponse, isCorrect);
+        }
+
+        private void PlayWrongAnswerSound()
+        {
+            Console.Beep(800, 500);
+        }
+
+        private void PlayCorrectAnswerSound()
+        {
+            Console.Beep(1600, 500);
+        }
+
+
+        // todo: write this function in a more generic way.
         /// <summary>
         /// Waiting the rat to response the movement direction abd update the _totalCorrectAnswers counter.
         /// <returns>The rat decision value and it's correctness.</returns>
         /// </summary>
-        public Tuple<RatDecison, bool> ResponseTimeStage()
+        public Tuple<RatDecison, bool> ResponseTimeStageRat()
         {
-            _logger.Info("ResponseTimeStage begin.");
+            _logger.Info("ResponseTimeStageRat begin.");
 
             //if not trainig continue.
             if (GetVariableValue("STIMULUS_TYPE") == "0")
@@ -729,7 +799,7 @@ namespace UniJoy
 
             //get the current stimulus direction.
             double currentHeadingDirection = double.Parse(GetVariableValue("HEADING_DIRECTION"));
-            // ~(Michael Saar)~ here the correct answer is determined.
+            // ~(Michael Saar)~ here the correct answer is determined. the correct choice is stored in the variable _correctDecision.
             DetermineCurrentStimulusAnswer();
 
             _remoteController.FlushBuffer();
@@ -742,7 +812,7 @@ namespace UniJoy
 
                 if (_currentUserResponse.Equals(PressType.Left))
                 {
-                    Console.Beep(1500, 500);
+                    //Console.Beep(1500, 500);
 
                     //increase the total choices for wrong or correct choices (some choices).
                     _totalChoices++;
@@ -760,6 +830,8 @@ namespace UniJoy
 
                     if (_correctDecision.Equals(PressType.Left))
                     {
+                        //todo: play sound for correct answer.
+
                         //increase the total correct answers.
                         _totalCorrectAnswers++;
 
@@ -802,7 +874,7 @@ namespace UniJoy
 
                 else if (_currentUserResponse.Equals(PressType.Right))
                 {
-                    Console.Beep(900, 500);
+                    //Console.Beep(900, 500);
 
                     //update current rat decision state.
                     _currentRatDecision = PressType.Right;
@@ -820,6 +892,8 @@ namespace UniJoy
 
                     if (_correctDecision.Equals(PressType.Right))
                     {
+                        // todo: play sound for correct answer.
+                        
                         //increase the total coreect answers.
                         _totalCorrectAnswers++;
 
@@ -1816,6 +1890,19 @@ namespace UniJoy
             /// The delay time between the end of water center reward and the Clue sound.
             /// </summary>
             //public double wClueDelay;
+        };
+
+
+        /// <summary>
+        /// Enum for the human stimulus decision.
+        /// </summary>
+        public enum HumanDecision
+        {
+            NoResponse = 0,
+            Left = 1,
+            Right = 2,
+            Up = 3,
+            Down = 4
         };
 
         /// <summary>
