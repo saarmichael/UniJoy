@@ -714,6 +714,7 @@ namespace UniJoy
             DetermineCurrentStimulusAnswer();
             
             _remoteController.FlushBuffer();
+            _currentUserResponse = PressType.None;
             Stopwatch sw = new Stopwatch();
             
             sw.Start();
