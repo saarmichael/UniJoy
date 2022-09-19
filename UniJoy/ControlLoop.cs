@@ -40,8 +40,8 @@ namespace UniJoy
 
         #region CONSTANTS
         
-        private const int CORRECT_RESP_FREQ = 1750;
-        private const int INCORRECT_RESP_FREQ = 700;
+        private const int CORRECT_RESP_FREQ = 2550;
+        private const int INCORRECT_RESP_FREQ = 1500;
         private const int PLAYING_SOUND_DURATION = 500; // in milliseconds
         
         #endregion CONSTANTS
@@ -543,7 +543,9 @@ namespace UniJoy
                         //sounds the beep with the missing start gead in the center.
                         else
                         {
-                            //Task.Run(() => { _windowsMediaPlayer.URL = _soundPlayerPathDB["WrongAnswer"]; _windowsMediaPlayer.controls.play(); });
+                            Task.Run(() => { _windowsMediaPlayer.URL = _soundPlayerPathDB["WrongAnswer"]; _windowsMediaPlayer.controls.play(); });
+                            // skip this trial.
+                            continue;
                         }
 
                         //the post trial stage for saving the trial data and for the delay between trials.
