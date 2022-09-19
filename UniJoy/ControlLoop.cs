@@ -39,6 +39,11 @@ namespace UniJoy
         const bool UPDATE_GLOBAL_DETAILS_LIST_VIEW = false;
 
         #region CONSTANTS
+        
+        private const int CORRECT_RESP_FREQ = 1750;
+        private const int INCORRECT_RESP_FREQ = 700;
+        private const int PLAYING_SOUND_DURATION = 500; // in milliseconds
+        
         #endregion CONSTANTS
 
         #region ATTRIBUTES
@@ -777,12 +782,12 @@ namespace UniJoy
         private void PlayWrongAnswerSound()
         {
             // play the sound in a new thread.
-            PlaySound(800, 500);
+            PlaySound(INCORRECT_RESP_FREQ, PLAYING_SOUND_DURATION);
         }
 
         private void PlayCorrectAnswerSound()
         {
-            PlaySound(1750, 500);
+            PlaySound(CORRECT_RESP_FREQ, PLAYING_SOUND_DURATION);
         }
 
 
@@ -1332,7 +1337,7 @@ namespace UniJoy
                     _logger.Info("Backward started.");
 
                     int rtuenTrajectorySize = returnTrajectory.Item1.Count();
-                    for (int i = 0; i < rtuenTrajectorySize; i += 16) // ~(Michael Saar)~ increment by 16 in order to imitate 1000Hz behavior
+                    for (int i = 0; i < rtuenTrajectorySize; i += 6) // ~(Michael Saar)~ increment by 6 in order to imitate 1000Hz behavior over 2.5 seconds
                     {
                         //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
                         double MOTION_BASE_CENTER = -0.22077500;
@@ -1351,10 +1356,10 @@ namespace UniJoy
             }
             
             // ---DEBUG LOG: why is there a sleep here? // ~(Michael Saar)~ 
-            _logger.Info("before post trial 5000 milliseconds sleep.");
+            //_logger.Info("before post trial 5000 milliseconds sleep.");
             //todoo::what is that magic number??
-            Thread.Sleep(5000);
-            _logger.Info("after post trial 5000 milliseconds sleep.");
+            //Thread.Sleep(5000);
+            //_logger.Info("after post trial 5000 milliseconds sleep.");
 
             bool trialSucceed = true;
 
