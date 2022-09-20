@@ -40,8 +40,8 @@ namespace UniJoy
 
         #region CONSTANTS
         
-        private const int CORRECT_RESP_FREQ = 2550;
-        private const int INCORRECT_RESP_FREQ = 1500;
+        private const int CORRECT_RESP_FREQ = 1900;
+        private const int INCORRECT_RESP_FREQ = 1100;
         private const int PLAYING_SOUND_DURATION = 500; // in milliseconds
         
         #endregion CONSTANTS
