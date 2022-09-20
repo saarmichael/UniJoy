@@ -40,8 +40,9 @@ namespace UniJoy
 
         #region CONSTANTS
         
-        private const int CORRECT_RESP_FREQ = 1900;
-        private const int INCORRECT_RESP_FREQ = 1100;
+        private const int CORRECT_RESP_FREQ = 2200;
+        private const int INCORRECT_RESP_FREQ = 1000;
+        private const int TIMOUT_FREQ = 400;
         private const int PLAYING_SOUND_DURATION = 500; // in milliseconds
         
         #endregion CONSTANTS
@@ -736,6 +737,7 @@ namespace UniJoy
             // if the response is None, then the user did not respond in time.
             if (_currentUserResponse == PressType.None)
             {
+                PlayTimeOutSound();
                 // todo: understand the role of this line here - why need to send the command to the unity engine? 
                 //send command to UnityEngine that it should clean all it's rendered data.
                 _unityCommandsSender.TrySendCommand(UnityEngineCommands.VisualOperationCommand, VisualOperationCommand.CleanScreen);
@@ -771,6 +773,12 @@ namespace UniJoy
             _logger.Info($"ResponseTimeStage end. User responded in time. User response: {_currentUserResponse}. Correct answer: {_correctDecision}. Is correct: {isCorrect}.");
             return new Tuple<PressType, bool>(_currentUserResponse, isCorrect);
         }
+
+        private void PlayTimeOutSound()
+        {
+            PlaySound(TIMOUT_FREQ, PLAYING_SOUND_DURATION);
+        }
+        
 
         private void PlaySound(int freq, int duration)
         {
