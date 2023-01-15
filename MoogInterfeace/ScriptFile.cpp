@@ -311,13 +311,13 @@ bool CScriptFile::Execute()
 	//std::this_thread::sleep_for(std::chrono::microseconds(520));
 	//std::this_thread::sleep_for(std::chrono::microseconds(300));
 	//std::this_thread::sleep_for(std::chrono::nanoseconds(520933)); // thr real value
-	Sleep(1);
+	//Sleep(1);
 
 	// execute each script command
 	while ((m_iCommandIndex <  m_iNumCommands) && (!bFault))
 	{
 		//avi : real sleep between messages.
-		//Sleep(1);
+		Sleep(1);
 
 		TCommand* pCommand = &m_stCommands[m_iCommandIndex++];
 

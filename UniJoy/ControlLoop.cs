@@ -1122,7 +1122,9 @@ namespace UniJoy
                 double MOTION_BASE_CENTER = -0.22077500;
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
-                    for (int i = 0; i < currentTrialTrajectoriesSize; i += 16) // ~(Michael Saar)~ jump 16 points in order to get 1000H
+                Stopwatch stopwatchPositions = new Stopwatch();
+                /*
+                    for (int i = 0; i < currentTrialTrajectoriesSize; i++) // ~(Michael Saar)~ jump 16 points in order to get 1000H
                     {
                         //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
                         double surge = _currentTrialTrajectories.Item1[i].X;
@@ -1133,9 +1135,40 @@ namespace UniJoy
                         double rz = _currentTrialTrajectories.Item1[i].RZ;
                         MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
                     }
+                    */
+                // create all trajectories at once
+                double[] surge = new double[currentTrialTrajectoriesSize];
+                double[] lateral = new double[currentTrialTrajectoriesSize];
+                double[] heave = new double[currentTrialTrajectoriesSize];
+                double[] rx = new double[currentTrialTrajectoriesSize];
+                double[] ry = new double[currentTrialTrajectoriesSize];
+                double[] rz = new double[currentTrialTrajectoriesSize];
+                
+                for (int i = 0; i < currentTrialTrajectoriesSize; i++)
+                {
+                    surge[i] = _currentTrialTrajectories.Item1[i].X;
+                    lateral[i] = _currentTrialTrajectories.Item1[i].Y;
+                    heave[i] = _currentTrialTrajectories.Item1[i].Z + MOTION_BASE_CENTER;
+                    rx[i] = _currentTrialTrajectories.Item1[i].RX;
+                    ry[i] = _currentTrialTrajectories.Item1[i].RY;
+                    rz[i] = _currentTrialTrajectories.Item1[i].RZ;    
+                }
+
+                // send all trajectories at once
+                double sumTimeSendPositions = 0;
+                stopwatchPositions.Start(); // ~(Michael Saar)~ --- DEBUG: calculate the average time of sending positions
+                double start = stopwatchPositions.ElapsedMilliseconds;
+                for (int i = 0; i < currentTrialTrajectoriesSize; i++)
+                {
+                    //start = stopwatchPositions.ElapsedMilliseconds;
+                    MoogController.MoogController.SendPosition(surge[i] / 100.0, heave[i], lateral[i] / 100.0, rx[i], ry[i], rz[i]);
+                    //sumTimeSendPositions += stopwatchPositions.ElapsedMilliseconds - start;
+                }
+                
                     // get the time passed from the start of the stopwatch.
                     double timePassed = stopwatch.ElapsedMilliseconds;
                     _logger.Info("Time passed: " + timePassed);
+                    _logger.Info("the average time of sending positions: " + sumTimeSendPositions / currentTrialTrajectoriesSize); // ~(Michael Saar)~ --- DEBUG: calculate the average time of sending positions
                     _logger.Info("Sending to MOOG forward movement Task --end"); // ~(Michael Saar)~
                 //});
             }
@@ -1347,7 +1380,10 @@ namespace UniJoy
                     _logger.Info("Backward started.");
 
                     int rtuenTrajectorySize = returnTrajectory.Item1.Count();
-                    for (int i = 0; i < rtuenTrajectorySize; i += 6) // ~(Michael Saar)~ increment by 6 in order to imitate 1000Hz behavior over 2.5 seconds
+                    
+                    // ~(Michael Saar)~ --- DEBUG ---
+                    
+                    for (int i = 0; i < rtuenTrajectorySize; i += 1) // ~(Michael Saar)~ increment by 6 in order to imitate 1000Hz behavior over 2.5 seconds
                     {
                         //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
                         double MOTION_BASE_CENTER = -0.22077500;
@@ -1360,6 +1396,8 @@ namespace UniJoy
                         double rz = returnTrajectory.Item1[i].RZ;
                         MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
                     }
+                    
+                    // send all 1000 positions at once without loop
 
                     _logger.Info("Backward ended.");
                 });
