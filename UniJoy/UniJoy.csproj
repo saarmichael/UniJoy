@@ -93,6 +93,7 @@
     <Compile Include="SavedDataMaker.cs" />
     <Compile Include="StaticValuesGenerator.cs" />
     <Compile Include="VaryingIndexSelector.cs" />
+    <Compile Include="WinApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
