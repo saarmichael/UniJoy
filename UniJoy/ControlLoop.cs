@@ -1114,63 +1114,70 @@ namespace UniJoy
             
             if (IsMoogConnected)
             {
+                Task forwardMovementTask;
                 //Task.Run(() =>
                 //{
                 //for (_currentTrialTrajectories.Moog.count)
-                _logger.Info("Sending to MOOG forward movement Task --begin"); // ~(Michael Saar)~
-                int currentTrialTrajectoriesSize = _currentTrialTrajectories.Item1.Count();
-                double MOTION_BASE_CENTER = -0.22077500;
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
-                Stopwatch stopwatchPositions = new Stopwatch();
-                /*
-                    for (int i = 0; i < currentTrialTrajectoriesSize; i++) // ~(Michael Saar)~ jump 16 points in order to get 1000H
-                    {
-                        //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
-                        double surge = _currentTrialTrajectories.Item1[i].X;
-                        double lateral = _currentTrialTrajectories.Item1[i].Y;
-                        double heave = _currentTrialTrajectories.Item1[i].Z + MOTION_BASE_CENTER;
-                        double rx = _currentTrialTrajectories.Item1[i].RX;
-                        double ry = _currentTrialTrajectories.Item1[i].RY;
-                        double rz = _currentTrialTrajectories.Item1[i].RZ;
-                        MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
-                    }
-                    */
-                // create all trajectories at once
-                double[] surge = new double[currentTrialTrajectoriesSize];
-                double[] lateral = new double[currentTrialTrajectoriesSize];
-                double[] heave = new double[currentTrialTrajectoriesSize];
-                double[] rx = new double[currentTrialTrajectoriesSize];
-                double[] ry = new double[currentTrialTrajectoriesSize];
-                double[] rz = new double[currentTrialTrajectoriesSize];
-                
-                for (int i = 0; i < currentTrialTrajectoriesSize; i++)
-                {
-                    surge[i] = _currentTrialTrajectories.Item1[i].X;
-                    lateral[i] = _currentTrialTrajectories.Item1[i].Y;
-                    heave[i] = _currentTrialTrajectories.Item1[i].Z + MOTION_BASE_CENTER;
-                    rx[i] = _currentTrialTrajectories.Item1[i].RX;
-                    ry[i] = _currentTrialTrajectories.Item1[i].RY;
-                    rz[i] = _currentTrialTrajectories.Item1[i].RZ;    
-                }
+                 forwardMovementTask = Task.Factory.StartNew(() =>
+                 {
+                     _logger.Info("Sending to MOOG forward movement Task --begin"); // ~(Michael Saar)~
+                     int currentTrialTrajectoriesSize = _currentTrialTrajectories.Item1.Count();
+                     double MOTION_BASE_CENTER = -0.22077500;
+                     Stopwatch stopwatch = new Stopwatch();
+                     stopwatch.Start();
+                     Stopwatch stopwatchPositions = new Stopwatch();
+                     /*
+                         for (int i = 0; i < currentTrialTrajectoriesSize; i++) // ~(Michael Saar)~ jump 16 points in order to get 1000H
+                         {
+                             //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
+                             double surge = _currentTrialTrajectories.Item1[i].X;
+                             double lateral = _currentTrialTrajectories.Item1[i].Y;
+                             double heave = _currentTrialTrajectories.Item1[i].Z + MOTION_BASE_CENTER;
+                             double rx = _currentTrialTrajectories.Item1[i].RX;
+                             double ry = _currentTrialTrajectories.Item1[i].RY;
+                             double rz = _currentTrialTrajectories.Item1[i].RZ;
+                             MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
+                         }
+                         */
+                     // create all trajectories at once
+                     double[] surge = new double[currentTrialTrajectoriesSize];
+                     double[] lateral = new double[currentTrialTrajectoriesSize];
+                     double[] heave = new double[currentTrialTrajectoriesSize];
+                     double[] rx = new double[currentTrialTrajectoriesSize];
+                     double[] ry = new double[currentTrialTrajectoriesSize];
+                     double[] rz = new double[currentTrialTrajectoriesSize];
 
-                // send all trajectories at once
-                double sumTimeSendPositions = 0;
-                stopwatchPositions.Start(); // ~(Michael Saar)~ --- DEBUG: calculate the average time of sending positions
-                double start = stopwatchPositions.ElapsedMilliseconds;
-                for (int i = 0; i < currentTrialTrajectoriesSize; i++)
-                {
-                    //start = stopwatchPositions.ElapsedMilliseconds;
-                    MoogController.MoogController.SendPosition(surge[i] / 100.0, heave[i], lateral[i] / 100.0, rx[i], ry[i], rz[i]);
-                    //sumTimeSendPositions += stopwatchPositions.ElapsedMilliseconds - start;
-                }
-                
-                    // get the time passed from the start of the stopwatch.
-                    double timePassed = stopwatch.ElapsedMilliseconds;
-                    _logger.Info("Time passed: " + timePassed);
-                    _logger.Info("the average time of sending positions: " + sumTimeSendPositions / currentTrialTrajectoriesSize); // ~(Michael Saar)~ --- DEBUG: calculate the average time of sending positions
-                    _logger.Info("Sending to MOOG forward movement Task --end"); // ~(Michael Saar)~
-                //});
+                     for (int i = 0; i < currentTrialTrajectoriesSize; i++)
+                     {
+                         surge[i] = _currentTrialTrajectories.Item1[i].X / 100.0;
+                         lateral[i] = _currentTrialTrajectories.Item1[i].Y / 100.0;
+                         heave[i] = _currentTrialTrajectories.Item1[i].Z + MOTION_BASE_CENTER;
+                         rx[i] = _currentTrialTrajectories.Item1[i].RX;
+                         ry[i] = _currentTrialTrajectories.Item1[i].RY;
+                         rz[i] = _currentTrialTrajectories.Item1[i].RZ;
+                     }
+
+                     // send all trajectories at once
+                     double sumTimeSendPositions = 0;
+                     stopwatchPositions.Start(); // ~(Michael Saar)~ --- DEBUG: calculate the average time of sending positions
+                     double start = stopwatchPositions.ElapsedMilliseconds;
+                     for (int i = 0; i < currentTrialTrajectoriesSize; i++)
+                     {
+                         //start = stopwatchPositions.ElapsedMilliseconds;
+                         MoogController.MoogController.SendPosition(surge[i], heave[i], lateral[i], rx[i], ry[i], rz[i]);
+                         MoogController.MoogController.SendPosition(surge[i], heave[i], lateral[i], rx[i], ry[i], rz[i]);
+                         //sumTimeSendPositions += stopwatchPositions.ElapsedMilliseconds - start;
+                     }
+
+                     // get the time passed from the start of the stopwatch.
+                     double timePassed = stopwatch.ElapsedMilliseconds;
+                     _logger.Info("Time passed: " + timePassed);
+                     _logger.Info("the average time of sending positions: " +
+                                  sumTimeSendPositions /
+                                  currentTrialTrajectoriesSize); // ~(Michael Saar)~ --- DEBUG: calculate the average time of sending positions
+                     _logger.Info("Sending to MOOG forward movement Task --end"); // ~(Michael Saar)~
+                 });
+                 //});
             }
             
 
@@ -1394,6 +1401,7 @@ namespace UniJoy
                         double rx = returnTrajectory.Item1[i].RX;
                         double ry = returnTrajectory.Item1[i].RY;
                         double rz = returnTrajectory.Item1[i].RZ;
+                        MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
                         MoogController.MoogController.SendPosition(surge / 100.0, heave, lateral / 100.0, rx, ry, rz);
                     }
                     

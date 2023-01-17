@@ -7,10 +7,13 @@ using Params;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MindFusion.Gauges;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Trajectories.TrajectoryCreators
 {
@@ -78,7 +81,7 @@ namespace Trajectories.TrajectoryCreators
         private double _deltaHeading;
 
         /// <summary>
-        /// The variables readen from the xlsx protocol file.
+        /// The variables read from the xlsx protocol file.
         /// </summary>
         private Variables _variablesList;
 
@@ -116,7 +119,7 @@ namespace Trajectories.TrajectoryCreators
         /// <summary>
         /// ThreeStepAdapdation Constructor.
         /// </summary>
-        /// <param name="variablesList">The variables list showen in the readen from the excel and changed by the main gui.</param>
+        /// <param name="variablesList">The variables list shown in the read from the excel and changed by the main gui.</param>
         /// <param name="crossVaryingVals">Final list holds all the current cross varying vals by dictionary of variables with values for each line(trial) for both ratHouseParameters and landscapeHouseParameters.</param>
         /// <param name="trajectorySampleNumber">The number of sample points for the trajectory.</param>
         public HeadingDiscrimination(Variables variablesList, List<Dictionary<string, double>> crossVaryingVals, Dictionary<string, List<double>> staticVals, int trajectorySampleNumber)
@@ -132,13 +135,13 @@ namespace Trajectories.TrajectoryCreators
         /// <summary>
         /// Generating a vector of sampled gaussian cdf with the given attributes.
         /// </summary>
-        /// <param name="duration">The duraon for the trajectory.</param>
+        /// <param name="duration">The duration for the trajectory.</param>
         /// <param name="sigma">The number of sigmas for the trajectory in the generated gayssian cdf.</param>
-        /// <param name="magnitude">The mfgnitude of the trajectory.</param>
+        /// <param name="magnitude">The magnitude of the trajectory.</param>
         /// <param name="frequency">The number of samples for the gaussian cdf to the trajectory.</param>
         /// <returns>
-        /// The sampled gaussian cdf trajector.
-        /// The vector length is as the fgiven frequency.
+        /// The sampled gaussian cdf trajectory.
+        /// The vector length is as the given frequency.
         /// </returns>
         public Vector<double> GenerateGaussianSampledCDF(double duration, double sigma, double magnitude, int frequency)
         {
@@ -153,10 +156,15 @@ namespace Trajectories.TrajectoryCreators
                  */
                 returnedVector[i] -= returnedVector[0];
             }
+            
 
             //remove the first point we need only for decreasing from other points.
             returnedVector = returnedVector.SubVector(1, frequency);
 
+            // plot the gaussian cdf using windows charting library.
+
+            //MindFusionPlotFunction(returnedVector);
+            
             //MatlabPlotFunction(returnedVector);
             return returnedVector;
         }
@@ -183,6 +191,8 @@ namespace Trajectories.TrajectoryCreators
                 ratHouseDistanceVector = GenerateGaussianSampledCDF(_duration, _sigma, _distance, _frequency);
                 //_headingDirection = (_headingDirection + 180) % 360;
             }
+            
+            //WinChartingPlotVector(ratHouseDistanceVector);
 
             //combined.
             if (_stimulusType == 3)
@@ -312,7 +322,7 @@ namespace Trajectories.TrajectoryCreators
         }
 
         /// <summary>
-        /// Creating the multiplier for each x,y,z movement by the amplitude , aimuth , elevtion and tilt.
+        /// Creating the multiplier for each x,y,z movement by the amplitude , azimuth , elevation and tilt.
         /// </summary>
         /// <param name="amplitude">Amplitude (degree).</param>
         /// <param name="azimuth">Azimuth (degree).</param>
@@ -413,6 +423,32 @@ namespace Trajectories.TrajectoryCreators
             {
                 _stimulusType = int.Parse(_variablesList._variablesDictionary["STIMULUS_TYPE"]._description["parameters"].MoogParameter);
             }
+        }
+
+        public void WinChartingPlotVector(Vector<double> toPlot)
+        {
+            // Create a new datavisualization chart
+            var chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            // Add a new chart-series
+            string seriesname = "Series1";
+            chart.Series.Add(seriesname);
+            // Set the chart-type to "Line"
+            chart.Series[seriesname].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            // Add some datapoints so the series. in this case you can pass the X and Y coordinates to AddXY() method
+            for (int i = 0; i < toPlot.Count; i++)
+            {
+                chart.Series[seriesname].Points.AddXY(i, toPlot[i]);
+            }
+            // Let's set the Y axis min and max values
+            chart.ChartAreas[0].AxisY.Minimum = toPlot.Min();
+            chart.ChartAreas[0].AxisY.Maximum = toPlot.Max();
+            // Set the chart title
+            chart.Titles.Add("Chart");
+            // Set the chart size
+            chart.Size = new System.Drawing.Size(800, 600);
+            // save the chart as a PNG
+            chart.SaveImage("C:\\Users\\user\\Desktop\\Michael\\dev\\UniJoy\\VectorChart.png", System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
+            
         }
 
         /// <summary>

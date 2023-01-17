@@ -10,7 +10,7 @@ namespace UniJoy
         /// </summary>
         [STAThread]
         static void Main()
-        {
+        { 
             ExcelProtocolConfigFileLoader excelLoader = new ExcelProtocolConfigFileLoader();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
