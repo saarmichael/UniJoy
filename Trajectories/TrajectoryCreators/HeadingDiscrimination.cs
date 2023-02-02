@@ -64,6 +64,11 @@ namespace Trajectories.TrajectoryCreators
         /// Describes the duration to make the move.
         /// </summary>
         private double _duration;
+        
+        /// <summary>
+        /// Describes the duration of the returning movement.
+        /// </summary>
+        private double _returnDuration;
 
         /// <summary>
         /// Describes the sigma of the gaussian for the trajectory.
@@ -136,7 +141,7 @@ namespace Trajectories.TrajectoryCreators
         /// Generating a vector of sampled gaussian cdf with the given attributes.
         /// </summary>
         /// <param name="duration">The duration for the trajectory.</param>
-        /// <param name="sigma">The number of sigmas for the trajectory in the generated gayssian cdf.</param>
+        /// <param name="sigma">The number of sigmas for the trajectory in the generated gaussian cdf.</param>
         /// <param name="magnitude">The magnitude of the trajectory.</param>
         /// <param name="frequency">The number of samples for the gaussian cdf to the trajectory.</param>
         /// <returns>
@@ -159,13 +164,8 @@ namespace Trajectories.TrajectoryCreators
             
 
             //remove the first point we need only for decreasing from other points.
-            returnedVector = returnedVector.SubVector(1, frequency);
+            returnedVector = returnedVector.SubVector(1, returnedVector.Count - 1);
 
-            // plot the gaussian cdf using windows charting library.
-
-            //MindFusionPlotFunction(returnedVector);
-            
-            //MatlabPlotFunction(returnedVector);
             return returnedVector;
         }
 
@@ -188,7 +188,8 @@ namespace Trajectories.TrajectoryCreators
             else
             {
                 //make the ratHouseDistance vector.
-                ratHouseDistanceVector = GenerateGaussianSampledCDF(_duration, _sigma, _distance, _frequency);
+                // ~(Michael Saar)~ : added 1 second to the duration to make sure the MOOG's not moving too fast.
+                ratHouseDistanceVector = GenerateGaussianSampledCDF(_returnDuration, _sigma, _distance, _frequency); 
                 //_headingDirection = (_headingDirection + 180) % 360;
             }
             
@@ -271,7 +272,7 @@ namespace Trajectories.TrajectoryCreators
                     RZ = CreateVector.Dense<double>((int)(_frequency * _duration), 0)
                 };
             }
-            else
+            else // return trajectory 
             {
                  MoogTrajectory = new Trajectory()
                 {
@@ -279,9 +280,9 @@ namespace Trajectories.TrajectoryCreators
                     Y = -surgeRatHouse,
                     Z = heaveRatHouse,
                     //rx - roll , ry - pitch , rz = yaw
-                    RX = CreateVector.Dense<double>((int)(_frequency * _duration), 0),
-                    RY = CreateVector.Dense<double>((int)(_frequency * _duration), 0),
-                    RZ = CreateVector.Dense<double>((int)(_frequency * _duration), 0)
+                    RX = CreateVector.Dense<double>((int)(_frequency * _returnDuration), 0),
+                    RY = CreateVector.Dense<double>((int)(_frequency * _returnDuration), 0),
+                    RZ = CreateVector.Dense<double>((int)(_frequency * _returnDuration), 0)
                 };
             }
 
@@ -376,6 +377,11 @@ namespace Trajectories.TrajectoryCreators
                 _duration = _staticVars["STIMULUS_DURATION"][0];
             else if (_crossVaryingVals[index].Keys.Contains("STIMULUS_DURATION"))
                 _duration = currentVaryingTrialParameters["STIMULUS_DURATION"];
+            
+            if (_staticVars.ContainsKey("RETURN_DURATION"))
+                _returnDuration = _staticVars["RETURN_DURATION"][0];
+            else if (_crossVaryingVals[index].Keys.Contains("RETURN_DURATION"))
+                _returnDuration = currentVaryingTrialParameters["RETURN_DURATION"];
 
             if (_staticVars.ContainsKey("SIGMA"))
                 _sigma = _staticVars["SIGMA"][0];

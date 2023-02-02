@@ -581,7 +581,7 @@ namespace UniJoy
             EndControlLoopByStopFunction();
         }
         /// <summary>
-        /// Initializes the variables , points , trajectories , random varibles ,  etc.
+        /// Initializes the variables ,points ,trajectories ,random variables , etc.
         /// </summary>
         public void ResetVariables()
         {
@@ -1095,9 +1095,6 @@ namespace UniJoy
 
             //start moving the robot according to the stimulus type.
             _logger.Info("Send Executing robot trajectory data start command");
-            //TODOO:DELETE
-            //_robotMotionTask.Start();
-
             //TODOO: Maayan - call the Moog to make a move
             int movementDuration = (int)(1000 * _currentTrialTimings.wDuration) + 5000; // ~(Michael Saar)~ added the 5000 
             /*
@@ -1164,8 +1161,13 @@ namespace UniJoy
                      for (int i = 0; i < currentTrialTrajectoriesSize; i++)
                      {
                          //start = stopwatchPositions.ElapsedMilliseconds;
+                         /*while(stopwatchPositions.ElapsedMilliseconds - start < 0.5)
+                         {
+                             
+                         }*/
                          MoogController.MoogController.SendPosition(surge[i], heave[i], lateral[i], rx[i], ry[i], rz[i]);
                          MoogController.MoogController.SendPosition(surge[i], heave[i], lateral[i], rx[i], ry[i], rz[i]);
+                         start = stopwatchPositions.ElapsedMilliseconds;
                          //sumTimeSendPositions += stopwatchPositions.ElapsedMilliseconds - start;
                      }
 
@@ -1173,8 +1175,7 @@ namespace UniJoy
                      double timePassed = stopwatch.ElapsedMilliseconds;
                      _logger.Info("Time passed: " + timePassed);
                      _logger.Info("the average time of sending positions: " +
-                                  sumTimeSendPositions /
-                                  currentTrialTrajectoriesSize); // ~(Michael Saar)~ --- DEBUG: calculate the average time of sending positions
+                                  sumTimeSendPositions /currentTrialTrajectoriesSize); // ~(Michael Saar)~ --- DEBUG: calculate the average time of sending positions
                      _logger.Info("Sending to MOOG forward movement Task --end"); // ~(Michael Saar)~
                  });
                  //});
@@ -1273,6 +1274,7 @@ namespace UniJoy
                 // log the _robotMotionTask Thread id // ~(Michael Saar)~
                 //_logger.Info("Waiting for _robotMotionTask to finish the movement." + "_robotMotionTask Thread id: " + _robotMotionTask.Id); // ~(Michael Saar)~
                 //_robotMotionTask.Wait();
+                
                 _logger.Info("_robotMotionTask finished the movement.");
             }
             //TODOO: ADD THE SAME WAIT FOR THE VISUAL
@@ -1291,7 +1293,7 @@ namespace UniJoy
         }
 
         /// <summary>
-        /// Wait for thesubject to press the start button in order to start the movement.
+        /// Wait for the subject to press the start button in order to start the movement.
         /// </summary>
         /// <returns>True if the subject pressed on the start button during the limit of the timeoutTime.</returns>
         //public bool WaitForHeadEnteranceToTheCenterStage()
@@ -1348,7 +1350,7 @@ namespace UniJoy
 
         /// <summary>
         /// The post trial time - analyaing the response , saving all the trial data into the results file.
-        /// <param name="duration1HeadInTheCenterStabilityStage">Indicated if one of the robots ot both moved due to suration 1 head in the center stability stage.</param>
+        /// <param name="duration1HeadInTheCenterStabilityStage">Indicated if one of the robots ot both moved due to duration 1 head in the center stability stage.</param>
         /// <returns>True if trial succeed otherwise returns false.</returns>
         /// </summary>
         public bool PostTrialStage(bool duration1HeadInTheCenterStabilityStage) // duration1HeadInTheCenterStabilityStage is always true
@@ -1386,11 +1388,11 @@ namespace UniJoy
                     //for (_currentTrialTrajectories.Moog.count)
                     _logger.Info("Backward started.");
 
-                    int rtuenTrajectorySize = returnTrajectory.Item1.Count();
+                    int returnTrajectorySize = returnTrajectory.Item1.Count();
                     
                     // ~(Michael Saar)~ --- DEBUG ---
                     
-                    for (int i = 0; i < rtuenTrajectorySize; i += 1) // ~(Michael Saar)~ increment by 6 in order to imitate 1000Hz behavior over 2.5 seconds
+                    for (int i = 0; i < returnTrajectorySize; i += 1) // ~(Michael Saar)~ increment by 6 in order to imitate 1000Hz behavior over 2.5 seconds
                     {
                         //SendPosition(currentTrialTrajectory.Moog(i).X , currentTrialTrajectory.Moog(i).Y , currentTrialTrajectory.Moog(i).Z)
                         double MOTION_BASE_CENTER = -0.22077500;
@@ -1416,7 +1418,9 @@ namespace UniJoy
             //todoo::what is that magic number??
             //Thread.Sleep(5000);
             //_logger.Info("after post trial 5000 milliseconds sleep.");
-
+            // dont contunie until the robot finished moving back to the home position.
+            // moveRobotHomePositionTask.Wait();
+            
             bool trialSucceed = true;
 
             if (!_currentRatDecision.Equals(RatDecison.PassDurationTime))
@@ -1442,7 +1446,7 @@ namespace UniJoy
                         ProtocolName = ProtocolFullName,
                         RatName = RatName,
                         StudentName = StudentName,
-                        //todoo::chnage that _currentRatDecision
+                        //todoo::change that _currentRatDecision
                         //RatDecison = _currentRatDecision,
                         TrialNum = _totalHeadStabilityInCenterDuringDurationTime + _totalHeadFixationBreaks,
                         StickOnNumber = NumOfStickOn,
@@ -1692,7 +1696,7 @@ namespace UniJoy
         }
 
         /// <summary>
-        /// Detrmines all current tiral timings and delays acoording the time types statuses.
+        /// Determines all current trial timings and delays according the time types statuses.
         /// </summary>
         /// <returns>Return the TrialTimings struct contains all the timings types.</returns>
         public TrialTimings DetermineCurrentTrialTimings()

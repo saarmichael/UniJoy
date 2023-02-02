@@ -63,13 +63,13 @@ namespace VaryingValuesGenerators
         public abstract void MakeTrialsVaringVectors();
 
         /// <summary>
-        /// Getting the list of all varying vector. Each veactor is represented by dictionary of variable name and value.
+        /// Getting the list of all varying vector. Each vector is represented by dictionary of variable name and value.
         /// </summary>
         /// <returns>Returns list in the size of generated varying vectors. Each vector represents by the name of the variable and it's value.</returns>
         public abstract List<Dictionary<string, double>> MakeVaryingMatrix();
 
         /// <summary>
-        /// Cretaes varying vectors list according to the varying vectors variables(the list include each variable as a vector with no connection each other).
+        /// Creates varying vectors list according to the varying vectors variables(the list include each variable as a vector with no connection each other).
         /// </summary>
         public abstract Dictionary<string, Vector<double>> MakeSeperatedVaryingVectorsList();
 
@@ -84,14 +84,13 @@ namespace VaryingValuesGenerators
         {
             Vector<double> createdVector = Vector<double>.Build.Dense((int)((highBound - lowBound) / increment + 1));
             int index = 0;
-
-            while (lowBound <= highBound)
+            double assignedValue = lowBound;
+            while (assignedValue <= highBound)
             {
-                createdVector.At(index, lowBound);
-                lowBound += increment;
+                createdVector.At(index, assignedValue);
+                assignedValue += increment;
                 index++;
             }
-
             return createdVector;
         }
 

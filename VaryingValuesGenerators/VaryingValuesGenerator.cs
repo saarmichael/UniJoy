@@ -42,7 +42,7 @@ namespace VaryingValuesGenerators
             //initialize the matrix that include all the spanning vectors.
             Dictionary<string, Vector<double>> seperatedVaryingValues = MakeSeperatedVaryingVectorsList();
 
-            //the commulative matrix that incresed 1 line in each iteration and in many rows as the number of values the variables takes.
+            //the cumulative matrix that increased 1 line in each iteration and in many rows as the number of values the variables takes.
             string m = seperatedVaryingValues.Keys.First();
             Vector<double> m2 = seperatedVaryingValues[m];
             Matrix<double> m3 = Matrix<double>.Build.DenseOfRowVectors(m2);
@@ -69,7 +69,7 @@ namespace VaryingValuesGenerators
 
                     //run over all values the variable is bounded in.
                     //each iteration in the loop added the repeated values of each value of the variable to the previous matrix with the matrix above the line.
-                    //also , it concatinating this new matrix to the other matrixes.
+                    //also , it concatenating this new matrix to the other matrices.
                     //after all the iterations of the loop , there is a previous duplicated matrix x times with new lines of duplicated values(x times).
                     //the x means the number of values in the variables.
                     foreach (double value in varVecKeyValuePair.Value)
@@ -87,7 +87,7 @@ namespace VaryingValuesGenerators
                             commulativeMatrix = addedMatrix.Transpose();
                         }
 
-                        //append the added matrix to the commulative matrix.
+                        //append the added matrix to the cumulative matrix.
                         else
                         {
                             commulativeMatrix = commulativeMatrix.Append(addedMatrix.Transpose());
@@ -144,7 +144,7 @@ namespace VaryingValuesGenerators
         }
 
         /// <summary>
-        /// Cretaes varying vectors list according to the varying vectors variables(the list include each variable as a vector with no connection each other).
+        /// Creates varying vectors list according to the varying vectors variables(the list include each variable as a vector with no connection each other).
         /// </summary>
         public override Dictionary<string, Vector<double>> MakeSeperatedVaryingVectorsList()
         {
@@ -160,10 +160,10 @@ namespace VaryingValuesGenerators
                 {
                     double low_bound = double.Parse(item.Value._description["low_bound"].MoogParameter);
                     double high_bound = double.Parse(item.Value._description["high_bound"].MoogParameter);
-                    double increament = double.Parse(item.Value._description["increament"].MoogParameter);
+                    double increment = double.Parse(item.Value._description["increament"].MoogParameter);
 
                     //add the vector to the return list.
-                    oneVarVector = CreateVectorFromBounds(low_bound, high_bound, increament);
+                    oneVarVector = CreateVectorFromBounds(low_bound, high_bound, increment);
                 }
                 else // equals "6"
                 {

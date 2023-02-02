@@ -215,12 +215,12 @@ namespace UniJoy
         /// <summary>
         /// Returns the ITrajectoryCreator to create trajectories with by the protocol type name.
         /// </summary>
-        /// <param name="protoclName">he protocol name.</param>
+        /// <param name="protocolName">he protocol name.</param>
         /// <returns>The ITrajectoryCreator to create trajectories with for the trials.</returns>
-        private ITrajectoryCreator DecideTrajectoryCreatorByProtocolName(string protoclName)
+        private ITrajectoryCreator DecideTrajectoryCreatorByProtocolName(string protocolName)
         {
             //determine the TrajectoryCreator to call with.
-            switch (protoclName)
+            switch (protocolName)
             {
                 //TODO: add speed/distance discrimination
                 case "HeadingDiscrimination":
