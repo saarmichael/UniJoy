@@ -18,5 +18,7 @@ namespace UniJoy
             Application.Run(new GuiInterface(ref excelLoader));
             WinApi.TimeEndPeriod(1);
         }
+        
+        // for test only
     }
 }
